@@ -46,7 +46,7 @@ public class App extends Application {
         Properties connectionProperties = new Properties();
 
         try {
-            FileInputStream stream = new FileInputStream("src/main/resources/config.properties");
+            FileInputStream stream = new FileInputStream("src/main/resources/test.config.properties");
             connectionProperties.load(stream);
 
             // Extract the database connection properties
