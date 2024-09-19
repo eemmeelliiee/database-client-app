@@ -1,5 +1,5 @@
 package se.lu.ics.data;
 
-public class ConsultDao {
+public class ConsultantDao {
 
 }
