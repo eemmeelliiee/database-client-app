@@ -16,4 +16,4 @@ bin/
 test/resources/projects/**/.vscode
 test/resources/projects/maven/salut/testGradle
 test-temp
-config.properties
+src/main/resources/config/config.properties
