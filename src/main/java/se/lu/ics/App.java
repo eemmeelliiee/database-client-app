@@ -28,7 +28,7 @@ public class App extends Application {
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -46,7 +46,7 @@ public class App extends Application {
         Properties connectionProperties = new Properties();
 
         try {
-            FileInputStream stream = new FileInputStream("src/main/resources/test.config.properties");
+            FileInputStream stream = new FileInputStream("src/main/resources/config/test.config.properties");
             connectionProperties.load(stream);
 
             // Extract the database connection properties
@@ -84,6 +84,7 @@ public class App extends Application {
             connection.close();
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Could not load properties file");
             System.exit(1);
         }

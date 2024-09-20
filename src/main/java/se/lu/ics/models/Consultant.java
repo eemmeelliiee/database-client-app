@@ -1,5 +1,5 @@
 package se.lu.ics.models;
 
-public class Consult {
+public class Consultant {
 
 }
