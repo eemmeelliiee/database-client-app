@@ -53,14 +53,16 @@ public class ConsultantDao {
 
     /*
      * * * * FIND CONSULTANT BY EmpNo * * * * /
-    /**
+     * /**
      * Retrieves a consultant from the database by EmpNo.
      * This method executes a SQL SELECT statement to fetch consultant details
      * (EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate) and returns the
      * Consultant object.
      *
      * @param empNo The EmpNo of the consultant to be retrieved.
+     * 
      * @return The Consultant object if found, otherwise null.
+     * 
      * @throws DaoException If there is an error accessing the database.
      */
     public Consultant findByEmpNo(String empNo) {
@@ -89,14 +91,16 @@ public class ConsultantDao {
 
     /*
      * * * * FIND CONSULTANTS BY EmpTitle * * * * /
-    /**
+     * /**
      * Retrieves consultants from the database by EmpTitle.
      * This method executes a SQL SELECT statement to fetch consultant details
      * (EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate) and returns a list
      * of Consultant objects.
      *
      * @param empTitle The EmpTitle of the consultants to be retrieved.
+     * 
      * @return A list of Consultant objects if found, otherwise an empty list.
+     * 
      * @throws DaoException If there is an error accessing the database.
      */
     public List<Consultant> findByEmpTitle(String empTitle) {
