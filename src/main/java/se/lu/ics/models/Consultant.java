@@ -3,57 +3,57 @@ package se.lu.ics.models;
 import java.time.LocalDate;
 
 public class Consultant {
-    private String EmpNo;
-    private String EmpFirstName;
-    private String EmpLastName;
-    private String EmpTitle;
-    private LocalDate EmpStartDate;
+    private String empNo;
+    private String empFirstName;
+    private String empLastName;
+    private String empTitle;
+    private LocalDate empStartDate;
 
-    public Consultant(String EmpNo, String EmpFirstName, String EmpLastName, String EmpTitle, LocalDate StartDate) {
-        this.EmpNo = EmpNo;
-        this.EmpFirstName = EmpFirstName;
-        this.EmpLastName = EmpLastName;
-        this.EmpTitle = EmpTitle;
-        this.EmpStartDate = StartDate;
+    public Consultant(String empNo, String empFirstName, String empLastName, String empTitle, LocalDate empStartDate) {
+        this.empNo = empNo;
+        this.empFirstName = empFirstName;
+        this.empLastName = empLastName;
+        this.empTitle = empTitle;
+        this.empStartDate = empStartDate;
     }
 
     public String getEmpNo() {
-        return EmpNo;
+        return empNo;
     }
 
-    public void setEmpNo(String EmpNo) {
-        this.EmpNo = EmpNo;
+    public void setEmpNo(String empNo) {
+        this.empNo = empNo;
     }
 
     public String getEmpFirstName() {
-        return EmpFirstName;
+        return empFirstName;
     }
 
-    public void setEmpFirstName(String EmpFirstName) {
-        this.EmpFirstName = EmpFirstName;
+    public void setEmpFirstName(String empFirstName) {
+        this.empFirstName = empFirstName;
     }
 
     public String getEmpLastName() {
-        return EmpLastName;
+        return empLastName;
     }
 
-    public void setEmpLastName(String EmpLastName) {
-        this.EmpLastName = EmpLastName;
+    public void setEmpLastName(String empLastName) {
+        this.empLastName = empLastName;
     }
 
     public String getEmpTitle() {
-        return EmpTitle;
+        return empTitle;
     }
 
-    public void setEmpTitle(String EmpTitle) {
-        this.EmpTitle = EmpTitle;
+    public void setEmpTitle(String empTitle) {
+        this.empTitle = empTitle;
     }
 
     public LocalDate getEmpStartDate() {
-        return EmpStartDate;
+        return empStartDate;
     }
 
-    public void setEmpStartDate(LocalDate StartDate) {
-        this.EmpStartDate = StartDate;
+    public void setEmpStartDate(LocalDate empStartDate) {
+        this.empStartDate = empStartDate;
     }
 }
