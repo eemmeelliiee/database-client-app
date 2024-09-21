@@ -64,7 +64,7 @@ public class ConsultantDao {
         Consultant consultant = null;
 
         try (Connection connection = connectionHandler.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             // Set the empNo parameter in the prepared statement
             statement.setString(1, empNo);
@@ -83,40 +83,40 @@ public class ConsultantDao {
         return consultant;
     }
 
-   /* FIND CONSULTANTS BY EmpTitle */
-/**
- * Retrieves consultants from the database by EmpTitle.
- * This method executes a SQL SELECT statement to fetch consultant details
- * (EmpNo, EmpFirstName, EmpLastName, EmpStartDate) and returns a list
- * of Consultant objects.
- *
- * @param empTitle The EmpTitle of the consultants to be retrieved.
- * @return A list of Consultant objects if found, otherwise an empty list.
- * @throws DaoException If there is an error accessing the database.
- */
-public List<Consultant> findByEmpTitle(String empTitle) {
-    String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?";
-    List<Consultant> consultants = new ArrayList<>();
+    /* FIND CONSULTANTS BY EmpTitle */
+    /**
+     * Retrieves consultants from the database by EmpTitle.
+     * This method executes a SQL SELECT statement to fetch consultant details
+     * (EmpNo, EmpFirstName, EmpLastName, EmpStartDate) and returns a list
+     * of Consultant objects.
+     *
+     * @param empTitle The EmpTitle of the consultants to be retrieved.
+     * @return A list of Consultant objects if found, otherwise an empty list.
+     * @throws DaoException If there is an error accessing the database.
+     */
+    public List<Consultant> findByEmpTitle(String empTitle) {
+        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?";
+        List<Consultant> consultants = new ArrayList<>();
 
-    try (Connection connection = connectionHandler.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
-        // Set the empTitle parameter in the prepared statement
-        statement.setString(1, empTitle);
+            // Set the empTitle parameter in the prepared statement
+            statement.setString(1, empTitle);
 
-        try (ResultSet resultSet = statement.executeQuery()) {
-            // Iterate through the result set and map each row to a Consultant object
-            while (resultSet.next()) {
-                consultants.add(mapToConsultant(resultSet));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                // Iterate through the result set and map each row to a Consultant object
+                while (resultSet.next()) {
+                    consultants.add(mapToConsultant(resultSet));
+                }
             }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching consultants with EmpTitle: " + empTitle, e);
         }
-    } catch (SQLException e) {
-        // Throw a custom DaoException if there's an issue with database access
-        throw new DaoException("Error fetching consultants with EmpTitle: " + empTitle, e);
-    }
 
-    return consultants;
-}
+        return consultants;
+    }
 
     /* SAVE CONSULTANT */
     /**
