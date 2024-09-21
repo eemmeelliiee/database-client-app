@@ -29,7 +29,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public List<Consultant> findAll() {
-        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpStartDate FROM Consultant;";
+        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpStartDate FROM Consultant";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
@@ -60,11 +60,11 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public Consultant findByEmpNo(String empNo) {
-        String query = "SELECT EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpNo = ?;";
+        String query = "SELECT EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpNo = ?";
         Consultant consultant = null;
 
         try (Connection connection = connectionHandler.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+            PreparedStatement statement = connection.prepareStatement(query)) {
 
             // Set the empNo parameter in the prepared statement
             statement.setString(1, empNo);
@@ -83,39 +83,40 @@ public class ConsultantDao {
         return consultant;
     }
 
-    /* FIND CONSULTANTS BY EmpTitle */
-    /**
-     * Retrieves consultants from the database by EmpTitle.
-     * This method executes a SQL SELECT statement to fetch consultant details
-     * (EmpNo, EmpFirstName, EmpLastName, EmpStartDate) and returns a list
-     * of Consultant objects.
-     *
-     * @param empTitle The EmpTitle of the consultants to be retrieved.
-     * @return A list of Consultant objects if found, otherwise an empty list.
-     * @throws DaoException If there is an error accessing the database.
-     */
-    public List<Consultant> findByEmpTitle(String empTitle) {
-        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?;";
-        List<Consultant> consultants = new ArrayList<>();
+   /* FIND CONSULTANTS BY EmpTitle */
+/**
+ * Retrieves consultants from the database by EmpTitle.
+ * This method executes a SQL SELECT statement to fetch consultant details
+ * (EmpNo, EmpFirstName, EmpLastName, EmpStartDate) and returns a list
+ * of Consultant objects.
+ *
+ * @param empTitle The EmpTitle of the consultants to be retrieved.
+ * @return A list of Consultant objects if found, otherwise an empty list.
+ * @throws DaoException If there is an error accessing the database.
+ */
+public List<Consultant> findByEmpTitle(String empTitle) {
+    String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?";
+    List<Consultant> consultants = new ArrayList<>();
 
-        try (Connection connection = connectionHandler.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet resultSet = statement.executeQuery()) {
+    try (Connection connection = connectionHandler.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query)) {
 
-            // Set the empTitle parameter in the prepared statement
-            statement.setString(1, empTitle);
+        // Set the empTitle parameter in the prepared statement
+        statement.setString(1, empTitle);
 
+        try (ResultSet resultSet = statement.executeQuery()) {
             // Iterate through the result set and map each row to a Consultant object
             while (resultSet.next()) {
                 consultants.add(mapToConsultant(resultSet));
             }
-        } catch (SQLException e) {
-            // Throw a custom DaoException if there's an issue with database access
-            throw new DaoException("Error fetching consultants with EmpTitle: " + empTitle, e);
         }
-
-        return consultants;
+    } catch (SQLException e) {
+        // Throw a custom DaoException if there's an issue with database access
+        throw new DaoException("Error fetching consultants with EmpTitle: " + empTitle, e);
     }
+
+    return consultants;
+}
 
     /* SAVE CONSULTANT */
     /**
@@ -128,7 +129,7 @@ public class ConsultantDao {
      *                      EmpNo already exists).
      */
     public void save(Consultant consultant) {
-        String query = "INSERT INTO Consultant(EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpStartDate) VALUES (?,?,?,?,?);";
+        String query = "INSERT INTO Consultant (EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpStartDate) VALUES (?,?,?,?,?)";
 
         try (Connection connection = connectionHandler.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -162,7 +163,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error updating the consultant's data.
      */
     public void update(Consultant consultant) {
-        String query = "UPDATE Consultant SET EmpNo = ?, EmpFirstName = ?, EmpLastName = ?, EmpTitle = ?, EmpStartDate = ? WHERE EmpNo = ?;";
+        String query = "UPDATE Consultant SET EmpNo = ?, EmpFirstName = ?, EmpLastName = ?, EmpTitle = ?, EmpStartDate = ? WHERE EmpNo = ?";
 
         try (Connection connection = connectionHandler.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -193,7 +194,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error deleting the consultant.
      */
     public void deleteByEmpNo(String empNo) {
-        String query = "DELETE FROM Consultant WHERE EmpNo = ?;";
+        String query = "DELETE FROM Consultant WHERE EmpNo = ?";
 
         try (Connection connection = connectionHandler.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
@@ -219,7 +220,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public int getTotalNumberOfConsultants() {
-        String query = "SELECT COUNT(ConsultantId) AS TotNbrOfConsultants FROM Consultant;";
+        String query = "SELECT COUNT(ConsultantId) AS TotNbrOfConsultants FROM Consultant";
         int totalNumberOfConsultants = 0;
 
         try (Connection connection = connectionHandler.getConnection();
