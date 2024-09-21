@@ -66,7 +66,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public Consultant findByEmpNo(String empNo) {
-        String query = "SELECT EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpNo = ?";
+        String query = "SELECT EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpNo = ?;";
         Consultant consultant = null;
 
         try (Connection connection = connectionHandler.getConnection();
@@ -104,7 +104,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public List<Consultant> findByEmpTitle(String empTitle) {
-        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?";
+        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?;";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
