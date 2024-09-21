@@ -114,7 +114,7 @@ public class ProjectDao {
                 // Execute the insert operation
                 insertStmt.executeUpdate();
             }
-            updateProjectStatus(connection, project); // Updates projectStatus attribute to calculated attribute
+            setProjectStatus(connection, project); // Updates projectStatus attribute to calculated attribute
                                                       // ProjectStatus in Project table
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
@@ -151,7 +151,7 @@ public class ProjectDao {
                 // Execute the update operation
                 updateStmt.executeUpdate();
             }
-            updateProjectStatus(connection, project); // Updates projectStatus attribute to calculated attribute
+            setProjectStatus(connection, project); // Updates projectStatus attribute to calculated attribute
                                                       // ProjectStatus in Project table
         } catch (SQLException e) {
             // Throw a DaoException for any SQL errors
@@ -170,7 +170,7 @@ public class ProjectDao {
      * 
      * @throws DaoException If there is an error updating the project's status.
      */
-    public void updateProjectStatus(Connection connection, Project project) throws DaoException {
+    public void setProjectStatus(Connection connection, Project project) throws DaoException {
         String selectStatusQuery = "SELECT ProjectStatus FROM Project WHERE ProjectNo = ?";
         // Retrieve the ProjectStatus for the updated project
         try (PreparedStatement selectStmt = connection.prepareStatement(selectStatusQuery)) {
