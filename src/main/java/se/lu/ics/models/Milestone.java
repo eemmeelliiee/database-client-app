@@ -3,37 +3,47 @@ package se.lu.ics.models;
 import java.time.LocalDate;
 
 public class Milestone {
-    private String MilestoneNo;
-    private String MilestoneName;
-    private LocalDate MilestoneDate;
+    private String milestoneNo;
+    private String projectNo;
+    private String milestoneName;
+    private LocalDate milestoneDate;
 
-    public Milestone(String MilestoneNo, String MilestoneName) {
-        this.MilestoneNo = MilestoneNo;
-        this.MilestoneName = MilestoneName;
-        this.MilestoneDate = LocalDate.now();
+    public Milestone(String milestoneNo, String projectNo, String milestoneName, LocalDate milestoneDate) {
+        this.milestoneNo = milestoneNo;
+        this.projectNo = projectNo;
+        this.milestoneName = milestoneName;
+        this.milestoneDate = milestoneDate;
     }
 
     public String getMilestoneNo() {
-        return MilestoneNo;
+        return milestoneNo;
     }
 
-    public void setMilestoneNo(String MilestoneNo) {
-        this.MilestoneNo = MilestoneNo;
+    public void setMilestoneNo(String milestoneNo) {
+        this.milestoneNo = milestoneNo;
+    }
+
+    public String getProjectNo(){
+        return projectNo;
+    }
+
+    public void setProjectNo(String projectNo){
+        this.projectNo = projectNo;
     }
 
     public String getMilestoneName() {
-        return MilestoneName;
+        return milestoneName;
     }
 
-    public void setMilestoneName(String MilestoneName) {
-        this.MilestoneName = MilestoneName;
+    public void setMilestoneName(String milestoneName) {
+        this.milestoneName = milestoneName;
     }
     
     public LocalDate getMilestoneDate() {
-        return MilestoneDate;
+        return milestoneDate;
     }
 
-    public void setMilestoneDate(LocalDate MilestoneDate) {
-        this.MilestoneDate = MilestoneDate;
+    public void setMilestoneDate(LocalDate milestoneDate) {
+        this.milestoneDate = milestoneDate;
     }
 }
