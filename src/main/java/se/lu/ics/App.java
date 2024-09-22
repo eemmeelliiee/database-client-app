@@ -1,13 +1,5 @@
 package se.lu.ics;
 
-import java.io.FileInputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Properties;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,8 +9,7 @@ import se.lu.ics.data.ConnectionHandler;
 import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
 import se.lu.ics.data.ProjectDao;
-import se.lu.ics.models.Consultant;
-import se.lu.ics.models.Project;
+
 
 import java.io.IOException;
 
