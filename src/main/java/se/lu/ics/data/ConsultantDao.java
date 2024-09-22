@@ -1,6 +1,5 @@
 package se.lu.ics.data;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,8 +13,8 @@ public class ConsultantDao {
 
     private ConnectionHandler connectionHandler;
 
-    public ConsultantDao() throws IOException {
-        this.connectionHandler = new ConnectionHandler(); // Might change this based on which view is the main view
+    public ConsultantDao(ConnectionHandler connectionHandler) {
+        this.connectionHandler = connectionHandler; // Might change this based on which view is the main view
     }
 
     /* FIND ALL CONSULTANTS */
@@ -250,7 +249,7 @@ public class ConsultantDao {
      * @throws SQLException If there is an error accessing the data in the
      *                      ResultSet.
      */
-    private Consultant mapToConsultant(ResultSet resultSet) throws SQLException {
+    protected Consultant mapToConsultant(ResultSet resultSet) throws SQLException {
         return new Consultant(
             resultSet.getString("EmpNo"),
             resultSet.getString("EmpFirstName"),

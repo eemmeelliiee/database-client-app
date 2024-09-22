@@ -2,6 +2,7 @@ module se.lu.ics {
     requires javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.graphics; // Make javafx.graphics transitive
+    requires java.desktop;
 
     requires java.sql;
 

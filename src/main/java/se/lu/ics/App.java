@@ -1,5 +1,6 @@
 package se.lu.ics;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,11 +17,15 @@ import javafx.stage.Stage;
 import se.lu.ics.data.ConnectionHandler;
 import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
+import se.lu.ics.data.MetaDataDao;  // Import MetaDataDao to test
 import se.lu.ics.data.ProjectDao;
+import se.lu.ics.data.WorkDao;
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Project;
+import java.awt.Desktop;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -45,21 +50,43 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
+    // Used for opening the xlsx file. Should probably be moved to a controller
+    private static void openExcelFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file); // Open the file with the default application
+            } else {
+                System.err.println("Desktop is not supported on this platform.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error opening Excel file: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) throws IOException {
 
         try {
-            ConsultantDao consultantDao = new ConsultantDao();
-            ConnectionHandler connectionHandler = consultantDao.getConnectionHandler();
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            ConsultantDao consultantDao = new ConsultantDao(connectionHandler);
+            ProjectDao projectDao = new ProjectDao(connectionHandler);
+            WorkDao workDao = new WorkDao(connectionHandler, consultantDao, projectDao);
+    
+            // Instantiate MetaDataDao and test the getNonIntegerColumns method
+            MetaDataDao metaDataDao = new MetaDataDao(connectionHandler);
+    
+            // Call the method to get non-integer columns (no need to print)
+            List<String> nonIntegerColumns = metaDataDao.getNonIntegerColumns();
+    
+            // Test the getTableWithMostRows method (no need to print)
+            String[] tableInfo = metaDataDao.getTableWithMostRows();
 
-            // Here goes testing code
-            // Test 1:
-
+            openExcelFile("src\\main\\resources\\excel\\ExcelData.xlsx");
+    
         } catch (DaoException | IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
         }
-        launch();
-
+    
+        launch();  // Start the JavaFX application
     }
-
-
 }
