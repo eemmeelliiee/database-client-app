@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import se.lu.ics.data.ConnectionHandler;
 import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
+import se.lu.ics.data.MetaDataDao;  // Import MetaDataDao to test
 import se.lu.ics.data.ProjectDao;
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Project;
@@ -48,18 +49,23 @@ public class App extends Application {
     public static void main(String[] args) throws IOException {
 
         try {
+            // Instantiate ConsultantDao
             ConsultantDao consultantDao = new ConsultantDao();
             ConnectionHandler connectionHandler = consultantDao.getConnectionHandler();
-
-            // Here goes testing code
-            // Test 1:
-
+    
+            // Instantiate MetaDataDao and test the getNonIntegerColumns method
+            MetaDataDao metaDataDao = new MetaDataDao();
+    
+            // Call the method to get non-integer columns (no need to print)
+            List<String> nonIntegerColumns = metaDataDao.getNonIntegerColumns();
+    
+            // Test the getTableWithMostRows method (no need to print)
+            String[] tableInfo = metaDataDao.getTableWithMostRows();
+    
         } catch (DaoException | IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
         }
-        launch();
-
+    
+        launch();  // Start the JavaFX application
     }
-
-
 }
