@@ -15,7 +15,7 @@ public class ConsultantDao {
     private ConnectionHandler connectionHandler;
 
     public ConsultantDao() throws IOException {
-        this.connectionHandler = new ConnectionHandler();
+        this.connectionHandler = new ConnectionHandler(); // Might change this based on which view is the main view
     }
 
     /* FIND ALL CONSULTANTS */
