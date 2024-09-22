@@ -3,7 +3,7 @@ package se.lu.ics.controllers;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import se.lu.ics.App;
-import se.lu.ics.data.ConsultantDao;
+import se.lu.ics.data.ConnectionHandler;
 
 public class PrimaryController {
 
@@ -12,11 +12,11 @@ public class PrimaryController {
         App.setRoot("secondary");
     }
 
-    private ConsultantDao consultantDao;
+    private ConnectionHandler connectionHandler;
 
     public PrimaryController() throws Exception { // Maybe doesnt need to throw exception, instead display error message
         try {
-            consultantDao = new ConsultantDao();
+            connectionHandler = new ConnectionHandler();
         } catch (IOException e) {
             throw new Exception("Error initializing database connection: " + e.getMessage());
         }
