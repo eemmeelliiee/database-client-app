@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public class ConnectionHandler {
     private String connectionURL;
-    private final String propertiedFilePath = "/config/test.config.properties";
+    private final String propertiedFilePath = "/config/config.properties";
 
     /**
      * Constructor that initializes the connection URL by loading properties from a file.

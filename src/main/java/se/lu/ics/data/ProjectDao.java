@@ -14,8 +14,8 @@ public class ProjectDao {
 
     private ConnectionHandler connectionHandler;
 
-    public ProjectDao() throws IOException {
-        this.connectionHandler = new ConnectionHandler();
+    public ProjectDao(ConnectionHandler connectionHandler) throws IOException {
+        this.connectionHandler = connectionHandler; // Change this based on which view is the main view
     }
 
     /* FIND ALL PROJECTS */
@@ -228,11 +228,12 @@ public class ProjectDao {
      */
     private Project mapToProject(ResultSet resultSet) throws SQLException {
         return new Project(
-                resultSet.getString("ProjectNo"),
-                resultSet.getString("ProjectName"),
-                resultSet.getDate("ProjectStartDate").toLocalDate(),
-                resultSet.getDate("ProjectEndDate").toLocalDate(),
-                resultSet.getString("ProjectStatus"));
+            resultSet.getString("ProjectNo"),
+            resultSet.getString("ProjectName"),
+            resultSet.getDate("ProjectStartDate") != null ? resultSet.getDate("ProjectStartDate").toLocalDate() : null,
+            resultSet.getDate("ProjectEndDate") != null ? resultSet.getDate("ProjectEndDate").toLocalDate() : null,
+            resultSet.getString("ProjectStatus") != null ? resultSet.getString("ProjectStatus") : null
+            );
     }
 
 }

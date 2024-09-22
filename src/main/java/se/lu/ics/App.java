@@ -5,12 +5,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Properties;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import se.lu.ics.data.ConnectionHandler;
+import se.lu.ics.data.ConsultantDao;
+import se.lu.ics.data.DaoException;
+import se.lu.ics.data.ProjectDao;
+import se.lu.ics.models.Consultant;
+import se.lu.ics.models.Project;
 
 import java.io.IOException;
 
@@ -37,57 +45,21 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
-        connectToDatabaseAndQuery();
-        launch();
-    }
-
-    private static void connectToDatabaseAndQuery() {
-        Properties connectionProperties = new Properties();
+    public static void main(String[] args) throws IOException {
 
         try {
-            FileInputStream stream = new FileInputStream("src/main/resources/config/test.config.properties");
-            connectionProperties.load(stream);
+            ConsultantDao consultantDao = new ConsultantDao();
+            ConnectionHandler connectionHandler = consultantDao.getConnectionHandler();
 
-            // Extract the database connection properties
-            String databaseServerName = connectionProperties.getProperty("database.server.name");
-            String databaseServerPort = connectionProperties.getProperty("database.server.port");
-            String databaseName = connectionProperties.getProperty("database.name");
-            String databaseUserName = connectionProperties.getProperty("database.user.name");
-            String databaseUserPassword = connectionProperties.getProperty("database.user.password");
+            // Here goes testing code
+            // Test 1:
 
-            // Construct the JDBC connection URL using the properties
-            String connectionURL = "jdbc:sqlserver://"
-                    + databaseServerName + ":"
-                    + databaseServerPort + ";"
-                    + "database=" + databaseName + ";"
-                    + "user=" + databaseUserName + ";"
-                    + "password=" + databaseUserPassword + ";"
-                    + "encrypt=true;"
-                    + "trustServerCertificate=true;";
-
-            String query = "SELECT * FROM Patient";
-
-            Connection connection = DriverManager.getConnection(connectionURL);
-
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                System.out.println("Patient id: " + resultSet.getString("PatientId"));
-                System.out.println("Patient name: " + resultSet.getString("PatientName"));
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Could not load properties file");
-            System.exit(1);
+        } catch (DaoException | IOException e) {
+            System.err.println("Error occurred: " + e.getMessage());
         }
+        launch();
+
     }
+
 
 }

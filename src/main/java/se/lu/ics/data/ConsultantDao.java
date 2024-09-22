@@ -15,7 +15,7 @@ public class ConsultantDao {
     private ConnectionHandler connectionHandler;
 
     public ConsultantDao() throws IOException {
-        this.connectionHandler = new ConnectionHandler();
+        this.connectionHandler = new ConnectionHandler(); // Might change this based on which view is the main view
     }
 
     /* FIND ALL CONSULTANTS */
@@ -95,7 +95,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public List<Consultant> findByEmpTitle(String empTitle) {
-        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?";
+        String query = "SELECT EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
@@ -252,10 +252,15 @@ public class ConsultantDao {
      */
     private Consultant mapToConsultant(ResultSet resultSet) throws SQLException {
         return new Consultant(
-                resultSet.getString("EmpNo"),
-                resultSet.getString("EmpFirstName"),
-                resultSet.getString("EmpLastName"),
-                resultSet.getString("EmpTitle"),
-                resultSet.getDate("EmpStartDate").toLocalDate());
+            resultSet.getString("EmpNo"),
+            resultSet.getString("EmpFirstName"),
+            resultSet.getString("EmpLastName"),
+            resultSet.getString("EmpTitle") != null ? resultSet.getString("EmpTitle") : null,
+            resultSet.getDate("EmpStartDate") != null ? resultSet.getDate("EmpStartDate").toLocalDate() : null
+        );
+    }
+
+    public ConnectionHandler getConnectionHandler() {
+        return connectionHandler;
     }
 }
