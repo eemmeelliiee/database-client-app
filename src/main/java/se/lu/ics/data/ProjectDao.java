@@ -232,8 +232,8 @@ public class ProjectDao {
             resultSet.getString("ProjectName"),
             resultSet.getDate("ProjectStartDate") != null ? resultSet.getDate("ProjectStartDate").toLocalDate() : null,
             resultSet.getDate("ProjectEndDate") != null ? resultSet.getDate("ProjectEndDate").toLocalDate() : null,
-            resultSet.getString("ProjectStatus")
-        );
+            resultSet.getString("ProjectStatus") != null ? resultSet.getString("ProjectStatus") : null
+            );
     }
 
 }
