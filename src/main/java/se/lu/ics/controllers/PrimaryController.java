@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import se.lu.ics.App;
 import se.lu.ics.data.ConnectionHandler;
+import se.lu.ics.data.ConsultantDao;
 
 public class PrimaryController {
 

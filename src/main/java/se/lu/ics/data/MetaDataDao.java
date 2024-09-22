@@ -12,8 +12,8 @@ public class MetaDataDao {
 
     private ConnectionHandler connectionHandler;
 
-    public MetaDataDao() throws IOException {
-        this.connectionHandler = new ConnectionHandler();
+    public MetaDataDao(ConnectionHandler connectionHandler) throws IOException {
+        this.connectionHandler = connectionHandler;
     }
 
     /**
@@ -68,9 +68,5 @@ public class MetaDataDao {
         }
     
         return result;
-    }
-
-    public ConnectionHandler getConnectionHandler() {
-        return connectionHandler;
     }
 }
