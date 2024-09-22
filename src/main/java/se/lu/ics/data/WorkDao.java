@@ -1,5 +1,6 @@
 package se.lu.ics.data;
 
+import java.sql.SQLWarning;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Project;
+import se.lu.ics.models.Work;
 
 public class WorkDao {
 
@@ -31,7 +33,7 @@ public class WorkDao {
      * @param workHours The number of hours worked by the consultant on the project.
      * @throws DaoException If there is an error adding the consultant to the project.
      */
-    public void addConsultantToProject(String empNo, String projectNo, int workHours) {
+    public String addConsultantToProject(String empNo, String projectNo, int workHours) {
         String query = "INSERT INTO Work (ConsultantId, ProjectId, WorkHours) " +
                        "VALUES((SELECT ConsultantId FROM Consultant WHERE EmpNo = ?), " +
                        "(SELECT ProjectId FROM Project WHERE ProjectNo = ?), ?)";
@@ -43,9 +45,24 @@ public class WorkDao {
             statement.setString(2, projectNo);
             statement.setInt(3, workHours);
             statement.executeUpdate();
+    
+            // Check for SQL warnings
+            SQLWarning warning = statement.getWarnings();
+            if (warning != null) {
+                StringBuilder warningMessage = new StringBuilder();
+                while (warning != null) {
+                    warningMessage.append("SQL Warning:\n");
+                    warningMessage.append("State  : ").append(warning.getSQLState()).append("\n");
+                    warningMessage.append("Message: ").append(warning.getMessage()).append("\n");
+                    warningMessage.append("Error  : ").append(warning.getErrorCode()).append("\n");
+                    warning = warning.getNextWarning();
+                }
+                return warningMessage.toString();
+            }
         } catch (SQLException e) {
             throw new DaoException("Error adding consultant to project.", e);
         }
+        return null; // No warnings
     }
 
     /* LIST ALL CONSULTANTS WORKING ON A PROJECT */
@@ -58,10 +75,10 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the consultants.
      */
     public List<Consultant> listConsultantsByProject(String projectNo) {
-        String query = "SELECT c.EmpNo, c.EmpTitle, c.EmpFirstName, c.EmpLastName " +
+        String query = "SELECT c.EmpNo, c.EmpTitle, c.EmpFirstName, c.EmpLastName, c.EmpStartDate " +
                        "FROM Consultant c " +
                        "JOIN Work w ON c.ConsultantId = w.ConsultantId " +
-                       "WHERE w.ProjectNo = ?";
+                       "WHERE w.ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?)";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
@@ -123,10 +140,10 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the consultants.
      */
     public List<Consultant> getConsultantsWithThreeProjectsOrLess() {
-        String query = "SELECT c.EmpNo, c.EmpTitle, c.EmpFirstName, c.EmpLastName " +
+        String query = "SELECT c.EmpNo, c.EmpTitle, c.EmpFirstName, c.EmpLastName, c.EmpStartDate, SUM(w.ProjectId) AS NbrOfProjects " +
                        "FROM Consultant c " +
                        "LEFT JOIN Work w ON c.ConsultantId = w.ConsultantId " +
-                       "GROUP BY c.EmpNo, c.EmpFirstName, c.EmpLastName, c.EmpTitle " +
+                       "GROUP BY c.EmpNo, c.EmpFirstName, c.EmpLastName, c.EmpTitle, c.EmpStartDate " +
                        "HAVING COUNT(DISTINCT w.ProjectId) <= 3";
         List<Consultant> consultants = new ArrayList<>();
 
@@ -142,6 +159,35 @@ public class WorkDao {
         }
 
         return consultants;
+    }
+
+    /* RETRIEVE NUMBER OF PROJECTS FOR CONSULTANT */
+    /**
+     * Retrieves the number of projects for a specific consultant.
+     * This method retrieves the number of projects a consultant is involved in
+     * based on their employee number.
+     *
+     * @param empNo The employee number of the consultant.
+     * @return The number of projects the consultant is involved in.
+     * @throws DaoException If there is an error retrieving the number of projects.
+     */
+    public int getNumberOfProjectsForConsultant(String empNo) throws DaoException {
+        String query = "SELECT COUNT(DISTINCT w.ProjectId) AS NbrOfProjects " +
+                "FROM Consultant c " +
+                "LEFT JOIN Work w ON c.ConsultantId = w.ConsultantId " +
+                "WHERE c.EmpNo = ?";
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, empNo);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("NbrOfProjects");
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error retrieving number of projects for consultant.", e);
+        }
+        return 0;
     }
 
     /* RETRIEVE PROJECTS INVOLVING EVERY CONSULTANT */
@@ -232,22 +278,18 @@ public class WorkDao {
     /* RETRIEVE HARDEST WORKING CONSULTANT */
     /**
      * Retrieves information on the hardest working consultant.
-     * This method retrieves the consultant with the highest average work hours per week.
+     * This method retrieves the consultant with the highest total work hours.
      *
      * @return The Consultant object representing the hardest working consultant.
      * @throws DaoException If there is an error retrieving the consultant.
      */
-    public Consultant getHardestWorkingConsultant() {
-        String query = "SELECT TOP 1 C.EmpNo, C.EmpFirstName, C.EmpLastName, " +
-                       "SUM(W.WorkHours) AS TotalWorkHours, " +
-                       "DATEDIFF(DAY, C.EmpStartDate, GETDATE()) AS DaysEmployed, " +
-                       "CASE WHEN DATEDIFF(DAY, C.EmpStartDate, GETDATE()) > 0 THEN " +
-                       "SUM(W.WorkHours) / (DATEDIFF(DAY, C.EmpStartDate, GETDATE()) / 7.0) " +
-                       "ELSE 0 END AS AverageWorkHoursPerWeek " +
+    public Consultant getHardestWorkingConsultant() throws DaoException {
+        String query = "SELECT TOP 1 C.EmpNo, C.EmpTitle, C.EmpFirstName, C.EmpLastName, C.EmpStartDate, SUM(W.WorkHours) AS TotalWorkHours " +
                        "FROM Consultant C " +
                        "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
-                       "GROUP BY C.ConsultantId, C.EmpNo, C.EmpFirstName, C.EmpLastName, C.EmpStartDate " +
-                       "ORDER BY AverageWorkHoursPerWeek DESC LIMIT 1";
+                       "GROUP BY C.EmpNo, C.EmpTitle, C.EmpFirstName, C.EmpLastName, C.EmpStartDate " +
+                       "ORDER BY TotalWorkHours DESC";
+
         Consultant consultant = null;
 
         try (Connection connection = connectionHandler.getConnection();
@@ -258,9 +300,68 @@ public class WorkDao {
                 consultant = consultantDao.mapToConsultant(resultSet);
             }
         } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
             throw new DaoException("Error retrieving the hardest working consultant.", e);
         }
 
         return consultant;
+    }
+
+    /* RETRIEVE TOTAL WORK HOURS FOR CONSULTANT */
+    /**
+     * Retrieves the total work hours for a specific consultant.
+     * This method retrieves the total work hours a consultant has logged based on their employee number.
+     *
+     * @param empNo The employee number of the consultant.
+     * @return The total work hours the consultant has logged.
+     * @throws DaoException If there is an error retrieving the total work hours.
+     */
+    public int getTotalWorkHoursForConsultant(String empNo) throws DaoException {
+        String query = "SELECT SUM(W.WorkHours) AS TotalWorkHours " +
+                       "FROM Consultant C " +
+                       "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
+                       "WHERE C.EmpNo = ?";
+        try (Connection connection = connectionHandler.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, empNo);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("TotalWorkHours");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            throw new DaoException("Error retrieving total work hours for consultant.", e);
+        }
+        return 0;
+    }
+
+    /* DELETE WORK RELATIONSHIP */
+    /**
+     * Deletes the relationship between a consultant and a project.
+     * This method removes the entry from the Work table based on the empNo and
+     * project number.
+     *
+     * @param empNo     The employee number of the consultant.
+     * @param projectNo The number of the project.
+     * @throws DaoException If there is an error deleting the relationship.
+     */
+    public void deleteConsultantFromProject(String empNo, String projectNo) {
+        String query = "DELETE FROM Work WHERE ConsultantId = (SELECT ConsultantId FROM Consultant WHERE EmpNo = ?) AND ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?)";
+
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, empNo);
+            statement.setString(2, projectNo);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DaoException("No relationship found for EmpNo: " + empNo + " and ProjectNo: " + projectNo);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error deleting relationship for EmpNo: " + empNo + " and ProjectNo: " + projectNo,
+                    e);
+        }
     }
 }
