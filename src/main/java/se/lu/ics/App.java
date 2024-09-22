@@ -22,6 +22,7 @@ import se.lu.ics.data.ProjectDao;
 import se.lu.ics.data.WorkDao;
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Project;
+import se.lu.ics.models.Work;
 import java.awt.Desktop;
 
 import java.io.IOException;
@@ -73,17 +74,18 @@ public class App extends Application {
             WorkDao workDao = new WorkDao(connectionHandler, consultantDao, projectDao);
             MetaDataDao metaDataDao = new MetaDataDao(connectionHandler);
 
+
             // PROJECT TESTS
 
             // 1. Test saving a new project
             Project newProject = new Project("P1001", "AI Development", LocalDate.of(2023, 1, 15),
-                    LocalDate.of(2023, 12, 31));
+            LocalDate.of(2023, 12, 31));
             projectDao.save(newProject);
             System.out.println("Project saved successfully: " + newProject);
 
             // 2. Test finding a project by project number
             System.out.println("\nRetrieving project by ProjectNo 'P1001':");
-            Project foundProject = projectDao.findByProjectNo("P1001");
+            Project foundProject = projectDao.findByProjectNo(newProject.getProjectNo());
             System.out.println("Project found: " + foundProject);
 
             // 3. Test updating the project
@@ -100,14 +102,15 @@ public class App extends Application {
             }
 
             // 5. Test deleting the project by project number
-            projectDao.deleteByProjectNo("P1001");
+            projectDao.deleteByProjectNo(newProject.getProjectNo());
             System.out.println("\nProject deleted successfully: P1001");
 
             // 6. Verify that the project is deleted
-            Project deletedProject = projectDao.findByProjectNo("P1001");
+            Project deletedProject = projectDao.findByProjectNo(newProject.getProjectNo());
             if (deletedProject == null) {
                 System.out.println("Project P1001 successfully deleted from the database.");
             }
+
 
             // CONSULTANT TESTS
 
@@ -121,13 +124,13 @@ public class App extends Application {
             // 2. Test saving a new consultant
             System.out.println("\nSaving a new consultant:");
             Consultant newConsultant = new Consultant("EMP1001", "John", "Doe", "Senior Consultant",
-                    LocalDate.of(2020, 1, 15));
+            LocalDate.of(2020, 1, 15));
             consultantDao.save(newConsultant);
             System.out.println("Consultant saved: " + newConsultant);
 
             // 3. Test retrieving a consultant by EmpNo
             System.out.println("\nRetrieving consultant by EmpNo:");
-            Consultant consultantByEmpNo = consultantDao.findByEmpNo("EMP1001");
+            Consultant consultantByEmpNo = consultantDao.findByEmpNo(newConsultant.getEmpNo());
             System.out.println("Consultant found: " + consultantByEmpNo);
 
             // 4. Test updating a consultant
@@ -145,7 +148,7 @@ public class App extends Application {
 
             // 6. Test deleting a consultant by EmpNo
             System.out.println("\nDeleting consultant by EmpNo:");
-            consultantDao.deleteByEmpNo("EMP1001");
+            consultantDao.deleteByEmpNo(newConsultant.getEmpNo());
             System.out.println("Consultant with EmpNo 'EMP1001' deleted.");
 
             // 7. Test retrieving the total number of consultants
@@ -153,25 +156,25 @@ public class App extends Application {
             int totalConsultants = consultantDao.getTotalNumberOfConsultants();
             System.out.println("Total number of consultants: " + totalConsultants);
 
+
             // WORK TESTS
 
-            // Test deleteConsultantFromProject
-            workDao.deleteConsultantFromProject("E003", "P002");
-            System.out.println("Consultant with EmpNo E003 removed from project P002 successfully.");
 
-            // Test addConsultantToProject
-            workDao.addConsultantToProject("E003", "P002", 40);
-            System.out.println("Consultant added to project successfully.");
+             // Test addConsultantToProject
+             Work work = new Work ("E003","P002",50);
+             workDao.addConsultantToProject(work.getEmpNo(), work.getProjectNo(), work.getWorkHours());
+             System.out.println("Consultant added to project successfully.");
+
 
             // Test listConsultantsByProject
-            List<Consultant> consultants = workDao.listConsultantsByProject("P002");
+            List<Consultant> consultants = workDao.listConsultantsByProject(work.getProjectNo());
             System.out.println("Consultants working on project P002:");
             for (Consultant consultant : consultants) {
                 System.out.println(consultant);
             }
 
             // Test getTotalWorkedHoursForConsultant
-            int totalHours = workDao.getTotalWorkedHoursForConsultant("E003");
+            double totalHours = workDao.getTotalWorkedHoursForConsultant(work.getEmpNo());
             System.out.println("Total worked hours for consultant E003: " + totalHours);
 
             List<Consultant> consultantsWithThreeProjectsOrLess = workDao.getConsultantsWithThreeProjectsOrLess();
@@ -189,20 +192,25 @@ public class App extends Application {
             }
 
             // Test getTotalHoursWorked
-            int totalHoursWorked = workDao.getTotalHoursWorked();
+            double totalHoursWorked = workDao.getTotalHoursWorked();
             System.out.println("Total hours worked by all consultants: " + totalHoursWorked);
             // Test updateWorkHours
-            workDao.updateWorkHours("P002", "E003", 50);
+            workDao.updateWorkHours(work.getProjectNo(), work.getEmpNo(), work.getWorkHours());
             System.out.println("Work hours updated successfully.");
             // Test getHardestWorkingConsultant
             Consultant hardestWorkingConsultant = workDao.getHardestWorkingConsultant();
             if (hardestWorkingConsultant != null) {
-                int totalWorkHours = workDao.getTotalWorkHoursForConsultant(hardestWorkingConsultant.getEmpNo());
+                double totalWorkHours = workDao.getTotalWorkHoursForConsultant(hardestWorkingConsultant.getEmpNo());
                 System.out.println("Hardest working consultant: " + hardestWorkingConsultant + ", Total Work Hours: "
                         + totalWorkHours);
             } else {
                 System.out.println("No consultant found.");
             }
+
+             // Test deleteConsultantFromProject
+             workDao.deleteConsultantFromProject("E003", "P002");
+             System.out.println("Consultant with EmpNo E003 removed from project P002 successfully.");
+
 
             // TESTS METADATA (not all methods tested)
 
@@ -219,7 +227,9 @@ public class App extends Application {
             System.out.println("Table Name: " + tableInfo[0]);
             System.out.println("Row Count: " + tableInfo[1]);
 
+
             // TEST OPEN EXCEL FILE
+
             openExcelFile("src/main/resources/excel/ExcelData.xlsx");
 
         } catch (DaoException | IOException e) {
