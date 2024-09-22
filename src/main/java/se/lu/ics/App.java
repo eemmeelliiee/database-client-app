@@ -52,6 +52,8 @@ public class App extends Application {
             ConnectionHandler connectionHandler = consultantDao.getConnectionHandler();
 
             // Here goes testing code
+            // Test 1:
+
         } catch (DaoException | IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
         }
