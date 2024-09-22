@@ -9,7 +9,7 @@ import se.lu.ics.data.ConnectionHandler;
 import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
 import se.lu.ics.data.ProjectDao;
-
+import se.lu.ics.data.WorkDao;
 
 import java.io.IOException;
 
@@ -39,8 +39,11 @@ public class App extends Application {
     public static void main(String[] args) throws IOException {
 
         try {
-            ConsultantDao consultantDao = new ConsultantDao();
-            ConnectionHandler connectionHandler = consultantDao.getConnectionHandler();
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+
+            ConsultantDao consultantDao = new ConsultantDao(connectionHandler);
+            ProjectDao projectDao = new ProjectDao(connectionHandler);
+            WorkDao workDao = new WorkDao(connectionHandler, consultantDao, projectDao);
 
             // Here goes testing code
             // Test 1:

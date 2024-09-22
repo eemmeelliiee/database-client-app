@@ -15,7 +15,7 @@ public class ProjectDao {
     private ConnectionHandler connectionHandler;
 
     public ProjectDao(ConnectionHandler connectionHandler) throws IOException {
-        this.connectionHandler = connectionHandler; // Change this based on which view is the main view
+        this.connectionHandler = connectionHandler; // Might cange this based on which view is the main view
     }
 
     /* FIND ALL PROJECTS */
@@ -226,7 +226,7 @@ public class ProjectDao {
      * @throws SQLException If there is an error accessing the data in the
      *                      ResultSet.
      */
-    private Project mapToProject(ResultSet resultSet) throws SQLException {
+    protected Project mapToProject(ResultSet resultSet) throws SQLException {
         return new Project(
             resultSet.getString("ProjectNo"),
             resultSet.getString("ProjectName"),
