@@ -15,7 +15,7 @@ public class ProjectDao {
     private ConnectionHandler connectionHandler;
 
     public ProjectDao() throws IOException {
-        this.connectionHandler = new ConnectionHandler();
+        this.connectionHandler = new ConnectionHandler(); // Change this based on which view is the main view
     }
 
     /* FIND ALL PROJECTS */
