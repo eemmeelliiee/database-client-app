@@ -1,5 +1,6 @@
 package se.lu.ics;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +21,7 @@ import se.lu.ics.data.MetaDataDao;  // Import MetaDataDao to test
 import se.lu.ics.data.ProjectDao;
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Project;
+import java.awt.Desktop;
 
 import java.io.IOException;
 
@@ -46,6 +48,20 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
+    // Used for opening the xlsx file. Should probably be moved to a controller
+    private static void openExcelFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file); // Open the file with the default application
+            } else {
+                System.err.println("Desktop is not supported on this platform.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error opening Excel file: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) throws IOException {
 
         try {
@@ -61,6 +77,8 @@ public class App extends Application {
     
             // Test the getTableWithMostRows method (no need to print)
             String[] tableInfo = metaDataDao.getTableWithMostRows();
+
+            openExcelFile("src\\main\\resources\\excel\\ExcelData.xlsx");
     
         } catch (DaoException | IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
