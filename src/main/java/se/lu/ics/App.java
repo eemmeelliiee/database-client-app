@@ -67,12 +67,13 @@ public class App extends Application {
     public static void main(String[] args) throws IOException {
 
         try {
-            // Instantiate ConsultantDao
-            ConsultantDao consultantDao = new ConsultantDao();
-            ConnectionHandler connectionHandler = consultantDao.getConnectionHandler();
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            ConsultantDao consultantDao = new ConsultantDao(connectionHandler);
+            ProjectDao projectDao = new ProjectDao(connectionHandler);
+            WorkDao workDao = new WorkDao(connectionHandler, consultantDao, projectDao);
     
             // Instantiate MetaDataDao and test the getNonIntegerColumns method
-            MetaDataDao metaDataDao = new MetaDataDao();
+            MetaDataDao metaDataDao = new MetaDataDao(connectionHandler);
     
             // Call the method to get non-integer columns (no need to print)
             List<String> nonIntegerColumns = metaDataDao.getNonIntegerColumns();
