@@ -1,14 +1,10 @@
 package se.lu.ics;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
+
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Properties;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,16 +13,13 @@ import javafx.stage.Stage;
 import se.lu.ics.data.ConnectionHandler;
 import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
-import se.lu.ics.data.MetaDataDao; // Import MetaDataDao to test
+import se.lu.ics.data.MetaDataDao; 
 import se.lu.ics.data.ProjectDao;
 import se.lu.ics.data.WorkDao;
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Project;
 import se.lu.ics.models.Work;
 import java.awt.Desktop;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * JavaFX App
