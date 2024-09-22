@@ -65,5 +65,17 @@ public class Project {
     public void setProjectStatus(String projectStatus){
         this.projectStatus = projectStatus;
     }
+
+    // For in terminal testing purposes
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectNo='" + projectNo + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectStartDate=" + projectStartDate +
+                ", projectEndDate=" + projectEndDate +
+                ", projectStatus='" + projectStatus + '\'' +
+                '}';
+    }
 }
 

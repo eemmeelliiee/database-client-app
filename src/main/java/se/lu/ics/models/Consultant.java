@@ -56,4 +56,16 @@ public class Consultant {
     public void setEmpStartDate(LocalDate empStartDate) {
         this.empStartDate = empStartDate;
     }
+
+    // For in terminal testing purposes
+    @Override
+    public String toString() {
+        return "Consultant{" +
+                "empNo='" + empNo + '\'' +
+                ", empFirstName='" + empFirstName + '\'' +
+                ", empLastName='" + empLastName + '\'' +
+                ", empTitle='" + empTitle + '\'' +
+                ", empStartDate=" + empStartDate +
+                '}';
+    }
 }
