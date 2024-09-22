@@ -35,4 +35,14 @@ public class Work {
     public void setWorkHours(double workHours) {
         this.workHours = workHours;
     }
+
+    // For in terminal testing purposes
+    @Override
+    public String toString() {
+        return "Work{" +
+                "projectNo='" + projectNo + '\'' +
+                ", consultantNo='" + consultantNo + '\'' +
+                ", workHours=" + workHours +
+                '}';
+    }
 }
