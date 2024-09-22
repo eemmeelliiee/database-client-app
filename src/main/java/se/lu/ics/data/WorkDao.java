@@ -33,7 +33,7 @@ public class WorkDao {
      * @param workHours The number of hours worked by the consultant on the project.
      * @throws DaoException If there is an error adding the consultant to the project.
      */
-    public String addConsultantToProject(String empNo, String projectNo, int workHours) {
+    public String addConsultantToProject(String empNo, String projectNo, double workHours) {
         String query = "INSERT INTO Work (ConsultantId, ProjectId, WorkHours) " +
                        "VALUES((SELECT ConsultantId FROM Consultant WHERE EmpNo = ?), " +
                        "(SELECT ProjectId FROM Project WHERE ProjectNo = ?), ?)";
@@ -43,7 +43,7 @@ public class WorkDao {
              
             statement.setString(1, empNo);
             statement.setString(2, projectNo);
-            statement.setInt(3, workHours);
+            statement.setDouble(3, workHours);
             statement.executeUpdate();
     
             // Check for SQL warnings
@@ -107,12 +107,12 @@ public class WorkDao {
      * @return The total worked hours.
      * @throws DaoException If there is an error retrieving the total worked hours.
      */
-    public int getTotalWorkedHoursForConsultant(String empNo) {
+    public double getTotalWorkedHoursForConsultant(String empNo) {
         String query = "SELECT SUM(w.WorkHours) AS TotalWorkedHours " +
                        "FROM Consultant c " +
                        "JOIN Work w ON w.ConsultantId = c.ConsultantId " +
                        "WHERE c.EmpNo = ?";
-        int totalWorkedHours = 0;
+        double totalWorkedHours = 0;
 
         try (Connection connection = connectionHandler.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -121,7 +121,7 @@ public class WorkDao {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    totalWorkedHours = resultSet.getInt("TotalWorkedHours");
+                    totalWorkedHours = resultSet.getDouble("TotalWorkedHours");
                 }
             }
         } catch (SQLException e) {
@@ -230,16 +230,16 @@ public class WorkDao {
      * @return The total hours worked.
      * @throws DaoException If there is an error retrieving the total hours.
      */
-    public int getTotalHoursWorked() {
+    public double getTotalHoursWorked() {
         String query = "SELECT SUM(WorkHours) AS TotHoursWorked FROM Work";
-        int totalHoursWorked = 0;
+        double totalHoursWorked = 0;
 
         try (Connection connection = connectionHandler.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
              
             if (resultSet.next()) {
-                totalHoursWorked = resultSet.getInt("TotHoursWorked");
+                totalHoursWorked = resultSet.getDouble("TotHoursWorked");
             }
         } catch (SQLException e) {
             throw new DaoException("Error fetching total hours worked by all consultants.", e);
@@ -258,7 +258,7 @@ public class WorkDao {
      * @param workHours The new number of work hours.
      * @throws DaoException If there is an error updating the work hours.
      */
-    public void updateWorkHours(String projectNo, String empNo, int workHours) {
+    public void updateWorkHours(String projectNo, String empNo, double workHours) {
         String query = "UPDATE Work SET WorkHours = ? " +
                        "WHERE ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?) " +
                        "AND ConsultantId = (SELECT ConsultantId FROM Consultant WHERE EmpNo = ?)";
@@ -266,7 +266,7 @@ public class WorkDao {
         try (Connection connection = connectionHandler.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
              
-            statement.setInt(1, workHours);
+            statement.setDouble(1, workHours);
             statement.setString(2, projectNo);
             statement.setString(3, empNo);
             statement.executeUpdate();
@@ -316,7 +316,7 @@ public class WorkDao {
      * @return The total work hours the consultant has logged.
      * @throws DaoException If there is an error retrieving the total work hours.
      */
-    public int getTotalWorkHoursForConsultant(String empNo) throws DaoException {
+    public double getTotalWorkHoursForConsultant(String empNo) throws DaoException {
         String query = "SELECT SUM(W.WorkHours) AS TotalWorkHours " +
                        "FROM Consultant C " +
                        "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
@@ -326,7 +326,7 @@ public class WorkDao {
             statement.setString(1, empNo);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt("TotalWorkHours");
+                    return resultSet.getDouble("TotalWorkHours");
                 }
             }
         } catch (SQLException e) {
