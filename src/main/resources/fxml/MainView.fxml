@@ -53,9 +53,9 @@
                     <items>
                       <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="583.0">
                            <children>
-                              <Button layoutX="438.0" layoutY="43.0" mnemonicParsing="false" text="Information overview" />
+                              <Button fx:id="showInfoPane" layoutX="438.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleShowInfoPane" text="Information overview" />
                               <Button fx:id="showRemoveConsultantPane" layoutX="162.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleShowRemoveConsultantPane" text="Remove consultant" />
-                              <Button layoutX="301.0" layoutY="43.0" mnemonicParsing="false" text="Update information" />
+                              <Button fx:id="showUpdateConsultantPane" layoutX="301.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleShowUpdateConsultantPane" text="Update information" />
                               <Button fx:id="showRegisterConsultantPane" layoutX="23.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleShowRegisterConsultantPane" text="Register consultant" />
                               <Label layoutX="217.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
                            </children>
@@ -81,7 +81,7 @@
                                           <TextField layoutX="132.0" layoutY="167.0" promptText="Junior IT" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="true">
+                                    <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Remove a consultant:" />
                                           <Label layoutX="141.0" layoutY="74.0" text="Employee Number:" />
@@ -89,7 +89,7 @@
                                           <Button layoutX="231.0" layoutY="141.0" mnemonicParsing="false" text="Remove consultant" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                    <AnchorPane fx:id="updateConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <ComboBox layoutX="276.0" layoutY="42.0" prefWidth="150.0" promptText="Choose consultant" />
                                           <Label layoutX="199.0" layoutY="14.0" text="Update information for consultant:" />
@@ -107,7 +107,7 @@
                                           <Button layoutX="229.0" layoutY="261.0" mnemonicParsing="false" text="Update information:" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                    <AnchorPane fx:id="infoPane" prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
                                           <TableView layoutX="34.0" layoutY="80.0" prefHeight="200.0" prefWidth="409.0">
@@ -121,7 +121,7 @@
                                           </TableView>
                                           <ComboBox layoutX="35.0" layoutY="40.0" prefHeight="26.0" prefWidth="181.0" promptText="View specific consultant" />
                                           <ComboBox layoutX="235.0" layoutY="40.0" prefHeight="26.0" prefWidth="114.0" promptText="View by title" />
-                                          <Button layoutX="362.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="View All" />
+                                          <Button fx:id="infoConsultantPane" layoutX="362.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="View All" />
                                           <Label layoutX="466.0" layoutY="120.0" prefHeight="40.0" prefWidth="82.0" text=" Total amount &#10;of consultants:" />
                                           <TextField layoutX="454.0" layoutY="167.0" prefHeight="26.0" prefWidth="106.0" promptText="Ska vara fixerad" />
                                        </children>
