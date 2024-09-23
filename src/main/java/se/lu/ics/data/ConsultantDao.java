@@ -155,12 +155,13 @@ public class ConsultantDao {
     }
 
     /* UPDATE CONSULTANT BY EmpNo */
-    /**
+     /**
      * Updates an existing consultant's details in the database.
      * This method updates the consultant's information based on the provided
      * Consultant object.
      *
      * @param updatedConsultant The Consultant object containing the updated data.
+     * @param oldEmpNo The original EmpNo used to identify the record to be updated.
      * @throws DaoException If there is an error updating the consultant's data.
      */
     public void update(Consultant updatedConsultant, String oldEmpNo) {
@@ -176,7 +177,7 @@ public class ConsultantDao {
             statement.setString(4, updatedConsultant.getEmpTitle());
             statement.setDate(5, Date.valueOf(updatedConsultant.getEmpStartDate())); // Convert LocalDate to
                                                                                      // java.sql.Date
-            statement.setString(6, oldEmpNo); // Use "old" EmpNo to identify the record (in case EmpNo is updated)
+            statement.setString(6, oldEmpNo); // In case EmpNo is updated
 
             // Execute the update operation
             statement.executeUpdate();

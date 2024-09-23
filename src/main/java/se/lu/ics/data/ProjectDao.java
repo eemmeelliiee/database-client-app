@@ -134,7 +134,9 @@ public class ProjectDao {
      * This method updates the project's information based on the provided
      * Project object.
      *
-     * @param project The Project object containing the updated data.
+     * @param updatedproject The Project object containing the updated data.
+     * @param oldProjectNo   The original ProjectNo used to identify the record to
+     *                       be updated.
      * 
      * @throws DaoException If there is an error updating the project's data.
      */
@@ -148,7 +150,7 @@ public class ProjectDao {
                 updateStmt.setString(2, updatedproject.getProjectName());
                 updateStmt.setDate(3, Date.valueOf(updatedproject.getProjectStartDate()));
                 updateStmt.setDate(4, Date.valueOf(updatedproject.getProjectEndDate()));
-                updateStmt.setString(5, oldProjectNo); // Use "old" ProjectNo to identify the record (in case ProjectNo is updated)
+                updateStmt.setString(5, oldProjectNo); // In case ProjectNo is updated
 
                 // Execute the update operation
                 updateStmt.executeUpdate();
