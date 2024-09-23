@@ -220,6 +220,26 @@ public class App extends Application {
             System.out.println("Table Name: " + tableInfo[0]);
             System.out.println("Row Count: " + tableInfo[1]);
 
+            // Call the getAllColumns method to retrieve all distinct column names
+            List<String> allColumns = metaDataDao.getAllColumns();
+            
+            // Print the column names to verify the output
+            System.out.println("Distinct Column Names in the Database:");
+            for (String column : allColumns) {
+                System.out.println(column);
+            }
+
+            List<String> primaryKeyConstraints = metaDataDao.getPrimaryKeyConstraints();
+
+            for (String constraint : primaryKeyConstraints) {
+                System.out.println("Primary Key Constraint: " + constraint);
+            }
+
+            List<String> checkConstraints = metaDataDao.getCheckConstraints();
+
+            for (String constraint : checkConstraints) {
+                System.out.println("Check Constraint: " + constraint);
+            }
 
             // TEST OPEN EXCEL FILE
 
