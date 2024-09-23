@@ -182,9 +182,10 @@ public class ConsultantDao {
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("A consultant with this EmpNo already exists.", e);
-            } else if (e.getErrorCode() == 515)
+            } else {
                 // Throw a DaoException for any SQL errors
                 throw new DaoException("Error updating consultant: " + consultant.getEmpNo(), e);
+            }
         }
     }
 
