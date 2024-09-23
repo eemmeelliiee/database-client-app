@@ -57,7 +57,7 @@
                               <Button layoutX="162.0" layoutY="43.0" mnemonicParsing="false" text="Remove consultant" />
                               <Button layoutX="301.0" layoutY="43.0" mnemonicParsing="false" text="Update information" />
                               <Button fx:id="showRegisterAnchorPane" layoutX="23.0" layoutY="43.0" mnemonicParsing="false" text="Register consultant" />
-                              <Label layoutX="217.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
+                              <Label fx:id="test" layoutX="217.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
