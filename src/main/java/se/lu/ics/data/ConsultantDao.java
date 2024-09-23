@@ -1,6 +1,5 @@
 package se.lu.ics.data;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,8 +13,8 @@ public class ConsultantDao {
 
     private ConnectionHandler connectionHandler;
 
-    public ConsultantDao() throws IOException {
-        this.connectionHandler = new ConnectionHandler(); // Might change this based on which view is the main view
+    public ConsultantDao(ConnectionHandler connectionHandler) {
+        this.connectionHandler = connectionHandler; // Might change this based on which view is the main view
     }
 
     /* FIND ALL CONSULTANTS */
@@ -29,7 +28,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public List<Consultant> findAll() {
-        String query = "SELECT EmpNo, EmpFirstName, EmpLastName, EmpTitle, EmpStartDate FROM Consultant";
+        String query = "SELECT EmpNo, EmpFirstName AS FirstName, EmpLastName AS LastName, EmpTitle AS Title, EmpStartDate AS StartDate FROM Consultant";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
@@ -60,7 +59,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public Consultant findByEmpNo(String empNo) {
-        String query = "SELECT EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpNo = ?";
+        String query = "SELECT EmpNo, EmpTitle AS Title, EmpFirstName AS FirstName, EmpLastName AS LastName, EmpStartDate AS StartDate FROM Consultant WHERE EmpNo = ?";
         Consultant consultant = null;
 
         try (Connection connection = connectionHandler.getConnection();
@@ -95,7 +94,7 @@ public class ConsultantDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public List<Consultant> findByEmpTitle(String empTitle) {
-        String query = "SELECT EmpNo, EmpTitle, EmpFirstName, EmpLastName, EmpStartDate FROM Consultant WHERE EmpTitle = ?";
+        String query = "SELECT EmpNo, EmpTitle AS Title, EmpFirstName AS FirstName, EmpLastName AS LastName, EmpStartDate AS StartDate FROM Consultant WHERE EmpTitle = ?";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
@@ -250,17 +249,13 @@ public class ConsultantDao {
      * @throws SQLException If there is an error accessing the data in the
      *                      ResultSet.
      */
-    private Consultant mapToConsultant(ResultSet resultSet) throws SQLException {
+    protected Consultant mapToConsultant(ResultSet resultSet) throws SQLException {
         return new Consultant(
             resultSet.getString("EmpNo"),
-            resultSet.getString("EmpFirstName"),
-            resultSet.getString("EmpLastName"),
-            resultSet.getString("EmpTitle") != null ? resultSet.getString("EmpTitle") : null,
-            resultSet.getDate("EmpStartDate") != null ? resultSet.getDate("EmpStartDate").toLocalDate() : null
+            resultSet.getString("FirstName"),
+            resultSet.getString("LastName"),
+            resultSet.getString("Title") != null ? resultSet.getString("Title") : null,
+            resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null
         );
-    }
-
-    public ConnectionHandler getConnectionHandler() {
-        return connectionHandler;
     }
 }

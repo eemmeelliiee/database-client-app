@@ -2,13 +2,13 @@ package se.lu.ics.models;
 
 public class Work {
 
+    private String empNo;
     private String projectNo;
-    private String consultantNo;
     private double workHours;
 
-    public Work(String projectNo, String consultantNo, double workHours) {
+    public Work(String empNo, String projectNo, double workHours) {
+        this.empNo = empNo;
         this.projectNo = projectNo;
-        this.consultantNo = consultantNo;
         this.workHours = workHours;
     }
 
@@ -20,12 +20,12 @@ public class Work {
         this.projectNo = projectNo;
     }
 
-    public String getConsultantNo() {
-        return consultantNo;
+    public String getEmpNo() {
+        return empNo;
     }
 
-    public void setConsultantNo(String consultantNo) {
-        this.consultantNo = consultantNo;
+    public void setEmpNo(String empNo) {
+        this.empNo = empNo;
     }
 
     public double getWorkHours() {
@@ -34,5 +34,15 @@ public class Work {
 
     public void setWorkHours(double workHours) {
         this.workHours = workHours;
+    }
+
+    // For in terminal testing purposes
+    @Override
+    public String toString() {
+        return "Work{" +
+                "projectNo='" + projectNo + '\'' +
+                ", empNo='" + empNo + '\'' +
+                ", workHours=" + workHours +
+                '}';
     }
 }
