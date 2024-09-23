@@ -69,4 +69,67 @@ public class MetaDataDao {
     
         return result;
     }
+
+    public List<String> getAllColumns() {
+        String query = "SELECT DISTINCT sys.columns.name AS ColumnName " +
+                       "FROM sys.columns " +
+                       "JOIN sys.tables ON sys.columns.object_id = sys.tables.object_id";
+        List<String> allColumns = new ArrayList<>();
+
+        try (Connection connection = connectionHandler.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                allColumns.add(resultSet.getString("ColumnName"));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error fetching all columns from the database.", e);
+        }
+
+        return allColumns;
+    }
+
+    public List<String> getPrimaryKeyConstraints() {
+        String query = "SELECT CONSTRAINT_NAME " +
+                       "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS " +
+                       "WHERE CONSTRAINT_TYPE = 'PRIMARY KEY'";
+        List<String> primaryKeyConstraints = new ArrayList<>();
+
+        try (Connection connection = connectionHandler.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            // Iterate through the result set and add constraint names to the list
+            while (resultSet.next()) {
+                primaryKeyConstraints.add(resultSet.getString("CONSTRAINT_NAME"));
+            }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching primary key constraints.", e);
+        }
+
+        return primaryKeyConstraints;
+    }
+
+    public List<String> getCheckConstraints() {
+        String query = "SELECT OBJECT_NAME(object_id) AS CheckConstraintName " +
+                       "FROM sys.check_constraints";
+        List<String> checkConstraints = new ArrayList<>();
+    
+        try (Connection connection = connectionHandler.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+    
+            // Iterate through the result set and add check constraint names to the list
+            while (resultSet.next()) {
+                checkConstraints.add(resultSet.getString("CheckConstraintName"));
+            }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching check constraints from the database.", e);
+        }
+    
+        return checkConstraints;
+    }
 }
