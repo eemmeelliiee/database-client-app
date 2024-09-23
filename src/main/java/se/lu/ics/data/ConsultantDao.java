@@ -146,6 +146,8 @@ public class ConsultantDao {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("A consultant with this EmpNo already exists.", e);
+            } else if (e.getErrorCode() == 515) {
+                throw new DaoException("Fields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
                 throw new DaoException("Error saving consultant: " + consultant.getEmpNo(), e);
             }
@@ -158,28 +160,33 @@ public class ConsultantDao {
      * This method updates the consultant's information based on the provided
      * Consultant object.
      *
-     * @param consultant The Consultant object containing the updated data.
+     * @param updatedConsultant The Consultant object containing the updated data.
      * @throws DaoException If there is an error updating the consultant's data.
      */
-    public void update(Consultant consultant) {
+    public void update(Consultant updatedConsultant, String oldEmpNo) {
         String query = "UPDATE Consultant SET EmpNo = ?, EmpFirstName = ?, EmpLastName = ?, EmpTitle = ?, EmpStartDate = ? WHERE EmpNo = ?";
 
         try (Connection connection = connectionHandler.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
 
             // Set updated consultant data into the prepared statement
-            statement.setString(1, consultant.getEmpNo());
-            statement.setString(2, consultant.getEmpFirstName());
-            statement.setString(3, consultant.getEmpLastName());
-            statement.setString(4, consultant.getEmpTitle());
-            statement.setDate(5, Date.valueOf(consultant.getEmpStartDate())); // Convert LocalDate to java.sql.Date
-            statement.setString(6, consultant.getEmpNo());
+            statement.setString(1, updatedConsultant.getEmpNo());
+            statement.setString(2, updatedConsultant.getEmpFirstName());
+            statement.setString(3, updatedConsultant.getEmpLastName());
+            statement.setString(4, updatedConsultant.getEmpTitle());
+            statement.setDate(5, Date.valueOf(updatedConsultant.getEmpStartDate())); // Convert LocalDate to
+                                                                                     // java.sql.Date
+            statement.setString(6, oldEmpNo); // Use "old" EmpNo to identify the record (in case EmpNo is updated)
 
             // Execute the update operation
             statement.executeUpdate();
         } catch (SQLException e) {
-            // Throw a DaoException for any SQL errors
-            throw new DaoException("Error updating consultant: " + consultant.getEmpNo(), e);
+            if (e.getErrorCode() == 2627) {
+                throw new DaoException("A consultant with this EmpNo already exists.", e);
+            } else {
+                // Throw a DaoException for any SQL errors
+                throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo(), e);
+            }
         }
     }
 
@@ -251,11 +258,10 @@ public class ConsultantDao {
      */
     protected Consultant mapToConsultant(ResultSet resultSet) throws SQLException {
         return new Consultant(
-            resultSet.getString("EmpNo"),
-            resultSet.getString("FirstName"),
-            resultSet.getString("LastName"),
-            resultSet.getString("Title") != null ? resultSet.getString("Title") : null,
-            resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null
-        );
+                resultSet.getString("EmpNo"),
+                resultSet.getString("FirstName"),
+                resultSet.getString("LastName"),
+                resultSet.getString("Title") != null ? resultSet.getString("Title") : null,
+                resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null);
     }
 }

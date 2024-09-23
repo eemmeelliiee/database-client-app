@@ -115,13 +115,13 @@ public class ProjectDao {
                 insertStmt.executeUpdate();
             }
             setProjectStatus(connection, project); // Updates projectStatus attribute to calculated attribute
-                                                      // ProjectStatus in Project table
+                                                   // ProjectStatus in Project table
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("A project with this ProjectNo or ProjectName already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("ProjectNo and ProjectName are not allowed to contain NULL-values.", e);
+                throw new DaoException("Fields ProjectNo and ProjectName cannot be empty.", e);
             } else {
                 throw new DaoException("Error saving project: " + project.getProjectNo(), e);
             }
@@ -138,31 +138,29 @@ public class ProjectDao {
      * 
      * @throws DaoException If there is an error updating the project's data.
      */
-    public void update(Project project) {
+    public void update(Project updatedproject, String oldProjectNo) {
         String updateQuery = "UPDATE Project SET ProjectNo = ?, ProjectName = ?, ProjectStartDate = ?, ProjectEndDate = ? WHERE ProjectNo = ?";
 
         try (Connection connection = connectionHandler.getConnection()) {
             // Update project details
             try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
-                updateStmt.setString(1, project.getProjectNo());
-                updateStmt.setString(2, project.getProjectName());
-                updateStmt.setDate(3, Date.valueOf(project.getProjectStartDate()));
-                updateStmt.setDate(4, Date.valueOf(project.getProjectEndDate()));
-                updateStmt.setString(5, project.getProjectNo());
+                updateStmt.setString(1, updatedproject.getProjectNo());
+                updateStmt.setString(2, updatedproject.getProjectName());
+                updateStmt.setDate(3, Date.valueOf(updatedproject.getProjectStartDate()));
+                updateStmt.setDate(4, Date.valueOf(updatedproject.getProjectEndDate()));
+                updateStmt.setString(5, oldProjectNo); // Use "old" ProjectNo to identify the record (in case ProjectNo is updated)
 
                 // Execute the update operation
                 updateStmt.executeUpdate();
             }
-            setProjectStatus(connection, project); // Updates projectStatus attribute to calculated attribute
-                                                      // ProjectStatus in Project table
+            setProjectStatus(connection, updatedproject); // Updates projectStatus attribute to calculated attribute
+            // ProjectStatus in Project table
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("A project with this ProjectNo or ProjectName already exists.", e);
-            } else if (e.getErrorCode() == 515) {
-                throw new DaoException("ProjectNo and ProjectName are not allowed to contain NULL-values.", e);
             } else {
-                throw new DaoException("Error saving project: " + project.getProjectNo(), e);
+                throw new DaoException("Error saving project: " + updatedproject.getProjectNo(), e);
             }
         }
     }
@@ -208,16 +206,16 @@ public class ProjectDao {
      */
     public void deleteByProjectNo(String projectNo) {
         String query = "DELETE FROM Project WHERE ProjectNo = ?";
-        
+
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            
+                PreparedStatement statement = connection.prepareStatement(query)) {
+
             // Set ProjectNo in the prepared statement
             statement.setString(1, projectNo);
-            
+
             // Execute the delete operation and get the number of rows affected
             int rowsAffected = statement.executeUpdate();
-            
+
             // Check if a project was deleted
             if (rowsAffected == 0) {
                 throw new DaoException("No project found with ProjectNo: " + projectNo);
@@ -241,12 +239,11 @@ public class ProjectDao {
      */
     protected Project mapToProject(ResultSet resultSet) throws SQLException {
         return new Project(
-            resultSet.getString("ProjectNo"),
-            resultSet.getString("Name"),
-            resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null,
-            resultSet.getDate("EndDate") != null ? resultSet.getDate("EndDate").toLocalDate() : null,
-            resultSet.getString("Status") != null ? resultSet.getString("Status") : null
-            );
+                resultSet.getString("ProjectNo"),
+                resultSet.getString("Name"),
+                resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null,
+                resultSet.getDate("EndDate") != null ? resultSet.getDate("EndDate").toLocalDate() : null,
+                resultSet.getString("Status") != null ? resultSet.getString("Status") : null);
     }
 
 }
