@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="418.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="418.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MainViewController">
    <children>
       <TabPane layoutX="-6.0" layoutY="-7.0" prefHeight="205.0" prefWidth="381.0" scaleShape="false" tabClosingPolicy="UNAVAILABLE" tabMinWidth="81.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -51,20 +51,20 @@
                <content>
                   <SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="583.0">
+                      <AnchorPane fx:id="mainAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="583.0">
                            <children>
                               <Button layoutX="438.0" layoutY="43.0" mnemonicParsing="false" text="Information overview" />
-                              <Button layoutX="162.0" layoutY="43.0" mnemonicParsing="false" text="Remove consultant" />
+                              <Button fx:id="showRemoveConsultantPane" layoutX="162.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleShowRemoveConsultantPane" text="Remove consultant" />
                               <Button layoutX="301.0" layoutY="43.0" mnemonicParsing="false" text="Update information" />
-                              <Button fx:id="showRegisterAnchorPane" layoutX="23.0" layoutY="43.0" mnemonicParsing="false" text="Register consultant" />
-                              <Label fx:id="test" layoutX="217.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
+                              <Button fx:id="showRegisterConsultantPane" layoutX="23.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleShowRegisterConsultantPane" text="Register consultant" />
+                              <Label layoutX="217.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
                               <StackPane layoutX="-1.0" layoutY="-1.0" prefHeight="295.0" prefWidth="583.0">
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                    <AnchorPane fx:id="registerConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Button layoutX="232.0" layoutY="255.0" mnemonicParsing="false" text="Register consultant" />
                                           <Label layoutX="235.0" layoutY="14.0" text="Register a consultant:" />
@@ -76,12 +76,12 @@
                                           <Label layoutX="16.0" layoutY="219.0" text="Start date:" />
                                           <TextField layoutX="131.0" layoutY="88.0" promptText="John" />
                                           <TextField layoutX="132.0" layoutY="126.0" promptText="Doe" />
-                                          <ComboBox layoutX="133.0" layoutY="174.0" prefHeight="26.0" prefWidth="159.0" />
                                           <DatePicker layoutX="132.0" layoutY="215.0" prefHeight="26.0" prefWidth="161.0" />
                                           <Label layoutX="367.0" layoutY="49.0" prefHeight="64.0" prefWidth="165.0" />
+                                          <TextField layoutX="132.0" layoutY="167.0" promptText="Junior IT" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                    <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="true">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Remove a consultant:" />
                                           <Label layoutX="141.0" layoutY="74.0" text="Employee Number:" />
