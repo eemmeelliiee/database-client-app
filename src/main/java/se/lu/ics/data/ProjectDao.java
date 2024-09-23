@@ -148,7 +148,7 @@ public class ProjectDao {
                 updateStmt.setString(2, updatedproject.getProjectName());
                 updateStmt.setDate(3, Date.valueOf(updatedproject.getProjectStartDate()));
                 updateStmt.setDate(4, Date.valueOf(updatedproject.getProjectEndDate()));
-                updateStmt.setString(5, oldProjectNo);
+                updateStmt.setString(5, oldProjectNo); // Use "old" ProjectNo to identify the record (in case ProjectNo is updated)
 
                 // Execute the update operation
                 updateStmt.executeUpdate();
