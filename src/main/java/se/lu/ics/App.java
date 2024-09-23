@@ -32,7 +32,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("Fxml Databasprojekt"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
@@ -124,7 +124,7 @@ public class App extends Application {
             System.out.println("Project saved successfully: " + newProject);
 
             // 2. Test finding a project by project number
-            System.out.println("\nRetrieving project by ProjectNo 'P1001':");
+             System.out.println("\nRetrieving project by ProjectNo 'P1001':");
             Project foundProject = projectDao.findByProjectNo(newProject.getProjectNo());
             System.out.println("Project found: " + foundProject);
 

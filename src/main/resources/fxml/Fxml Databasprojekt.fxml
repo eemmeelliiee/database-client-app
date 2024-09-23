@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="418.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutX="-6.0" layoutY="-7.0" prefHeight="205.0" prefWidth="381.0" scaleShape="false" tabClosingPolicy="UNAVAILABLE" tabMinWidth="81.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Home">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="83.0" fitWidth="176.0" layoutX="227.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../private/var/folders/zc/kgbp8m_x7fb0xb_r0c5k7xvw0000gp/T/com.apple.Photos.NSItemProvider/uuid=A09C08E4-65E5-408D-959B-51EB9C4747EE&amp;library=1&amp;type=1&amp;mode=1&amp;loc=true&amp;cap=true.jpeg/Bild%206.jpeg" />
+                           </image>
+                        </ImageView>
+                        <Text layoutX="163.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your vision, Our strategy">
+                           <font>
+                              <Font name="Charter Black Italic" size="20.0" />
+                           </font>
+                        </Text>
+                        <TextArea cache="true" editable="false" layoutX="35.0" layoutY="153.0" text="Arctic Byte is a forward-thinking consulting firm dedicated to empowering businesses with innovative, technology-driven solutions. Specializing in digital transformation, data analytics, and strategic IT consulting, we help organizations navigate the complexities of today’s fast-paced digital landscape. Our team of seasoned experts brings a wealth of industry knowledge and a results-oriented approach to every project, ensuring that our clients achieve sustainable growth and operational excellence. At Arctic Byte, we combine cutting-edge technology with personalized strategies, delivering measurable impact and long-term success." wrapText="true">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Consultant">
+               <content>
+                  <SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="583.0">
+                           <children>
+                              <Button layoutX="438.0" layoutY="43.0" mnemonicParsing="false" text="Information overview" />
+                              <Button layoutX="162.0" layoutY="43.0" mnemonicParsing="false" text="Remove consultant" />
+                              <Button layoutX="301.0" layoutY="43.0" mnemonicParsing="false" text="Update information" />
+                              <Button fx:id="showRegisterAnchorPane" layoutX="23.0" layoutY="43.0" mnemonicParsing="false" text="Register consultant" />
+                              <Label layoutX="217.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <StackPane layoutX="-1.0" layoutY="-1.0" prefHeight="295.0" prefWidth="583.0">
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Button layoutX="232.0" layoutY="255.0" mnemonicParsing="false" text="Register consultant" />
+                                          <Label layoutX="235.0" layoutY="14.0" text="Register a consultant:" />
+                                          <TextField layoutX="132.0" layoutY="46.0" promptText="Ex: E004" />
+                                          <Label layoutX="12.0" layoutY="49.0" text="Employee Number:" />
+                                          <Label layoutX="12.0" layoutY="92.0" prefHeight="17.0" prefWidth="64.0" text="First name:" />
+                                          <Label layoutX="13.0" layoutY="130.0" prefHeight="17.0" prefWidth="63.0" text="Last name:" />
+                                          <Label layoutX="16.0" layoutY="179.0" text="Title:" />
+                                          <Label layoutX="16.0" layoutY="219.0" text="Start date:" />
+                                          <TextField layoutX="131.0" layoutY="88.0" promptText="John" />
+                                          <TextField layoutX="132.0" layoutY="126.0" promptText="Doe" />
+                                          <ComboBox layoutX="133.0" layoutY="174.0" prefHeight="26.0" prefWidth="159.0" />
+                                          <DatePicker layoutX="132.0" layoutY="215.0" prefHeight="26.0" prefWidth="161.0" />
+                                          <Label layoutX="367.0" layoutY="49.0" prefHeight="64.0" prefWidth="165.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="233.0" layoutY="14.0" text="Remove a consultant:" />
+                                          <Label layoutX="141.0" layoutY="74.0" text="Employee Number:" />
+                                          <ComboBox layoutX="274.0" layoutY="70.0" prefWidth="150.0" promptText="Choose employee" />
+                                          <Button layoutX="231.0" layoutY="141.0" mnemonicParsing="false" text="Remove consultant" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <ComboBox layoutX="276.0" layoutY="42.0" prefWidth="150.0" promptText="Choose consultant" />
+                                          <Label layoutX="199.0" layoutY="14.0" text="Update information for consultant:" />
+                                          <Label layoutX="199.0" layoutY="47.0" text="Consultant:" />
+                                          <Label layoutX="104.0" layoutY="89.0" text="Employee Number:" />
+                                          <Label layoutX="148.0" layoutY="123.0" text="First name:" />
+                                          <Label layoutX="148.0" layoutY="159.0" text="Last name:" />
+                                          <Label layoutX="181.0" layoutY="196.0" text="Title:" />
+                                          <Label layoutX="150.0" layoutY="227.0" text="Start date:" />
+                                          <TextField layoutX="272.0" layoutY="85.0" promptText="Ex: E001" />
+                                          <TextField layoutX="271.0" layoutY="119.0" promptText="Adam" />
+                                          <TextField layoutX="270.0" layoutY="155.0" promptText="Smith" />
+                                          <ComboBox layoutX="271.0" layoutY="191.0" prefHeight="26.0" prefWidth="158.0" />
+                                          <DatePicker layoutX="272.0" layoutY="223.0" prefHeight="26.0" prefWidth="157.0" />
+                                          <Button layoutX="229.0" layoutY="261.0" mnemonicParsing="false" text="Update information:" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
+                                          <TableView layoutX="34.0" layoutY="80.0" prefHeight="200.0" prefWidth="409.0">
+                                            <columns>
+                                              <TableColumn prefWidth="79.79247665405273" text="Emp. Number" />
+                                                <TableColumn prefWidth="83.8084487915039" text="First Name" />
+                                                <TableColumn prefWidth="86.38825988769531" text="Last Name" />
+                                                <TableColumn minWidth="5.872344970703125" prefWidth="92.61172485351562" text="Title" />
+                                                <TableColumn prefWidth="65.18362426757812" text="Start Date" />
+                                            </columns>
+                                          </TableView>
+                                          <ComboBox layoutX="35.0" layoutY="40.0" prefHeight="26.0" prefWidth="181.0" promptText="View specific consultant" />
+                                          <ComboBox layoutX="235.0" layoutY="40.0" prefHeight="26.0" prefWidth="114.0" promptText="View by title" />
+                                          <Button layoutX="362.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="View All" />
+                                          <Label layoutX="466.0" layoutY="120.0" prefHeight="40.0" prefWidth="82.0" text=" Total amount &#10;of consultants:" />
+                                          <TextField layoutX="454.0" layoutY="167.0" prefHeight="26.0" prefWidth="106.0" promptText="Ska vara fixerad" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+            <Tab text="Project">
+               <content>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="391.0" prefWidth="587.0">
+                     <items>
+                        <AnchorPane maxHeight="87.0" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="580.0">
+                           <children>
+                              <Label layoutX="232.0" layoutY="6.0" text="PROJECT OVERVIEW" />
+                              <Button layoutX="44.0" layoutY="41.0" mnemonicParsing="false" text="Register Project" />
+                              <Button layoutX="303.0" layoutY="41.0" mnemonicParsing="false" text="Update Project" />
+                              <Button layoutX="173.0" layoutY="41.0" mnemonicParsing="false" text="Remove Project" />
+                              <Button layoutX="425.0" layoutY="41.0" mnemonicParsing="false" text="Information Overview" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="288.0" prefWidth="585.0">
+                           <children>
+                              <StackPane layoutY="-3.0" prefHeight="297.0" prefWidth="586.0">
+                                 <children>
+                                    <AnchorPane prefHeight="309.0" prefWidth="607.0">
+                                       <children>
+                                          <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
+                                          <TableView layoutX="24.0" layoutY="86.0" prefHeight="189.0" prefWidth="440.0">
+                                             <columns>
+                                                <TableColumn prefWidth="107.55587577819824" text="Project Number" />
+                                                <TableColumn prefWidth="110.94409942626953" text="Name" />
+                                                <TableColumn minWidth="3.433319091796875" prefWidth="112.72348022460938" text="Start Date" />
+                                                <TableColumn prefWidth="106.20755004882812" text="End Date" />
+                                             </columns>
+                                          </TableView>
+                                          <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" />
+                                          <Button layoutX="398.0" layoutY="43.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="View all" />
+                                          <Button layoutX="196.0" layoutY="43.0" mnemonicParsing="false" text="Projects involving all consultants" />
+                                          <Label layoutX="478.0" layoutY="86.0" prefHeight="188.0" prefWidth="90.0" text="Error yta" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="247.0" layoutY="14.0" text="Update a project:" />
+                                          <Label layoutX="159.0" layoutY="51.0" text="Project Number:" />
+                                          <ChoiceBox layoutX="281.0" layoutY="46.0" prefWidth="150.0" />
+                                          <Label layoutX="159.0" layoutY="96.0" text="Project Number:" />
+                                          <Label layoutX="189.0" layoutY="138.0" text="Start Date:" />
+                                          <Label layoutX="191.0" layoutY="181.0" text="End Date:" />
+                                          <Label layoutX="203.0" layoutY="216.0" text="Name:" />
+                                          <Button layoutX="267.0" layoutY="250.0" mnemonicParsing="false" text="Button" />
+                                          <DatePicker layoutX="283.0" layoutY="175.0" prefHeight="26.0" prefWidth="148.0" />
+                                          <DatePicker layoutX="283.0" layoutY="134.0" prefHeight="26.0" prefWidth="149.0" />
+                                          <TextField layoutX="282.0" layoutY="91.0" prefHeight="26.0" prefWidth="151.0" />
+                                          <TextField layoutX="282.0" layoutY="211.0" prefHeight="26.0" prefWidth="151.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="244.0" layoutY="14.0" text="Remove a project:" />
+                                          <Label layoutX="156.0" layoutY="76.0" text="Project Number:" />
+                                          <ChoiceBox layoutX="278.0" layoutY="72.0" prefWidth="150.0" />
+                                          <Button layoutX="242.0" layoutY="136.0" mnemonicParsing="false" text="Remove Project" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="244.0" layoutY="14.0" text="Register a project:" />
+                                          <Label layoutX="37.0" layoutY="50.0" text="Project Number:" />
+                                          <TextField layoutX="164.0" layoutY="45.0" promptText="Ex: P001" />
+                                          <Label layoutX="89.0" layoutY="104.0" text="Name:" />
+                                          <TextField layoutX="164.0" layoutY="100.0" promptText="Ex: Alpha Project" />
+                                          <Label layoutX="67.0" layoutY="149.0" text="Start Date:" />
+                                          <DatePicker layoutX="164.0" layoutY="144.0" prefHeight="26.0" prefWidth="159.0" />
+                                          <Label layoutX="69.0" layoutY="195.0" text="End Date:" />
+                                          <DatePicker layoutX="164.0" layoutY="190.0" prefHeight="26.0" prefWidth="159.0" />
+                                          <Button layoutX="132.0" layoutY="243.0" mnemonicParsing="false" text="Register Project" />
+                                          <Label layoutX="378.0" layoutY="83.0" prefHeight="89.0" prefWidth="162.0" text="Ska vara error ruta ifall error uppstår" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+            <Tab text="Milestone">
+               <content>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="387.0" prefWidth="587.0">
+                     <items>
+                        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="83.0" prefWidth="585.0">
+                           <children>
+                              <Button layoutX="15.0" layoutY="31.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Register Milestone" />
+                              <Button layoutX="168.0" layoutY="31.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="120.0" text="Add Milestone" />
+                              <Button layoutX="300.0" layoutY="31.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="132.0" text="Remove Milestone" />
+                              <Button layoutX="444.0" layoutY="31.0" mnemonicParsing="false" text="Retrieve Milestone" />
+                              <Label layoutX="225.0" layoutY="5.0" text="MILESTONE OVERVIEW" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <StackPane layoutX="1.0" layoutY="1.0" prefHeight="293.0" prefWidth="586.0">
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="238.0" layoutY="14.0" text="Register a milestone" />
+                                          <ChoiceBox layoutX="140.0" layoutY="49.0" prefWidth="150.0" />
+                                          <ChoiceBox layoutX="140.0" layoutY="94.0" prefWidth="150.0" />
+                                          <TextField layoutX="140.0" layoutY="133.0" prefWidth="150.0" />
+                                          <DatePicker layoutX="140.0" layoutY="172.0" prefHeight="26.0" prefWidth="150.0" />
+                                          <Label layoutX="11.0" layoutY="54.0" text="Milestone Number:" />
+                                          <Label layoutX="24.0" layoutY="98.0" text="Project Number:" />
+                                          <Label layoutX="21.0" layoutY="138.0" text="Milestone Name:" />
+                                          <Label layoutX="83.0" layoutY="177.0" text="Date:" />
+                                          <Button layoutX="67.0" layoutY="225.0" mnemonicParsing="false" prefWidth="150.0" text="Register Milestone" />
+                                          <Label layoutX="329.0" layoutY="48.0" prefHeight="160.0" prefWidth="217.0" text="Error yta" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="248.0" layoutY="14.0" text="Add a milestone:" />
+                                          <Label layoutX="32.0" layoutY="60.0" text="Milestone Number:" />
+                                          <Label layoutX="46.0" layoutY="107.0" text="Project Number:" />
+                                          <Label layoutX="105.0" layoutY="153.0" text="Date:" />
+                                          <Label layoutX="99.0" layoutY="195.0" text="Name:" />
+                                          <TextField layoutX="177.0" layoutY="56.0" promptText="Ex: M001" />
+                                          <TextField layoutX="177.0" layoutY="191.0" promptText="Ex: Phase 1 completion" />
+                                          <DatePicker layoutX="177.0" layoutY="148.0" prefHeight="26.0" prefWidth="160.0" />
+                                          <ChoiceBox layoutX="177.0" layoutY="102.0" prefHeight="26.0" prefWidth="160.0" />
+                                          <Button layoutX="150.0" layoutY="240.0" mnemonicParsing="false" text="Add milestone" />
+                                          <Label layoutX="359.0" layoutY="55.0" prefHeight="163.0" prefWidth="196.0" text="Error yta" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="236.0" layoutY="14.0" text="Remove A Milestone:" />
+                                          <Label layoutX="148.0" layoutY="61.0" text="Project Number:" />
+                                          <Label layoutX="132.0" layoutY="113.0" text="Milestone Number:" />
+                                          <ChoiceBox layoutX="267.0" layoutY="57.0" prefWidth="150.0" />
+                                          <ChoiceBox layoutX="268.0" layoutY="108.0" prefWidth="150.0" />
+                                          <Button layoutX="233.0" layoutY="169.0" mnemonicParsing="false" text="Remove milestone:" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Label layoutX="241.0" layoutY="14.0" text="Retrieve Milestone:" />
+                                          <ComboBox layoutX="17.0" layoutY="47.0" prefHeight="26.0" prefWidth="234.0" promptText="View specific project + milestones" />
+                                          <TableView layoutX="16.0" layoutY="90.0" prefHeight="188.0" prefWidth="383.0">
+                                             <columns>
+                                                <TableColumn prefWidth="124.03993225097656" text="Milestone Number" />
+                                                <TableColumn prefWidth="135.4600830078125" text="Name" />
+                                                <TableColumn prefWidth="122.5" text="Date" />
+                                             </columns>
+                                          </TableView>
+                                          <Label layoutX="413.0" layoutY="122.0" text="Total number of milestones:" />
+                                          <TextField layoutX="425.0" layoutY="147.0" prefHeight="26.0" prefWidth="127.0" promptText="Ska vara fixerad" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+            <Tab text="Work">
+               <content>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="388.0" prefWidth="586.0">
+                     <items>
+                        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="107.0" prefWidth="584.0">
+                           <children>
+                              <Button layoutX="15.0" layoutY="35.0" mnemonicParsing="false" text="Add consultant to project" />
+                              <Button layoutX="405.0" layoutY="35.0" mnemonicParsing="false" text="Check working consultants" />
+                              <Button layoutX="232.0" layoutY="35.0" mnemonicParsing="false" text="Update work hours" />
+                              <Button layoutX="74.0" layoutY="73.0" mnemonicParsing="false" text="Display consultants work hours " />
+                              <Button layoutX="304.0" layoutY="73.0" mnemonicParsing="false" text="Check hardest working consultant" />
+                              <Label layoutX="242.0" layoutY="7.0" text="WORK OVERVIEW" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="584.0">
+                           <children>
+                              <StackPane prefHeight="275.0" prefWidth="587.0">
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Button layoutX="43.0" layoutY="217.0" mnemonicParsing="false" text="Refresh" />
+                                          <Label layoutX="220.0" layoutY="25.0" text="Hardest working consultant" />
+                                          <TableView layoutX="43.0" layoutY="69.0" prefHeight="136.0" prefWidth="502.0">
+                                             <columns>
+                                                <TableColumn prefWidth="125.81924819946289" text="Consultant Number" />
+                                                <TableColumn prefWidth="90.11174011230469" text="First Name" />
+                                                <TableColumn prefWidth="85.88825988769531" text="Last Name" />
+                                                <TableColumn prefWidth="81.8563232421875" text="Title" />
+                                                <TableColumn prefWidth="119.8614501953125" text="Total Hours worked" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <ChoiceBox layoutX="135.0" layoutY="42.0" prefWidth="150.0" />
+                                          <Label layoutX="15.0" layoutY="47.0" text="Consultant Number:" />
+                                          <Label layoutX="219.0" layoutY="21.0" text="View consultant work hours" />
+                                          <Label layoutX="16.0" layoutY="91.0" text="Total worked hours:" />
+                                          <TextArea layoutX="135.0" layoutY="89.0" prefHeight="26.0" prefWidth="150.0" />
+                                          <Button layoutX="12.0" layoutY="138.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="282.0" text="View consultants that work on 3 projects or less" />
+                                          <TableView layoutX="10.0" layoutY="167.0" prefHeight="100.0" prefWidth="438.0">
+                                             <columns>
+                                                <TableColumn prefWidth="115.31922721862793" text="Consultant Number" />
+                                                <TableColumn prefWidth="80.35916137695312" text="First Name" />
+                                                <TableColumn prefWidth="80.35916137695312" text="Last Name" />
+                                                <TableColumn prefWidth="80.35916137695312" text="Title" />
+                                                <TableColumn prefWidth="80.35916137695312" text="Date" />
+                                             </columns>
+                                          </TableView>
+                                          <Label layoutX="459.0" layoutY="83.0" text="Message area" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="168.0" layoutY="14.0" text="Check working consultants on specific projects" />
+                                          <TableView layoutX="4.0" layoutY="75.0" prefHeight="175.0" prefWidth="450.0">
+                                             <columns>
+                                                <TableColumn prefWidth="124.39109802246094" text="Consultant Number" />
+                                                <TableColumn prefWidth="84.27655029296875" text="First Name" />
+                                                <TableColumn prefWidth="81.79248046875" text="Last Name" />
+                                                <TableColumn prefWidth="71.31646728515625" text="Title" />
+                                                <TableColumn prefWidth="97.68356323242188" text="Start Date" />
+                                             </columns>
+                                          </TableView>
+                                          <ComboBox layoutX="15.0" layoutY="44.0" prefWidth="150.0" promptText="Project Number" />
+                                          <Label layoutX="454.0" layoutY="48.0" text="Error/message yta" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="241.0" layoutY="14.0" text="Update work hours:" />
+                                          <ChoiceBox layoutX="219.0" layoutY="52.0" prefWidth="150.0" />
+                                          <ChoiceBox layoutX="219.0" layoutY="95.0" prefWidth="150.0" />
+                                          <TextField layoutX="219.0" layoutY="144.0" prefWidth="150.0" />
+                                          <Button layoutX="247.0" layoutY="185.0" mnemonicParsing="false" text="Update Hours" />
+                                          <Label layoutX="143.0" layoutY="56.0" text="Consultant:" />
+                                          <Label layoutX="117.0" layoutY="99.0" text="Project Number:" />
+                                          <Label layoutX="169.0" layoutY="149.0" text="Hours:" />
+                                          <Label layoutX="414.0" layoutY="57.0" text="Message area" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                       <children>
+                                          <Label layoutX="42.0" layoutY="62.0" text="Employee Number:" />
+                                          <Label layoutX="58.0" layoutY="112.0" text="Project Number:" />
+                                          <Label layoutX="79.0" layoutY="158.0" text="Work Hours:" />
+                                          <Label layoutX="214.0" layoutY="22.0" text="Add a consultant to a project:" />
+                                          <ChoiceBox layoutX="182.0" layoutY="57.0" prefWidth="150.0" />
+                                          <ChoiceBox layoutX="182.0" layoutY="107.0" prefWidth="150.0" />
+                                          <TextField layoutX="182.0" layoutY="154.0" prefHeight="26.0" prefWidth="150.0" promptText="Ex: 30 or 30.5" />
+                                          <Button layoutX="105.0" layoutY="209.0" mnemonicParsing="false" text="Add consultant tp project" />
+                                          <Label layoutX="373.0" layoutY="56.0" prefHeight="123.0" prefWidth="184.0" text="Error yta" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+            <Tab text="Metadata">
+               <content>
+                  <SplitPane dividerPositions="0.2825520833333333" orientation="VERTICAL" prefHeight="386.0" prefWidth="586.0">
+                     <items>
+                        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="76.0" prefWidth="584.0">
+                           <children>
+                              <Button layoutX="8.0" layoutY="31.0" mnemonicParsing="false" text="View Table Information" />
+                              <Button layoutX="313.0" layoutY="31.0" mnemonicParsing="false" text="View Primary Constraints" />
+                              <Button layoutX="159.0" layoutY="31.0" mnemonicParsing="false" text="View Check Constraints" />
+                              <Button layoutX="476.0" layoutY="31.0" mnemonicParsing="false" text="View Excel File" />
+                              <Label layoutX="226.0" layoutY="7.0" text="METADATA OVERVIEW" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <StackPane prefHeight="302.0" prefWidth="586.0">
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
