@@ -60,6 +60,7 @@ public class WorkDao {
                 return warningMessage.toString();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DaoException("Error adding consultant to project.", e);
         }
         return null; // No warnings
@@ -75,7 +76,7 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the consultants.
      */
     public List<Consultant> listConsultantsByProject(String projectNo) {
-        String query = "SELECT c.EmpNo, c.EmpTitle, c.EmpFirstName, c.EmpLastName, c.EmpStartDate " +
+        String query = "SELECT c.EmpNo, c.EmpTitle AS Title, c.EmpFirstName AS FirstName, c.EmpLastName AS LastName, c.EmpStartDate AS StartDate " +
                        "FROM Consultant c " +
                        "JOIN Work w ON c.ConsultantId = w.ConsultantId " +
                        "WHERE w.ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?)";
@@ -140,7 +141,7 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the consultants.
      */
     public List<Consultant> getConsultantsWithThreeProjectsOrLess() {
-        String query = "SELECT c.EmpNo, c.EmpTitle, c.EmpFirstName, c.EmpLastName, c.EmpStartDate, SUM(w.ProjectId) AS NbrOfProjects " +
+        String query = "SELECT c.EmpNo, c.EmpTitle AS Title, c.EmpFirstName AS FirstName, c.EmpLastName AS LastName, c.EmpStartDate AS StartDate, SUM(w.ProjectId) AS NbrOfProjects " +
                        "FROM Consultant c " +
                        "LEFT JOIN Work w ON c.ConsultantId = w.ConsultantId " +
                        "GROUP BY c.EmpNo, c.EmpFirstName, c.EmpLastName, c.EmpTitle, c.EmpStartDate " +
@@ -199,8 +200,8 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the projects.
      */
     public List<Project> getProjectsInvolvingAllConsultants() {
-        String query = "SELECT p.ProjectStatus, p.ProjectNo, p.ProjectName, " +
-                       "p.ProjectStartDate, p.ProjectEndDate " +
+        String query = "SELECT p.ProjectStatus AS Status, p.ProjectNo, p.ProjectName AS Name, " +
+                       "p.ProjectStartDate AS StartDate, p.ProjectEndDate AS EndDate " +
                        "FROM Project p " +
                        "JOIN Work w ON w.ProjectId = p.ProjectId " +
                        "GROUP BY p.ProjectNo, p.ProjectName, p.ProjectStartDate, " +
@@ -284,7 +285,7 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the consultant.
      */
     public Consultant getHardestWorkingConsultant() throws DaoException {
-        String query = "SELECT TOP 1 C.EmpNo, C.EmpTitle, C.EmpFirstName, C.EmpLastName, C.EmpStartDate, SUM(W.WorkHours) AS TotalWorkHours " +
+        String query = "SELECT TOP 1 C.EmpNo, C.EmpTitle AS Title, C.EmpFirstName AS FirstName, C.EmpLastName AS LastName, C.EmpStartDate AS StartDate, SUM(W.WorkHours) AS TotalWorkHours " +
                        "FROM Consultant C " +
                        "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
                        "GROUP BY C.EmpNo, C.EmpTitle, C.EmpFirstName, C.EmpLastName, C.EmpStartDate " +

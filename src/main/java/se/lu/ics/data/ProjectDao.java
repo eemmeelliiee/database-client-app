@@ -31,7 +31,7 @@ public class ProjectDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public List<Project> findAll() {
-        String query = "SELECT ProjectStatus, ProjectNo, ProjectName, ProjectStartDate, ProjectEndDate FROM Project ORDER BY ProjectStatus DESC";
+        String query = "SELECT ProjectStatus AS Status, ProjectNo, ProjectName AS Name, ProjectStartDate AS StartDate, ProjectEndDate AS EndDate FROM Project ORDER BY ProjectStatus DESC";
         List<Project> projects = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
@@ -65,7 +65,7 @@ public class ProjectDao {
      * @throws DaoException If there is an error accessing the database.
      */
     public Project findByProjectNo(String projectNo) {
-        String query = "SELECT ProjectStatus, ProjectNo, ProjectName, ProjectStartDate, ProjectEndDate FROM Project WHERE ProjectNo = ?";
+        String query = "SELECT ProjectStatus AS Status, ProjectNo, ProjectName AS Name, ProjectStartDate AS StartDate, ProjectEndDate AS EndDate FROM Project WHERE ProjectNo = ?";
         Project project = null;
 
         try (Connection connection = connectionHandler.getConnection();
@@ -171,14 +171,14 @@ public class ProjectDao {
      * @throws DaoException If there is an error updating the project's status.
      */
     public void setProjectStatus(Connection connection, Project project) throws DaoException {
-        String selectStatusQuery = "SELECT ProjectStatus FROM Project WHERE ProjectNo = ?";
+        String selectStatusQuery = "SELECT ProjectStatus AS Status FROM Project WHERE ProjectNo = ?";
         // Retrieve the ProjectStatus for the updated project
         try (PreparedStatement selectStmt = connection.prepareStatement(selectStatusQuery)) {
             selectStmt.setString(1, project.getProjectNo());
 
             try (ResultSet resultSet = selectStmt.executeQuery()) {
                 if (resultSet.next()) {
-                    String projectStatus = resultSet.getString("ProjectStatus");
+                    String projectStatus = resultSet.getString("Status");
                     project.setProjectStatus(projectStatus); // Set the ProjectStatus in the Project object
                 }
             }
@@ -229,10 +229,10 @@ public class ProjectDao {
     protected Project mapToProject(ResultSet resultSet) throws SQLException {
         return new Project(
             resultSet.getString("ProjectNo"),
-            resultSet.getString("ProjectName"),
-            resultSet.getDate("ProjectStartDate") != null ? resultSet.getDate("ProjectStartDate").toLocalDate() : null,
-            resultSet.getDate("ProjectEndDate") != null ? resultSet.getDate("ProjectEndDate").toLocalDate() : null,
-            resultSet.getString("ProjectStatus") != null ? resultSet.getString("ProjectStatus") : null
+            resultSet.getString("Name"),
+            resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null,
+            resultSet.getDate("EndDate") != null ? resultSet.getDate("EndDate").toLocalDate() : null,
+            resultSet.getString("Status") != null ? resultSet.getString("Status") : null
             );
     }
 
