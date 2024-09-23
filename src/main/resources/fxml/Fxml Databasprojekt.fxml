@@ -20,7 +20,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="418.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane layoutX="-6.0" layoutY="-7.0" prefHeight="205.0" prefWidth="381.0" scaleShape="false" tabClosingPolicy="UNAVAILABLE" tabMinWidth="81.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -57,7 +56,7 @@
                               <Button layoutX="438.0" layoutY="43.0" mnemonicParsing="false" text="Information overview" />
                               <Button layoutX="162.0" layoutY="43.0" mnemonicParsing="false" text="Remove consultant" />
                               <Button layoutX="301.0" layoutY="43.0" mnemonicParsing="false" text="Update information" />
-                              <Button layoutX="23.0" layoutY="43.0" mnemonicParsing="false" text="Register consultant" />
+                              <Button fx:id="showRegisterAnchorPane" layoutX="23.0" layoutY="43.0" mnemonicParsing="false" text="Register consultant" />
                               <Label layoutX="217.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
                            </children>
                         </AnchorPane>
@@ -65,7 +64,7 @@
                            <children>
                               <StackPane layoutX="-1.0" layoutY="-1.0" prefHeight="295.0" prefWidth="583.0">
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <Button layoutX="232.0" layoutY="255.0" mnemonicParsing="false" text="Register consultant" />
                                           <Label layoutX="235.0" layoutY="14.0" text="Register a consultant:" />
@@ -108,7 +107,7 @@
                                           <Button layoutX="229.0" layoutY="261.0" mnemonicParsing="false" text="Update information:" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
                                           <TableView layoutX="34.0" layoutY="80.0" prefHeight="200.0" prefWidth="409.0">
@@ -136,8 +135,8 @@
                </content>
             </Tab>
             <Tab text="Project">
-              <content>
-                  <SplitPane dividerPositions="0.5" layoutX="-3.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="391.0" prefWidth="587.0">
+               <content>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="391.0" prefWidth="587.0">
                      <items>
                         <AnchorPane maxHeight="87.0" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="580.0">
                            <children>
@@ -152,7 +151,7 @@
                            <children>
                               <StackPane layoutY="-3.0" prefHeight="297.0" prefWidth="586.0">
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                    <AnchorPane prefHeight="309.0" prefWidth="607.0">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
                                           <TableView layoutX="24.0" layoutY="86.0" prefHeight="189.0" prefWidth="440.0">
@@ -214,11 +213,11 @@
                         </AnchorPane>
                      </items>
                   </SplitPane>
-              </content>
+               </content>
             </Tab>
             <Tab text="Milestone">
-              <content>
-                  <SplitPane dividerPositions="0.5" layoutX="-1.0" layoutY="1.0" orientation="VERTICAL" prefHeight="387.0" prefWidth="587.0">
+               <content>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="387.0" prefWidth="587.0">
                      <items>
                         <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="83.0" prefWidth="585.0">
                            <children>
@@ -294,10 +293,10 @@
                         </AnchorPane>
                      </items>
                   </SplitPane>
-              </content>
+               </content>
             </Tab>
             <Tab text="Work">
-              <content>
+               <content>
                   <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="388.0" prefWidth="586.0">
                      <items>
                         <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="107.0" prefWidth="584.0">
@@ -397,11 +396,11 @@
                         </AnchorPane>
                      </items>
                   </SplitPane>
-              </content>
+               </content>
             </Tab>
             <Tab text="Metadata">
-              <content>
-                  <SplitPane dividerPositions="0.2825520833333333" layoutX="1.0" layoutY="1.0" orientation="VERTICAL" prefHeight="386.0" prefWidth="586.0">
+               <content>
+                  <SplitPane dividerPositions="0.2825520833333333" orientation="VERTICAL" prefHeight="386.0" prefWidth="586.0">
                      <items>
                         <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="76.0" prefWidth="584.0">
                            <children>
@@ -426,7 +425,7 @@
                         </AnchorPane>
                      </items>
                   </SplitPane>
-              </content>
+               </content>
             </Tab>
         </tabs>
       </TabPane>
