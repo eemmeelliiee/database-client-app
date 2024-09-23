@@ -76,9 +76,9 @@ public class App extends Application {
             Milestone milestone1 = new Milestone("M030", "P001", "Milestone 1", LocalDate.of(2023, 10, 1));
             Milestone milestone2 = new Milestone("M031", "P001", "Milestone 2", LocalDate.of(2023, 11, 1));
             Milestone milestone3 = new Milestone("M032", "P002", "Milestone 3", LocalDate.of(2023, 12, 1));
-            // milestoneDao.save(milestone1);
-            // milestoneDao.save(milestone2);
-            // milestoneDao.save(milestone3);
+            milestoneDao.save(milestone1);
+            milestoneDao.save(milestone2);
+            milestoneDao.save(milestone3);
             System.out.println("Milestones saved successfully.");
 
             // 2. Test retrieving milestones by project number
