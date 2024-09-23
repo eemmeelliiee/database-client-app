@@ -119,7 +119,9 @@ public class ProjectDao {
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("A project with this ProjectNo already exists.", e);
+                throw new DaoException("A project with this ProjectNo or ProjectName already exists.", e);
+            } else if (e.getErrorCode() == 515) {
+                throw new DaoException("ProjectNo and ProjectName are not allowed to contain NULL-values.", e);
             } else {
                 throw new DaoException("Error saving project: " + project.getProjectNo(), e);
             }
@@ -154,8 +156,14 @@ public class ProjectDao {
             setProjectStatus(connection, project); // Updates projectStatus attribute to calculated attribute
                                                       // ProjectStatus in Project table
         } catch (SQLException e) {
-            // Throw a DaoException for any SQL errors
-            throw new DaoException("Error updating project: " + project.getProjectNo(), e);
+            // Check for unique constraint violation (SQL Server error code 2627)
+            if (e.getErrorCode() == 2627) {
+                throw new DaoException("A project with this ProjectNo or ProjectName already exists.", e);
+            } else if (e.getErrorCode() == 515) {
+                throw new DaoException("ProjectNo and ProjectName are not allowed to contain NULL-values.", e);
+            } else {
+                throw new DaoException("Error saving project: " + project.getProjectNo(), e);
+            }
         }
     }
 
@@ -200,15 +208,20 @@ public class ProjectDao {
      */
     public void deleteByProjectNo(String projectNo) {
         String query = "DELETE FROM Project WHERE ProjectNo = ?";
-
+        
         try (Connection connection = connectionHandler.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
-
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            
             // Set ProjectNo in the prepared statement
             statement.setString(1, projectNo);
-
-            // Execute the delete operation
-            statement.executeUpdate();
+            
+            // Execute the delete operation and get the number of rows affected
+            int rowsAffected = statement.executeUpdate();
+            
+            // Check if a project was deleted
+            if (rowsAffected == 0) {
+                throw new DaoException("No project found with ProjectNo: " + projectNo);
+            }
         } catch (SQLException e) {
             // Throw a DaoException for SQL errors during deletion
             throw new DaoException("Error deleting project with ProjectNo: " + projectNo, e);
