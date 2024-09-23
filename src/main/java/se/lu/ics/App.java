@@ -73,9 +73,12 @@ public class App extends Application {
             // // MILESTONE TESTS
 
             // // 1. Test saving new milestones
-            // Milestone milestone1 = new Milestone("M030", "P001", "Milestone 1", LocalDate.of(2023, 10, 1));
-            // Milestone milestone2 = new Milestone("M031", "P001", "Milestone 2", LocalDate.of(2023, 11, 1));
-            // Milestone milestone3 = new Milestone("M032", "P002", "Milestone 3", LocalDate.of(2023, 12, 1));
+            // Milestone milestone1 = new Milestone("M030", "P001", "Milestone 1",
+            // LocalDate.of(2023, 10, 1));
+            // Milestone milestone2 = new Milestone("M031", "P001", "Milestone 2",
+            // LocalDate.of(2023, 11, 1));
+            // Milestone milestone3 = new Milestone("M032", "P002", "Milestone 3",
+            // LocalDate.of(2023, 12, 1));
             // milestoneDao.save(milestone1);
             // milestoneDao.save(milestone2);
             // milestoneDao.save(milestone3);
@@ -85,21 +88,23 @@ public class App extends Application {
             // List<Milestone> milestonesP1 = milestoneDao.findByProjectNo("P001");
             // System.out.println("Milestones for project P1:");
             // for (Milestone milestone : milestonesP1) {
-            //     System.out.println(milestone);
+            // System.out.println(milestone);
             // }
 
             // List<Milestone> milestonesP2 = milestoneDao.findByProjectNo("P002");
             // System.out.println("Milestones for project P2:");
             // for (Milestone milestone : milestonesP2) {
-            //     System.out.println(milestone);
+            // System.out.println(milestone);
             // }
 
             // // 3. Test retrieving the total number of milestones for a project
             // int totalMilestonesP1 = milestoneDao.getTotalNumberOfMilestones("P001");
-            // System.out.println("Total number of milestones for project P1: " + totalMilestonesP1);
+            // System.out.println("Total number of milestones for project P1: " +
+            // totalMilestonesP1);
 
             // int totalMilestonesP2 = milestoneDao.getTotalNumberOfMilestones("P002");
-            // System.out.println("Total number of milestones for project P2: " + totalMilestonesP2);
+            // System.out.println("Total number of milestones for project P2: " +
+            // totalMilestonesP2);
 
             // // 4. Test deleting a milestone
             // milestoneDao.deleteByProjectNoAndMilestoneNo("P001", "M030");
@@ -108,10 +113,11 @@ public class App extends Application {
             // System.out.println("Milestone M1 from project P1 deleted successfully.");
 
             // // Verify deletion
-            // List<Milestone> milestonesAfterDeletion = milestoneDao.findByProjectNo("P001");
+            // List<Milestone> milestonesAfterDeletion =
+            // milestoneDao.findByProjectNo("P001");
             // System.out.println("Milestones for project P1 after deletion:");
             // for (Milestone milestone : milestonesAfterDeletion) {
-            //     System.out.println(milestone);
+            // System.out.println(milestone);
             // }
 
             // // PROJECT TESTS
@@ -124,7 +130,7 @@ public class App extends Application {
             // System.out.println("Project saved successfully: " + newProject);
 
             // // 2. Test finding a project by project number
-            //  System.out.println("\nRetrieving project by ProjectNo 'P1001':");
+            // System.out.println("\nRetrieving project by ProjectNo 'P1001':");
             // Project foundProject = projectDao.findByProjectNo(newProject.getProjectNo());
             // System.out.println("Project found: " + foundProject);
 
@@ -163,7 +169,8 @@ public class App extends Application {
 
             // // 2. Test saving a new consultant
             // System.out.println("\nSaving a new consultant:");
-            // Consultant newConsultant = new Consultant("EMP1001", "John", "Doe", "Senior Consultant",
+            // Consultant newConsultant = new Consultant("EMP1001", "John", "Doe", "Senior
+            // Consultant",
             // LocalDate.of(2020, 1, 15));
             // consultantDao.save(newConsultant);
             // System.out.println("Consultant saved: " + newConsultant);
@@ -176,13 +183,15 @@ public class App extends Application {
 
             // // 4. Test updating a consultant
             // System.out.println("\nUpdating consultant:");
-            // consultantByEmpNo.setEmpLastName("Smith");
-            // consultantDao.update(consultantByEmpNo);
+            // String oldEmpNo = consultantByEmpNo.getEmpNo();
+            // consultantByEmpNo.setEmpNo("EMP1002");
+            // consultantDao.update(consultantByEmpNo, oldEmpNo);
             // System.out.println("Consultant updated: " + consultantByEmpNo);
 
             // // 5. Test retrieving consultants by title
             // System.out.println("\nRetrieving consultants by title 'Senior IT':");
-            // List<Consultant> consultantsByTitle = consultantDao.findByEmpTitle("Senior IT");
+            // List<Consultant> consultantsByTitle = consultantDao.findByEmpTitle("Senior
+            // IT");
             // for (Consultant consultant : consultantsByTitle) {
             // System.out.println(consultant);
             // }
@@ -258,7 +267,8 @@ public class App extends Application {
 
             // // Test deleteConsultantFromProject
             // workDao.deleteConsultantFromProject("E003", "P002");
-            // System.out.println("Consultant with EmpNo E003 removed from project P002 successfully.");
+            // System.out.println("Consultant with EmpNo E003 removed from project P002
+            // successfully.");
 
             // // TESTS METADATA (not all methods tested)
 
@@ -296,9 +306,9 @@ public class App extends Application {
             // System.out.println("Check Constraint: " + constraint);
             // }
 
-            // // TEST OPEN EXCEL FILE
+            // TEST OPEN EXCEL FILE
 
-            // openExcelFile("src/main/resources/excel/ExcelData.xlsx");
+            openExcelFile("src/main/resources/excel/ExcelData.xlsx");
 
         } catch (DaoException | IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
