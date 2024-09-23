@@ -258,8 +258,4 @@ public class ConsultantDao {
             resultSet.getDate("EmpStartDate") != null ? resultSet.getDate("EmpStartDate").toLocalDate() : null
         );
     }
-
-    public ConnectionHandler getConnectionHandler() {
-        return connectionHandler;
-    }
 }
