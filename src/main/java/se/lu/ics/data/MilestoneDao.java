@@ -45,6 +45,10 @@ public class MilestoneDao {
                 throw new DaoException("A milestone with this MilstoneNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("MilestoneNo are not allowed to contain NULL-values.", e);
+            }
+            // Checks for general constraints because SQL server lacks an error code for check constraints.
+            else if (e.getErrorCode() == 547) {
+                throw new DaoException("The milestone date is set to a date before 2022-01-01. Please change it to a later date.", e);
             } else {
                 throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
         }
@@ -151,7 +155,7 @@ public class MilestoneDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 515) {
-                throw new DaoException("ProjectNo and MilestoneNo are not allowed to contain NULL-values.", e);
+                throw new DaoException("Fields ProjectNo and MilestoneNo cannot be empty.", e);
             } else {
                 throw new DaoException("Error deleting milestone with MilestoneNo: " + milestoneNo + " for project: " + projectNo, e);
             }

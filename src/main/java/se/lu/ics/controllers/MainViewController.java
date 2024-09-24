@@ -2,12 +2,16 @@ package se.lu.ics.controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Milestone;
@@ -317,8 +321,10 @@ public class MainViewController {
     @FXML
     private Label lableResponse;
 
+    //DAO instance
     private ConsultantDao consultantDao;
 
+    //Constructor
     public MainViewController() throws IOException {
         try {
             ConnectionHandler connectionHandler = new ConnectionHandler();
@@ -347,8 +353,55 @@ public class MainViewController {
                       "Employee No: " + empNo + "\n" +
                       "Start Date: " + empStartDate);
 
+        populateEmployeeNumbers();
+
         
     }
+
+    //Remove Consultant
+    @FXML
+    private ComboBox<String> removeConsultantNo; // combobox for employee number
+
+    @FXML
+    private Button removeConsultantButton;
+
+    @FXML
+    private Label removeConsultantResponse;
+
+    @FXML
+    private void initialize() {
+        populateEmployeeNumbers();
+    }
+
+    private void populateEmployeeNumbers() {
+        List<String> employeeNumbers = consultantDao.findAllEmpNos();
+        removeConsultantNo.getItems().clear();
+        removeConsultantNo.getItems().addAll(employeeNumbers);
+    }
+
+    @FXML
+    private void handleButtonRemoveConsultant() {
+        String empNo = removeConsultantNo.getValue(); // Get the selected Employee Number
+        
+        // Check if an Employee Number is selected
+        if (empNo != null && !empNo.isEmpty()) {
+            consultantDao.deleteByEmpNo(empNo); // Remove the consultant
+            
+            // Create a response message with a newline for formatting
+            String responseMessage = String.format("Consultant with Employee No: " + empNo +  " Successfully removed.");
+            
+            // Set the formatted string to the response label
+            removeConsultantResponse.setText(responseMessage);
+            
+            // Optional: Refresh the ComboBox after removal
+            populateEmployeeNumbers(); // Assuming you have a method to refresh the ComboBox
+        } else {
+            // If no Employee Number is selected, show a warning message
+            removeConsultantResponse.setText("Please select an employee number.");
+        }
+    }
+    
+
 
 
 }

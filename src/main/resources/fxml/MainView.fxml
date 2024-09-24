@@ -13,8 +13,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
@@ -28,11 +26,6 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="83.0" fitWidth="176.0" layoutX="227.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../private/var/folders/zc/kgbp8m_x7fb0xb_r0c5k7xvw0000gp/T/com.apple.Photos.NSItemProvider/uuid=A09C08E4-65E5-408D-959B-51EB9C4747EE&amp;library=1&amp;type=1&amp;mode=1&amp;loc=true&amp;cap=true.jpeg/Bild%206.jpeg" />
-                           </image>
-                        </ImageView>
                         <Text layoutX="163.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your vision, Our strategy">
                            <font>
                               <Font name="Charter Black Italic" size="20.0" />
@@ -64,7 +57,7 @@
                            <children>
                               <StackPane layoutX="-1.0" layoutY="-1.0" prefHeight="295.0" prefWidth="583.0">
                                  <children>
-                                    <AnchorPane fx:id="registerConsultantPane" prefHeight="200.0" prefWidth="200.0">
+                                    <AnchorPane fx:id="registerConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Button fx:id="registerConsultantButton" layoutX="232.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleButtonRegisterConsultant" text="Register consultant" />
                                           <Label layoutX="235.0" layoutY="14.0" text="Register a consultant:" />
@@ -81,12 +74,13 @@
                                           <TextField fx:id="registerConsultantTitle" layoutX="132.0" layoutY="167.0" promptText="Junior IT" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                                    <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Remove a consultant:" />
                                           <Label layoutX="141.0" layoutY="74.0" text="Employee Number:" />
-                                          <ComboBox layoutX="274.0" layoutY="70.0" prefWidth="150.0" promptText="Choose employee" />
-                                          <Button layoutX="231.0" layoutY="141.0" mnemonicParsing="false" text="Remove consultant" />
+                                          <ComboBox fx:id="removeConsultantNo" layoutX="274.0" layoutY="70.0" prefWidth="150.0" promptText="Choose employee" />
+                                          <Button fx:id="removeConsultantButton" layoutX="231.0" layoutY="141.0" mnemonicParsing="false" onAction="#handleButtonRemoveConsultant" text="Remove consultant" />
+                                          <Label fx:id="removeConsultantResponse" layoutX="94.0" layoutY="174.0" prefHeight="99.0" prefWidth="398.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="updateConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
@@ -123,7 +117,7 @@
                                           <ComboBox layoutX="235.0" layoutY="40.0" prefHeight="26.0" prefWidth="114.0" promptText="View by title" />
                                           <Button fx:id="infoConsultantPane" layoutX="362.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="View All" />
                                           <Label layoutX="466.0" layoutY="120.0" prefHeight="40.0" prefWidth="82.0" text=" Total amount &#10;of consultants:" />
-                                          <TextField layoutX="454.0" layoutY="167.0" prefHeight="26.0" prefWidth="106.0" promptText="Ska vara fixerad" />
+                                          <Label layoutX="466.0" layoutY="160.0" prefHeight="119.0" prefWidth="84.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -232,7 +226,7 @@
                            <children>
                               <StackPane layoutX="1.0" layoutY="1.0" prefHeight="293.0" prefWidth="586.0">
                                  <children>
-                                    <AnchorPane fx:id="registerMSPane" prefHeight="200.0" prefWidth="200.0">
+                                    <AnchorPane fx:id="registerMSPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Label layoutX="238.0" layoutY="14.0" text="Register a milestone" />
                                           <ChoiceBox layoutX="140.0" layoutY="49.0" prefWidth="150.0" />
@@ -272,10 +266,10 @@
                                           <Button layoutX="233.0" layoutY="169.0" mnemonicParsing="false" text="Remove milestone:" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="retrieveMSPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                                    <AnchorPane fx:id="retrieveMSPane" prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <Label layoutX="241.0" layoutY="14.0" text="Retrieve Milestone:" />
-                                          <ComboBox layoutX="17.0" layoutY="47.0" prefHeight="26.0" prefWidth="234.0" promptText="View specific project + milestones" />
+                                          <ComboBox layoutX="17.0" layoutY="47.0" prefHeight="26.0" prefWidth="139.0" promptText="Choose Project:" />
                                           <TableView layoutX="16.0" layoutY="90.0" prefHeight="188.0" prefWidth="383.0">
                                              <columns>
                                                 <TableColumn prefWidth="124.03993225097656" text="Milestone Number" />
@@ -284,7 +278,7 @@
                                              </columns>
                                           </TableView>
                                           <Label layoutX="413.0" layoutY="122.0" text="Total number of milestones:" />
-                                          <TextField layoutX="425.0" layoutY="147.0" prefHeight="26.0" prefWidth="127.0" promptText="Ska vara fixerad" />
+                                          <Label layoutX="413.0" layoutY="147.0" prefHeight="130.0" prefWidth="153.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -328,13 +322,12 @@
                                           </TableView>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="displayConsHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                                    <AnchorPane fx:id="displayConsHoursPane" prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <ChoiceBox layoutX="135.0" layoutY="51.0" prefWidth="150.0" />
                                           <Label layoutX="15.0" layoutY="57.0" text="Consultant Number:" />
                                           <Label layoutX="219.0" layoutY="15.0" text="View consultant work hours" />
                                           <Label layoutX="305.0" layoutY="55.0" text="Total worked hours:" />
-                                          <TextArea layoutX="423.0" layoutY="44.0" prefHeight="26.0" prefWidth="150.0" />
                                           <Button layoutX="12.0" layoutY="103.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="282.0" text="View consultants that work on 3 projects or less" />
                                           <TableView layoutX="10.0" layoutY="138.0" prefHeight="129.0" prefWidth="439.0">
                                              <columns>
@@ -346,6 +339,7 @@
                                              </columns>
                                           </TableView>
                                           <Label layoutX="466.0" layoutY="103.0" prefHeight="146.0" prefWidth="97.0" text="Message area" />
+                                          <Label layoutX="419.0" layoutY="57.0" prefHeight="73.0" prefWidth="154.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="checkWorkingConsPane" prefHeight="200.0" prefWidth="200.0" visible="false">
@@ -364,7 +358,7 @@
                                           <Label layoutX="454.0" layoutY="48.0" text="Error/message yta" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="updateHoursPane" prefHeight="200.0" prefWidth="200.0">
+                                    <AnchorPane fx:id="updateHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Label layoutX="241.0" layoutY="14.0" text="Update work hours:" />
                                           <ChoiceBox layoutX="219.0" layoutY="52.0" prefWidth="150.0" />

@@ -47,6 +47,37 @@ public class ConsultantDao {
         return consultants;
     }
 
+    /* FIND ALL EmpNos */
+    /**
+     * Retrieves all consultants from the database.
+     * This method executes a SQL SELECT statement to fetch EmpNo's and returns them
+     * as a list of Strings.
+     *
+     * @return A list of EmpNo Strings.
+     * @throws DaoException If there is an error accessing the database.
+     */
+    public List<String> findAllEmpNos() {
+        String query = "SELECT EmpNo FROM Consultant";
+        List<String> empNos = new ArrayList<>();
+    
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+    
+            // Iterate through the result set and add each EmpNo to the list
+            while (resultSet.next()) {
+                empNos.add(resultSet.getString("EmpNo"));
+            }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching all EmpNos.", e);
+        }
+    
+        return empNos;
+    }
+
+    
+
     /* FIND CONSULTANT BY EmpNo */
     /**
      * Retrieves a consultant from the database by EmpNo.
