@@ -1,11 +1,27 @@
 package se.lu.ics.controllers;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
+
+import se.lu.ics.models.Consultant;
+import se.lu.ics.models.Milestone;
+import se.lu.ics.models.Project;
+import se.lu.ics.models.Work;
+import se.lu.ics.data.ConsultantDao;
+import se.lu.ics.data.DaoException;
+import se.lu.ics.data.ConnectionHandler;
 
 
 public class MainViewController {
+
+    //DAO instance
+   // private ConsultantDao consultantDao = new ConsultantDao();
 
     // Register Consultant Pane
     @FXML 
@@ -278,4 +294,61 @@ public class MainViewController {
     }
 
     //MetaData Tab
+
+    //Register Consultant
+    @FXML
+    private TextField registerConsultantNo;
+
+    @FXML
+    private TextField registerConsultantName;
+
+    @FXML
+    private TextField registerConsultantLast;
+
+    @FXML
+    private TextField registerConsultantTitle;
+
+    @FXML
+    private DatePicker registerConsultantDate;
+
+    @FXML
+    private Button registerConsultantButton;
+
+    @FXML
+    private Label lableResponse;
+
+    private ConsultantDao consultantDao;
+
+    public MainViewController() throws IOException {
+        try {
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            consultantDao = new ConsultantDao(connectionHandler);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleButtonRegisterConsultant() {
+        String empNo = registerConsultantNo.getText();
+        String empFirstName = registerConsultantName.getText();
+        String empLastName = registerConsultantLast.getText();
+        String empTitle = registerConsultantTitle.getText();
+        LocalDate empStartDate = registerConsultantDate.getValue();
+
+        Consultant newConsultant = new Consultant(empNo, empFirstName, empLastName, empTitle, empStartDate);
+
+        consultantDao.save(newConsultant);
+
+        lableResponse.setText("New Consultant Registered:\n" +
+                      "First Name: " + empFirstName + "\n" +
+                      "Last Name: " + empLastName + "\n" +
+                      "Title: " + empTitle + "\n" +
+                      "Employee No: " + empNo + "\n" +
+                      "Start Date: " + empStartDate);
+
+        
+    }
+
+
 }
