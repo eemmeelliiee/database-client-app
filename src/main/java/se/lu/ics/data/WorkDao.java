@@ -28,26 +28,28 @@ public class WorkDao {
      * Adds a consultant to a project.
      * This method inserts a new record into the Work table.
      *
-     * @param empNo The EmpNo of the consultant.
+     * @param empNo     The EmpNo of the consultant.
      * @param projectNo The ProjectNo of the project.
      * @param workHours The number of hours worked by the consultant on the project.
-     * @throws DaoException If there is an error adding the consultant to the project.
+     * @throws DaoException If there is an error adding the consultant to the
+     *                      project.
      */
     public String addConsultantToProject(String empNo, String projectNo, double workHours) {
         String query = "INSERT INTO Work (ConsultantId, ProjectId, WorkHours) " +
-                       "VALUES((SELECT ConsultantId FROM Consultant WHERE EmpNo = ?), " +
-                       "(SELECT ProjectId FROM Project WHERE ProjectNo = ?), ?)";
-        
+                "VALUES((SELECT ConsultantId FROM Consultant WHERE EmpNo = ?), " +
+                "(SELECT ProjectId FROM Project WHERE ProjectNo = ?), ?)";
+
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-             
+                PreparedStatement statement = connection.prepareStatement(query)) {
+
             statement.setString(1, empNo);
             statement.setString(2, projectNo);
             statement.setDouble(3, workHours);
             statement.executeUpdate();
-    
+
             // Check for SQL warnings
             SQLWarning warning = statement.getWarnings();
+            
             if (warning != null) {
                 StringBuilder warningMessage = new StringBuilder();
                 while (warning != null) {
@@ -60,8 +62,17 @@ public class WorkDao {
                 return warningMessage.toString();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DaoException("Error adding consultant to project.", e);
+            if (e.getErrorCode() == 2627) {
+                throw new DaoException("The combination of EmpNo and ProjectNo must be unique.", e);
+            } else if (e.getErrorCode() == 515) {
+                throw new DaoException("Fields EmpNo and ProjectNo cannot be empty", e);
+            } else if (e.getErrorCode() == 8114) {
+                throw new DaoException("Work hours must be a number", e);
+            } else if (e.getErrorCode() == 547) {
+                throw new DaoException("Work hours must be a greater than 0", e);
+            } else {
+                throw new DaoException("Error adding consultant to project.", e);
+            }
         }
         return null; // No warnings
     }
@@ -76,15 +87,16 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the consultants.
      */
     public List<Consultant> listConsultantsByProject(String projectNo) {
-        String query = "SELECT c.EmpNo, c.EmpTitle AS Title, c.EmpFirstName AS FirstName, c.EmpLastName AS LastName, c.EmpStartDate AS StartDate " +
-                       "FROM Consultant c " +
-                       "JOIN Work w ON c.ConsultantId = w.ConsultantId " +
-                       "WHERE w.ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?)";
+        String query = "SELECT c.EmpNo, c.EmpTitle AS Title, c.EmpFirstName AS FirstName, c.EmpLastName AS LastName, c.EmpStartDate AS StartDate "
+                +
+                "FROM Consultant c " +
+                "JOIN Work w ON c.ConsultantId = w.ConsultantId " +
+                "WHERE w.ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?)";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-             
+                PreparedStatement statement = connection.prepareStatement(query)) {
+
             statement.setString(1, projectNo);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -102,7 +114,8 @@ public class WorkDao {
     /* DISPLAY TOTAL WORKED HOURS FOR A CONSULTANT */
     /**
      * Displays the total worked hours for a certain consultant.
-     * This method retrieves the sum of hours worked by the consultant across all projects.
+     * This method retrieves the sum of hours worked by the consultant across all
+     * projects.
      *
      * @param empNo The EmpNo of the consultant.
      * @return The total worked hours.
@@ -110,14 +123,14 @@ public class WorkDao {
      */
     public double getTotalWorkedHoursForConsultant(String empNo) {
         String query = "SELECT SUM(w.WorkHours) AS TotalWorkedHours " +
-                       "FROM Consultant c " +
-                       "JOIN Work w ON w.ConsultantId = c.ConsultantId " +
-                       "WHERE c.EmpNo = ?";
+                "FROM Consultant c " +
+                "JOIN Work w ON w.ConsultantId = c.ConsultantId " +
+                "WHERE c.EmpNo = ?";
         double totalWorkedHours = 0;
 
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-             
+                PreparedStatement statement = connection.prepareStatement(query)) {
+
             statement.setString(1, empNo);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -135,23 +148,25 @@ public class WorkDao {
     /* RETRIEVE CONSULTANTS WORKING ON THREE PROJECTS OR LESS */
     /**
      * Retrieves information on all consultants who work in three projects or less.
-     * This method retrieves consultant details based on the number of projects they are involved in.
+     * This method retrieves consultant details based on the number of projects they
+     * are involved in.
      *
      * @return A list of Consultant objects.
      * @throws DaoException If there is an error retrieving the consultants.
      */
     public List<Consultant> getConsultantsWithThreeProjectsOrLess() {
-        String query = "SELECT c.EmpNo, c.EmpTitle AS Title, c.EmpFirstName AS FirstName, c.EmpLastName AS LastName, c.EmpStartDate AS StartDate, SUM(w.ProjectId) AS NbrOfProjects " +
-                       "FROM Consultant c " +
-                       "LEFT JOIN Work w ON c.ConsultantId = w.ConsultantId " +
-                       "GROUP BY c.EmpNo, c.EmpFirstName, c.EmpLastName, c.EmpTitle, c.EmpStartDate " +
-                       "HAVING COUNT(DISTINCT w.ProjectId) <= 3";
+        String query = "SELECT c.EmpNo, c.EmpTitle AS Title, c.EmpFirstName AS FirstName, c.EmpLastName AS LastName, c.EmpStartDate AS StartDate, SUM(w.ProjectId) AS NbrOfProjects "
+                +
+                "FROM Consultant c " +
+                "LEFT JOIN Work w ON c.ConsultantId = w.ConsultantId " +
+                "GROUP BY c.EmpNo, c.EmpFirstName, c.EmpLastName, c.EmpTitle, c.EmpStartDate " +
+                "HAVING COUNT(DISTINCT w.ProjectId) <= 3";
         List<Consultant> consultants = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-             
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
             while (resultSet.next()) {
                 consultants.add(consultantDao.mapToConsultant(resultSet));
             }
@@ -194,25 +209,26 @@ public class WorkDao {
     /* RETRIEVE PROJECTS INVOLVING EVERY CONSULTANT */
     /**
      * Retrieves information on projects that involve every consultant.
-     * This method retrieves project details based on the involvement of all consultants.
+     * This method retrieves project details based on the involvement of all
+     * consultants.
      *
      * @return A list of Project objects.
      * @throws DaoException If there is an error retrieving the projects.
      */
     public List<Project> getProjectsInvolvingAllConsultants() {
         String query = "SELECT p.ProjectStatus AS Status, p.ProjectNo, p.ProjectName AS Name, " +
-                       "p.ProjectStartDate AS StartDate, p.ProjectEndDate AS EndDate " +
-                       "FROM Project p " +
-                       "JOIN Work w ON w.ProjectId = p.ProjectId " +
-                       "GROUP BY p.ProjectNo, p.ProjectName, p.ProjectStartDate, " +
-                       "p.ProjectEndDate, p.ProjectStatus " +
-                       "HAVING COUNT(w.ConsultantId) = (SELECT COUNT(ConsultantId) FROM Consultant)";
+                "p.ProjectStartDate AS StartDate, p.ProjectEndDate AS EndDate " +
+                "FROM Project p " +
+                "JOIN Work w ON w.ProjectId = p.ProjectId " +
+                "GROUP BY p.ProjectNo, p.ProjectName, p.ProjectStartDate, " +
+                "p.ProjectEndDate, p.ProjectStatus " +
+                "HAVING COUNT(w.ConsultantId) = (SELECT COUNT(ConsultantId) FROM Consultant)";
         List<Project> projects = new ArrayList<>();
 
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-             
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
             while (resultSet.next()) {
                 projects.add(projectDao.mapToProject(resultSet));
             }
@@ -225,7 +241,8 @@ public class WorkDao {
 
     /* DISPLAY TOTAL NUMBER OF HOURS WORKED BY ALL CONSULTANTS */
     /**
-     * Displays the total number of hours worked by all consultants across all projects.
+     * Displays the total number of hours worked by all consultants across all
+     * projects.
      * This method retrieves the sum of hours worked by all consultants.
      *
      * @return The total hours worked.
@@ -236,9 +253,9 @@ public class WorkDao {
         double totalHoursWorked = 0;
 
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-             
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
             if (resultSet.next()) {
                 totalHoursWorked = resultSet.getDouble("TotHoursWorked");
             }
@@ -255,24 +272,31 @@ public class WorkDao {
      * This method updates the work hours for a consultant on a specific project.
      *
      * @param projectNo The ProjectNo of the project.
-     * @param empNo The EmpNo of the consultant.
+     * @param empNo     The EmpNo of the consultant.
      * @param workHours The new number of work hours.
      * @throws DaoException If there is an error updating the work hours.
      */
     public void updateWorkHours(String projectNo, String empNo, double workHours) {
         String query = "UPDATE Work SET WorkHours = ? " +
-                       "WHERE ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?) " +
-                       "AND ConsultantId = (SELECT ConsultantId FROM Consultant WHERE EmpNo = ?)";
-        
+                "WHERE ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?) " +
+                "AND ConsultantId = (SELECT ConsultantId FROM Consultant WHERE EmpNo = ?)";
+
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-             
+                PreparedStatement statement = connection.prepareStatement(query)) {
+
             statement.setDouble(1, workHours);
             statement.setString(2, projectNo);
             statement.setString(3, empNo);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Error updating work hours for consultant: " + empNo + " on project: " + projectNo, e);
+            if (e.getErrorCode() == 8114) {
+                throw new DaoException("Work hours must be a number", e);
+            }
+            if (e.getErrorCode() == 547) {
+                throw new DaoException("Work hours must be a greater than 0", e);
+            } else {
+                throw new DaoException("Error updating work hours.", e);
+            }
         }
     }
 
@@ -285,18 +309,19 @@ public class WorkDao {
      * @throws DaoException If there is an error retrieving the consultant.
      */
     public Consultant getHardestWorkingConsultant() throws DaoException {
-        String query = "SELECT TOP 1 C.EmpNo, C.EmpTitle AS Title, C.EmpFirstName AS FirstName, C.EmpLastName AS LastName, C.EmpStartDate AS StartDate, SUM(W.WorkHours) AS TotalWorkHours " +
-                       "FROM Consultant C " +
-                       "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
-                       "GROUP BY C.EmpNo, C.EmpTitle, C.EmpFirstName, C.EmpLastName, C.EmpStartDate " +
-                       "ORDER BY TotalWorkHours DESC";
+        String query = "SELECT TOP 1 C.EmpNo, C.EmpTitle AS Title, C.EmpFirstName AS FirstName, C.EmpLastName AS LastName, C.EmpStartDate AS StartDate, SUM(W.WorkHours) AS TotalWorkHours "
+                +
+                "FROM Consultant C " +
+                "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
+                "GROUP BY C.EmpNo, C.EmpTitle, C.EmpFirstName, C.EmpLastName, C.EmpStartDate " +
+                "ORDER BY TotalWorkHours DESC";
 
         Consultant consultant = null;
 
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-             
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
             if (resultSet.next()) {
                 consultant = consultantDao.mapToConsultant(resultSet);
             }
@@ -311,7 +336,8 @@ public class WorkDao {
     /* RETRIEVE TOTAL WORK HOURS FOR CONSULTANT */
     /**
      * Retrieves the total work hours for a specific consultant.
-     * This method retrieves the total work hours a consultant has logged based on their employee number.
+     * This method retrieves the total work hours a consultant has logged based on
+     * their employee number.
      *
      * @param empNo The employee number of the consultant.
      * @return The total work hours the consultant has logged.
@@ -319,11 +345,11 @@ public class WorkDao {
      */
     public double getTotalWorkHoursForConsultant(String empNo) throws DaoException {
         String query = "SELECT SUM(W.WorkHours) AS TotalWorkHours " +
-                       "FROM Consultant C " +
-                       "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
-                       "WHERE C.EmpNo = ?";
+                "FROM Consultant C " +
+                "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
+                "WHERE C.EmpNo = ?";
         try (Connection connection = connectionHandler.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, empNo);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
