@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.sql.Types;
 import se.lu.ics.models.Consultant;
 
 public class ConsultantDao {
@@ -199,12 +201,17 @@ public class ConsultantDao {
             statement.setString(2, consultant.getEmpFirstName());
             statement.setString(3, consultant.getEmpLastName());
             statement.setString(4, consultant.getEmpTitle());
-            statement.setDate(5, Date.valueOf(consultant.getEmpStartDate()));
+            // Check if empStartDate is null and handle it appropriately
+            if (consultant.getEmpStartDate() != null) {
+                statement.setDate(5, Date.valueOf(consultant.getEmpStartDate()));
+            } else {
+                statement.setNull(5, Types.DATE);
+            }
 
             // Execute the insert operation
             statement.executeUpdate();
         } catch (SQLException e) {
-            // Check for unique constraint violation (SQL Server error code 2627)
+            // Check for constraint violations
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("A consultant with this EmpNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
@@ -212,6 +219,11 @@ public class ConsultantDao {
             } else {
                 throw new DaoException("Error saving consultant: " + consultant.getEmpNo(), e);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // Handle any other exceptions
+            throw new DaoException("An unexpected error occurred while saving consultant: " + consultant.getEmpNo(), e);
         }
     }
 
