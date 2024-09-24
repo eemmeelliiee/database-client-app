@@ -42,16 +42,16 @@ public class MilestoneDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("A milestone with this MilstoneNo already exists.", e);
+                throw new DaoException("A combination of this MilestonNo and ProjectNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("MilestoneNo are not allowed to contain NULL-values.", e);
-            }
-            // Checks for general constraints because SQL server lacks an error code for check constraints.
-            else if (e.getErrorCode() == 547) {
-                throw new DaoException("The milestone date is set to a date before 2022-01-01. Please change it to a later date.", e);
+                throw new DaoException("Fields MilestoneNo and ProjectNo cannot be empty.", e);
+            } else if (e.getErrorCode() == 547) {
+                throw new DaoException("MilestoneDate must be after 2022-01-01", e);
             } else {
                 throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
         }
+        } catch (Exception e){
+            throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
         }
     }
 
