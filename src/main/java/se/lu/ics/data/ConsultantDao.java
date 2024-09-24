@@ -133,7 +133,7 @@ public class ConsultantDao {
 
             // Set the empTitle parameter in the prepared statement
             statement.setString(1, empTitle);
-
+            
             try (ResultSet resultSet = statement.executeQuery()) {
                 // Iterate through the result set and map each row to a Consultant object
                 while (resultSet.next()) {
@@ -146,6 +146,36 @@ public class ConsultantDao {
         }
 
         return consultants;
+    }
+
+    /* FIND ALL EmpTitles */
+    /**
+     * Retrieves all unique EmpTitles from the database.
+     * This method executes a SQL SELECT statement to fetch unique EmpTitles and
+     * returns them as a list of Strings.
+     *
+     * @return A list of EmpTitle Strings.
+     * @throws DaoException If there is an error accessing the database.
+     */
+
+    public List<String> findAllEmpTitles() {
+        String query = "SELECT DISTINCT EmpTitle FROM Consultant";
+        List<String> empTitles = new ArrayList<>();
+
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            // Iterate through the result set and add each EmpTitle to the list
+            while (resultSet.next()) {
+                empTitles.add(resultSet.getString("EmpTitle"));
+            }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching all EmpTitles.", e);
+        }
+
+        return empTitles;
     }
 
     /* SAVE CONSULTANT */
