@@ -45,14 +45,10 @@ public class MilestoneDao {
                 throw new DaoException("A milestone with this MilstoneNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("MilestoneNo are not allowed to contain NULL-values.", e);
-            } else if (e.getErrorCode() == 547) {
-                String errorMessage = e.getMessage();
-
-                if (errorMessage.contains("CHECK constraint")) {
-                    throw new DaoException("The milestone date is set to a date before 2022-01-01. Please change it to a later date.", e);
-                } else {
-                    throw new DaoException("An unspecified constraint occured.", e);
-                }
+            }
+            // Checks for general constraints because SQL server lacks an error code for check constraints.
+            else if (e.getErrorCode() == 547) {
+                throw new DaoException("The milestone date is set to a date before 2022-01-01. Please change it to a later date.", e);
             } else {
                 throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
         }
