@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ComboBox;
 
 import se.lu.ics.models.Consultant;
@@ -38,7 +42,6 @@ public class MainViewController {
     private void handleShowRegisterConsultantPane() {
         registerConsultantPane.setVisible(true);
         removeConsultantPane.setVisible(false);
-        updateConsultantPane.setVisible(false);
         infoPane.setVisible(false);
     }
 
@@ -53,25 +56,9 @@ public class MainViewController {
     private void handleShowRemoveConsultantPane() {
         removeConsultantPane.setVisible(true);
         registerConsultantPane.setVisible(false);
-        updateConsultantPane.setVisible(false);
         infoPane.setVisible(false);
     }
 
-    // Update Consultant Pane
-    @FXML
-    private AnchorPane updateConsultantPane;
-
-    @FXML
-    private Button showUpdateConsultantPane;
-
-    @FXML
-    private void handleShowUpdateConsultantPane() {
-        updateConsultantPane.setVisible(true);
-        registerConsultantPane.setVisible(false);
-        removeConsultantPane.setVisible(false);
-        infoPane.setVisible(false);
-    
-    }
 
     // info pane
     @FXML
@@ -85,7 +72,6 @@ public class MainViewController {
         infoPane.setVisible(true);
         registerConsultantPane.setVisible(false);
         removeConsultantPane.setVisible(false);
-        updateConsultantPane.setVisible(false);
     }
 
 
@@ -102,7 +88,6 @@ public class MainViewController {
     private void handleShowRegisterProjectPane() {
         registerProjectPane.setVisible(true);
         removeProjectPane.setVisible(false);
-        updateProjectPane.setVisible(false);
         infoProjectPane.setVisible(false);
     }
 
@@ -117,24 +102,7 @@ public class MainViewController {
     private void handleShowRemoveProjectPane() {
         removeProjectPane.setVisible(true);
         registerProjectPane.setVisible(false);
-        updateProjectPane.setVisible(false);
         infoProjectPane.setVisible(false);
-    }
-
-    // Update Project Pane
-    @FXML
-    private AnchorPane updateProjectPane;
-
-    @FXML
-    private Button showUpdateProjectPane;
-
-    @FXML
-    private void handleShowUpdateProjectPane() {
-        updateProjectPane.setVisible(true);
-        registerProjectPane.setVisible(false);
-        removeProjectPane.setVisible(false);
-        infoProjectPane.setVisible(false);
-    
     }
 
     // info pane
@@ -149,25 +117,9 @@ public class MainViewController {
         infoProjectPane.setVisible(true);
         registerProjectPane.setVisible(false);
         removeProjectPane.setVisible(false);
-        updateProjectPane.setVisible(false);
     }
 
     //Milestone Tab
-
-    //Register Milestone Pane
-    @FXML
-    private AnchorPane registerMSPane;
-
-    @FXML
-    private Button showRegisterMSPane;
-
-    @FXML
-    private void handleShowRegisterMSPane() {
-        registerMSPane.setVisible(true);
-        removeMSPane.setVisible(false);
-        addMSPane.setVisible(false);
-        retrieveMSPane.setVisible(false);
-    }
 
     //Remove Milestone Pane
     @FXML
@@ -179,7 +131,6 @@ public class MainViewController {
     @FXML
     private void handleShowRemoveMSPane() {
         removeMSPane.setVisible(true);
-        registerMSPane.setVisible(false);
         addMSPane.setVisible(false);
         retrieveMSPane.setVisible(false);
     }
@@ -194,7 +145,6 @@ public class MainViewController {
     @FXML
     private void handleShowAddMSPane() {
         addMSPane.setVisible(true);
-        registerMSPane.setVisible(false);
         removeMSPane.setVisible(false);
         retrieveMSPane.setVisible(false);
     
@@ -210,7 +160,6 @@ public class MainViewController {
     @FXML
     private void handleShowRetrieveMSPane() {
         retrieveMSPane.setVisible(true);
-        registerMSPane.setVisible(false);
         removeMSPane.setVisible(false);
         addMSPane.setVisible(false);
     }
@@ -228,7 +177,6 @@ public class MainViewController {
     private void handleShowAddConToProPane() {
         addConToProPane.setVisible(true);
         checkWorkingConsPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
         hardestWorkingConPane.setVisible(false);
     }
@@ -244,26 +192,10 @@ public class MainViewController {
     private void handleShowCheckWorkingConsPane() {
         checkWorkingConsPane.setVisible(true);
         addConToProPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
         hardestWorkingConPane.setVisible(false);
     }
 
-    // Update Hours Pane
-    @FXML
-    private AnchorPane updateHoursPane;
-
-    @FXML
-    private Button showUpdateHoursPane;
-
-    @FXML
-    private void handleShowUpdateHoursPane() {
-        updateHoursPane.setVisible(true);
-        addConToProPane.setVisible(false);
-        checkWorkingConsPane.setVisible(false);
-        displayConsHoursPane.setVisible(false);
-        hardestWorkingConPane.setVisible(false);
-    }
 
     // Display Consultant Hours Pane
     @FXML
@@ -277,7 +209,6 @@ public class MainViewController {
         displayConsHoursPane.setVisible(true);
         addConToProPane.setVisible(false);
         checkWorkingConsPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         hardestWorkingConPane.setVisible(false);
     }
 
@@ -293,7 +224,6 @@ public class MainViewController {
         hardestWorkingConPane.setVisible(true);
         addConToProPane.setVisible(false);
         checkWorkingConsPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
     }
 
@@ -371,12 +301,16 @@ public class MainViewController {
     @FXML
     private void initialize() {
         populateEmployeeNumbers();
+        populateEmployeeTitles();
+        setupTableColumns();
     }
 
     private void populateEmployeeNumbers() {
         List<String> employeeNumbers = consultantDao.findAllEmpNos();
         removeConsultantNo.getItems().clear();
         removeConsultantNo.getItems().addAll(employeeNumbers);
+        /*infoConsultantNo.getItems().clear();
+        infoConsultantNo.getItems().addAll(employeeNumbers);*/
     }
 
     @FXML
@@ -388,7 +322,7 @@ public class MainViewController {
             consultantDao.deleteByEmpNo(empNo); // Remove the consultant
             
             // Create a response message with a newline for formatting
-            String responseMessage = String.format("Consultant with Employee No: " + empNo +  " Successfully removed.");
+            String responseMessage = String.format("Consultant with Employee No: " + empNo +  " has been successfully removed.");
             
             // Set the formatted string to the response label
             removeConsultantResponse.setText(responseMessage);
@@ -400,6 +334,74 @@ public class MainViewController {
             removeConsultantResponse.setText("Please select an employee number.");
         }
     }
+
+    //Info consultant
+    /*@FXML
+    private ComboBox<String> infoConsultantNo; // combobox for employee number*/
+
+    // @FXML
+    //private Button infoConsultantButton;
+
+    @FXML
+    private ComboBox<String> infoConsultantTitle; // combobox for employee name
+
+    @FXML
+    private Label infoConsultantResponse;
+
+    @FXML
+    private Label totalConsultantsResponse; 
+    
+    @FXML
+    private TableView<Consultant> consultantTableView;
+
+    @FXML
+    private TableColumn<Consultant, String> colEmpNo; // Column for employee number
+    @FXML
+    private TableColumn<Consultant, String> colFirstName; // Column for first name
+    @FXML
+    private TableColumn<Consultant, String> colLastName; // Column for last name
+    @FXML
+    private TableColumn<Consultant, String> colTitle; // Column for title
+    @FXML
+    private TableColumn<Consultant, LocalDate> colStartDate; // Column for start date
+    
+
+    private void populateEmployeeTitles() {
+        List<String> employeeTitles = consultantDao.findAllEmpTitles();
+        infoConsultantTitle.getItems().clear();
+        infoConsultantTitle.getItems().addAll(employeeTitles);
+    }
+
+    // Set up the TableColumns to bind to Consultant properties
+    private void setupTableColumns() {
+        colEmpNo.setCellValueFactory(new PropertyValueFactory<>("empNo"));
+        colFirstName.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
+        colLastName.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<>("empStartDate"));
+    
+        populateEmployeeTitles();
+
+        //Add a listener to combobox to populate TableView when a title is selected
+        infoConsultantTitle.setOnAction(event -> populateTableViewByTitle(infoConsultantTitle.getValue()));
+    
+    }
+
+    //Populate the TableView based on the selected title
+    private void populateTableViewByTitle(String title) {
+        if (title != null && !title.isEmpty()) {
+            List<Consultant> consultants = consultantDao.findByEmpTitle(title); // Find consultants by title
+
+            //Check
+            System.out.println("Consultants retrieved: " + consultants.size());
+
+            ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultants); // Convert to ObservableList
+            consultantTableView.setItems(consultantList); // Set items in TableView
+        }
+    } 
+
+   
+
     
 
 
