@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.sql.Types;
 import se.lu.ics.models.Project;
 
 public class ProjectDao {
@@ -88,6 +90,26 @@ public class ProjectDao {
         return project;
     }
 
+    public List<String> findAllProjectNos() {
+        String query = "SELECT ProjectNo FROM Project";
+        List<String> projectNos = new ArrayList<>();
+
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            // Iterate through the result set and add each EmpNo to the list
+            while (resultSet.next()) {
+                projectNos.add(resultSet.getString("ProjectNo"));
+            }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching all ProjectNos.", e);
+        }
+
+        return projectNos;
+    }
+
     /* SAVE PROJECT */
     /**
      * Saves a new project to the database.
@@ -108,9 +130,19 @@ public class ProjectDao {
             try (PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
                 insertStmt.setString(1, project.getProjectNo());
                 insertStmt.setString(2, project.getProjectName());
-                insertStmt.setDate(3, Date.valueOf(project.getProjectStartDate()));
-                insertStmt.setDate(4, Date.valueOf(project.getProjectEndDate()));
+                // Check if projectStartDate is null and handle it appropriately
+                if (project.getProjectStartDate() != null) {
+                    insertStmt.setDate(3, Date.valueOf(project.getProjectStartDate()));
+                } else {
+                    insertStmt.setNull(3, Types.DATE);
+                }
 
+                // Check if projectEndDate is null and handle it appropriately
+                if (project.getProjectEndDate() != null) {
+                    insertStmt.setDate(4, Date.valueOf(project.getProjectEndDate()));
+                } else {
+                    insertStmt.setNull(4, Types.DATE);
+                }
                 // Execute the insert operation
                 insertStmt.executeUpdate();
             }
@@ -122,13 +154,13 @@ public class ProjectDao {
                 throw new DaoException("A project with this ProjectNo or ProjectName already exists.", e);
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("Fields ProjectNo and ProjectName cannot be empty.", e);
-            }
-            // Checks for general constraints because SQL server lacks an error code for check constraints.
-            else if (e.getErrorCode() == 547) {
-                throw new DaoException("The start date is after the end date. Choose a date that starts before the end date.", e);
+            } else if (e.getErrorCode() == 547) {
+                throw new DaoException("End date must be after start date", e);
             } else {
                 throw new DaoException("Error saving project: " + project.getProjectNo(), e);
             }
+        } catch (Exception e) {
+            throw new DaoException("Error saving project: " + project.getProjectNo());
         }
     }
 
@@ -168,10 +200,13 @@ public class ProjectDao {
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("Fields ProjectNo and ProjectName cannot be empty.");
             } else if (e.getErrorCode() == 547) {
-                throw new DaoException("The start date is after the end date. Choose a date that starts before the end date.");
+                throw new DaoException(
+                        "The start date is after the end date. Choose a date that starts before the end date.");
             } else {
                 throw new DaoException("Error saving project: " + updatedproject.getProjectNo(), e);
             }
+        } catch (Exception e) {
+            throw new DaoException("Error saving project: " + updatedproject.getProjectNo());
         }
     }
 
@@ -218,7 +253,7 @@ public class ProjectDao {
         String query = "DELETE FROM Project WHERE ProjectNo = ?";
 
         try (Connection connection = connectionHandler.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             // Set ProjectNo in the prepared statement
             statement.setString(1, projectNo);

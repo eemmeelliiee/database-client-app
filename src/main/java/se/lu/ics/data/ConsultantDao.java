@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.sql.Types;
 import se.lu.ics.models.Consultant;
 
 public class ConsultantDao {
@@ -59,11 +61,11 @@ public class ConsultantDao {
     public List<String> findAllEmpNos() {
         String query = "SELECT EmpNo FROM Consultant";
         List<String> empNos = new ArrayList<>();
-    
+
         try (Connection connection = connectionHandler.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query);
                 ResultSet resultSet = statement.executeQuery()) {
-    
+
             // Iterate through the result set and add each EmpNo to the list
             while (resultSet.next()) {
                 empNos.add(resultSet.getString("EmpNo"));
@@ -72,11 +74,9 @@ public class ConsultantDao {
             // Throw a custom DaoException if there's an issue with database access
             throw new DaoException("Error fetching all EmpNos.", e);
         }
-    
+
         return empNos;
     }
-
-    
 
     /* FIND CONSULTANT BY EmpNo */
     /**
@@ -144,8 +144,36 @@ public class ConsultantDao {
             // Throw a custom DaoException if there's an issue with database access
             throw new DaoException("Error fetching consultants with EmpTitle: " + empTitle, e);
         }
-
         return consultants;
+    }
+
+    /* FIND ALL EmpTitles */
+    /**
+     * Retrieves all unique EmpTitles from the database.
+     * This method executes a SQL SELECT statement to fetch unique EmpTitles and
+     * returns them as a list of Strings.
+     *
+     * @return A list of EmpTitle Strings.
+     * @throws DaoException If there is an error accessing the database.
+     */
+
+    public List<String> findAllEmpTitles() {
+        String query = "SELECT DISTINCT EmpTitle FROM Consultant";
+        List<String> empTitles = new ArrayList<>();
+
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            // Iterate through the result set and add each EmpTitle to the list
+            while (resultSet.next()) {
+                empTitles.add(resultSet.getString("EmpTitle"));
+            }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching all EmpTitles.", e);
+        }
+        return empTitles;
     }
 
     /* SAVE CONSULTANT */
@@ -169,30 +197,39 @@ public class ConsultantDao {
             statement.setString(2, consultant.getEmpFirstName());
             statement.setString(3, consultant.getEmpLastName());
             statement.setString(4, consultant.getEmpTitle());
-            statement.setDate(5, Date.valueOf(consultant.getEmpStartDate()));
+            // Check if empStartDate is null and handle it appropriately
+            if (consultant.getEmpStartDate() != null) {
+                statement.setDate(5, Date.valueOf(consultant.getEmpStartDate()));
+            } else {
+                statement.setNull(5, Types.DATE);
+            }
 
             // Execute the insert operation
             statement.executeUpdate();
         } catch (SQLException e) {
-            // Check for unique constraint violation (SQL Server error code 2627)
+            // Check for constraint violations
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("A consultant with this EmpNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("Fields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
-                throw new DaoException("Error saving consultant: " + consultant.getEmpNo(), e);
+                throw new DaoException("Error registering consultant: " + consultant.getEmpNo(), e);
             }
+        } catch (Exception e) {
+            // Handle any other exceptions
+            throw new DaoException("Error registering consultant: " + consultant.getEmpNo(), e);
         }
     }
 
     /* UPDATE CONSULTANT BY EmpNo */
-     /**
+    /**
      * Updates an existing consultant's details in the database.
      * This method updates the consultant's information based on the provided
      * Consultant object.
      *
      * @param updatedConsultant The Consultant object containing the updated data.
-     * @param oldEmpNo The original EmpNo used to identify the record to be updated.
+     * @param oldEmpNo          The original EmpNo used to identify the record to be
+     *                          updated.
      * @throws DaoException If there is an error updating the consultant's data.
      */
     public void update(Consultant updatedConsultant, String oldEmpNo) {
@@ -215,10 +252,13 @@ public class ConsultantDao {
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("A consultant with this EmpNo already exists.", e);
+            } else if (e.getErrorCode() == 515) {
+                throw new DaoException("Fields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
-                // Throw a DaoException for any SQL errors
                 throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo(), e);
             }
+        } catch (Exception e) {
+            throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo(), e);
         }
     }
 

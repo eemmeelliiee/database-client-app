@@ -2,19 +2,24 @@ package se.lu.ics.models;
 
 import java.time.LocalDate;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Consultant {
     private String empNo;
     private String empFirstName;
     private String empLastName;
-    private String empTitle;
-    private LocalDate empStartDate;
+    private StringProperty empTitle;
+    private ObjectProperty<LocalDate> empStartDate;
 
     public Consultant(String empNo, String empFirstName, String empLastName, String empTitle, LocalDate empStartDate) {
         this.empNo = empNo;
         this.empFirstName = empFirstName;
         this.empLastName = empLastName;
-        this.empTitle = empTitle;
-        this.empStartDate = empStartDate;
+        this.empTitle = new SimpleStringProperty(empTitle);
+        this.empStartDate = new SimpleObjectProperty<>(empStartDate);
     }
 
     public String getEmpNo() {
@@ -42,18 +47,34 @@ public class Consultant {
     }
 
     public String getEmpTitle() {
-        return empTitle;
+        return empTitle.get();
     }
 
     public void setEmpTitle(String empTitle) {
+        this.empTitle.set(empTitle);
+    }
+
+    public StringProperty empTitleProperty() {
+        return empTitle;
+    }
+
+    public void setEmpTitle(StringProperty empTitle) {
         this.empTitle = empTitle;
     }
 
     public LocalDate getEmpStartDate() {
-        return empStartDate;
+        return empStartDate.get();
     }
 
     public void setEmpStartDate(LocalDate empStartDate) {
+        this.empStartDate.set(empStartDate);
+    }
+
+    public ObjectProperty<LocalDate> empStartDateProperty() {
+        return empStartDate;
+    }
+
+    public void setEmpStartDate(ObjectProperty<LocalDate> empStartDate) {
         this.empStartDate = empStartDate;
     }
 
