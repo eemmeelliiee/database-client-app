@@ -41,7 +41,13 @@ public class MilestoneDao {
             // Execute the insert operation
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
+            if (e.getErrorCode() == 2627) {
+                throw new DaoException("A milestone with this MilstoneNo already exists.", e);
+            } else if (e.getErrorCode() == 515) {
+                throw new DaoException("MilestoneNo are not allowed to contain NULL-values.", e);
+            } else {
+                throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
+        }
         }
     }
 
@@ -73,7 +79,11 @@ public class MilestoneDao {
                 }
             }
         } catch (SQLException e) {
-            throw new DaoException("Error fetching milestones for project: " + projectNo, e);
+            if (e.getErrorCode() == 515) {
+                throw new DaoException("ProjectId is not allowed to contain NULL-values.", e);
+            } else {
+                throw new DaoException("Error fetching milestones for project: " + projectNo, e);
+            }
         }
 
         return milestones;
@@ -107,7 +117,11 @@ public class MilestoneDao {
                 }
             }
         } catch (SQLException e) {
+            if (e.getErrorCode() == 515) {
+                throw new DaoException("ProjectNo is not allowed to contain NULL-values.", e);
+            } else {
             throw new DaoException("Error fetching the total number of milestones for project: " + projectNo, e);
+            }
         }
 
         return totalNumberOfMilestones;
@@ -136,8 +150,11 @@ public class MilestoneDao {
             // Execute the delete operation
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException(
-                    "Error deleting milestone with MilestoneNo: " + milestoneNo + " for project: " + projectNo, e);
+            if (e.getErrorCode() == 515) {
+                throw new DaoException("ProjectNo and MilestoneNo are not allowed to contain NULL-values.", e);
+            } else {
+                throw new DaoException("Error deleting milestone with MilestoneNo: " + milestoneNo + " for project: " + projectNo, e);
+            }
         }
     }
 
