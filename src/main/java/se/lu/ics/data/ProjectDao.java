@@ -88,6 +88,27 @@ public class ProjectDao {
         return project;
     }
 
+    public List<String> findAllProjectNos() {
+        String query = "SELECT ProjectNo FROM Project";
+        List<String> projectNos = new ArrayList<>();
+    
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+    
+            // Iterate through the result set and add each EmpNo to the list
+            while (resultSet.next()) {
+                projectNos.add(resultSet.getString("ProjectNo"));
+            }
+        } catch (SQLException e) {
+            // Throw a custom DaoException if there's an issue with database access
+            throw new DaoException("Error fetching all ProjectNos.", e);
+        }
+    
+        return projectNos;
+    }
+
+
     /* SAVE PROJECT */
     /**
      * Saves a new project to the database.
