@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="418.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MainViewController">
+<AnchorPane prefHeight="418.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MainViewController">
    <children>
       <TabPane layoutX="-6.0" layoutY="-7.0" prefHeight="205.0" prefWidth="381.0" scaleShape="false" tabClosingPolicy="UNAVAILABLE" tabMinWidth="81.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -85,21 +85,21 @@
                                     <AnchorPane fx:id="infoPane" prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
-                                          <TableView fx:id="consultantTableView" layoutX="34.0" layoutY="80.0" prefHeight="200.0" prefWidth="409.0">
+                                          <TableView fx:id="consultantTableView" layoutX="34.0" layoutY="80.0" prefHeight="200.0" prefWidth="438.0">
                                             <columns>
                                               <TableColumn fx:id="colEmpNo" prefWidth="79.79247665405273" text="Emp. Number" />
                                                 <TableColumn fx:id="colFirstName" prefWidth="83.8084487915039" text="First Name" />
                                                 <TableColumn fx:id="colLastName" prefWidth="86.38825988769531" text="Last Name" />
                                                 <TableColumn fx:id="colTitle" minWidth="5.872344970703125" prefWidth="92.61172485351562" text="Title" />
-                                                <TableColumn fx:id="colStartDate" prefWidth="65.18362426757812" text="Start Date" />
+                                                <TableColumn fx:id="colStartDate" prefWidth="93.5" text="Start Date" />
                                             </columns>
                                           </TableView>
-                                          <ComboBox layoutX="35.0" layoutY="40.0" prefHeight="26.0" prefWidth="181.0" promptText="View specific consultant" />
-                                          <ComboBox fx:id="infoConsultantTitle" layoutX="235.0" layoutY="40.0" prefHeight="26.0" prefWidth="114.0" promptText="View by title" />
-                                          <Button layoutX="362.0" layoutY="40.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="View All" />
-                                          <Label layoutX="467.0" layoutY="170.0" prefHeight="40.0" prefWidth="82.0" text=" Total amount &#10;of consultants:" />
+                                          <ComboBox fx:id="viewSpecificConsultantComboBox" layoutX="35.0" layoutY="40.0" prefHeight="26.0" prefWidth="181.0" promptText="View specific consultant" />
+                                          <ComboBox fx:id="infoConsultantTitle" layoutX="246.0" layoutY="40.0" prefHeight="26.0" prefWidth="114.0" promptText="View by title" />
+                                          <Button fx:id="viewAllButton" layoutX="391.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleButtonViewAll" prefHeight="26.0" prefWidth="81.0" text="View All" />
                                           <Label fx:id="infoConsultantResponse" layoutX="466.0" layoutY="40.0" prefHeight="119.0" prefWidth="84.0" />
-                                          <Label fx:id="totalConsultantsResponse" layoutX="466.0" layoutY="210.0" prefHeight="77.0" prefWidth="83.0" />
+                                          <Label fx:id="totalConsultantsResponse" layoutX="488.0" layoutY="193.0" prefHeight="87.0" prefWidth="158.0" />
+                                          <Label layoutX="34.0" layoutY="287.0" prefHeight="17.0" prefWidth="558.0" text="To update a consultant: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -126,7 +126,7 @@
                            <children>
                               <StackPane layoutY="-3.0" prefHeight="297.0" prefWidth="586.0">
                                  <children>
-                                    <AnchorPane fx:id="infoProjectPane" prefHeight="309.0" prefWidth="607.0" visible="false">
+                                    <AnchorPane fx:id="infoProjectPane" prefHeight="309.0" prefWidth="607.0">
                                        <children>
                                           <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
                                           <TableView layoutX="24.0" layoutY="86.0" prefHeight="189.0" prefWidth="440.0">
@@ -137,7 +137,7 @@
                                                 <TableColumn prefWidth="106.20755004882812" text="End Date" />
                                              </columns>
                                           </TableView>
-                                          <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" />
+                                          <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" visible="false" />
                                           <Button layoutX="398.0" layoutY="43.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="View all" />
                                           <Button layoutX="196.0" layoutY="43.0" mnemonicParsing="false" text="Projects involving all consultants" />
                                           <Label layoutX="478.0" layoutY="86.0" prefHeight="188.0" prefWidth="90.0" text="Error yta" />
@@ -147,23 +147,24 @@
                                        <children>
                                           <Label layoutX="244.0" layoutY="14.0" text="Remove a project:" />
                                           <Label layoutX="156.0" layoutY="76.0" text="Project Number:" />
-                                          <ChoiceBox layoutX="278.0" layoutY="72.0" prefWidth="150.0" />
-                                          <Button layoutX="242.0" layoutY="136.0" mnemonicParsing="false" text="Remove Project" />
+                                          <Button fx:id="removeProjectButton" layoutX="242.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleButtonRemoveProject" text="Remove Project" />
+                                          <ComboBox fx:id="removeProjectNo" layoutX="259.0" layoutY="72.0" prefWidth="150.0" />
+                                          <Label fx:id="removeProjectLabelResponse" layoutX="39.0" layoutY="202.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="registerProjectPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                                        <children>
                                           <Label layoutX="244.0" layoutY="14.0" text="Register a project:" />
                                           <Label layoutX="37.0" layoutY="50.0" text="Project Number:" />
-                                          <TextField layoutX="164.0" layoutY="45.0" promptText="Ex: P001" />
+                                          <TextField fx:id="registerProjectNo" layoutX="164.0" layoutY="45.0" promptText="Ex: P001" />
                                           <Label layoutX="89.0" layoutY="104.0" text="Name:" />
-                                          <TextField layoutX="164.0" layoutY="100.0" promptText="Ex: Alpha Project" />
+                                          <TextField fx:id="registerProjectName" layoutX="164.0" layoutY="100.0" promptText="Ex: Alpha Project" />
                                           <Label layoutX="67.0" layoutY="149.0" text="Start Date:" />
-                                          <DatePicker layoutX="164.0" layoutY="144.0" prefHeight="26.0" prefWidth="159.0" />
+                                          <DatePicker fx:id="registerProjectStartDate" layoutX="164.0" layoutY="144.0" prefHeight="26.0" prefWidth="159.0" />
                                           <Label layoutX="69.0" layoutY="195.0" text="End Date:" />
-                                          <DatePicker layoutX="164.0" layoutY="190.0" prefHeight="26.0" prefWidth="159.0" />
-                                          <Button layoutX="132.0" layoutY="243.0" mnemonicParsing="false" text="Register Project" />
-                                          <Label layoutX="378.0" layoutY="83.0" prefHeight="89.0" prefWidth="162.0" text="Ska vara error ruta ifall error uppstår" />
+                                          <DatePicker fx:id="registerProjectEndDate" layoutX="164.0" layoutY="190.0" prefHeight="26.0" prefWidth="159.0" />
+                                          <Button fx:id="registerProjectButton" layoutX="132.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleButtonRegisterProject" text="Register Project" />
+                                          <Label fx:id="registerProjectLabelResponse" layoutX="333.0" layoutY="82.0" prefHeight="89.0" prefWidth="248.0" text="Ska vara error ruta ifall error uppstår" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -358,5 +359,6 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Label fx:id="infoOverViewLabel" layoutX="34.0" layoutY="443.0" />
    </children>
 </AnchorPane>
