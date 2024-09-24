@@ -123,16 +123,9 @@ public class ProjectDao {
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("Fields ProjectNo and ProjectName cannot be empty.", e);
             }
-            // Checks for general constraints. SQL-server lacks an error code for check constraints.
+            // Checks for general constraints because SQL server lacks an error code for check constraints.
             else if (e.getErrorCode() == 547) {
-                String errorMessage = e.getMessage();
-
-                // There's only one check constraint. The else statement shouldn't be able to run, but is used to avoid potential errors.
-                if (errorMessage.contains("CHECK constraint")) {
-                    throw new DaoException("The start date is after the end date. Choose a date that starts before the end date.", e);
-                } else {
-                    throw new DaoException("Another unspecified constraint occured.");
-                }
+                throw new DaoException("The start date is after the end date. Choose a date that starts before the end date.", e);
             } else {
                 throw new DaoException("Error saving project: " + project.getProjectNo(), e);
             }
@@ -175,13 +168,7 @@ public class ProjectDao {
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("Fields ProjectNo and ProjectName cannot be empty.");
             } else if (e.getErrorCode() == 547) {
-                String errorMessage = e.getMessage();
-
-                if (errorMessage.contains("CHECK constraint")) {
-                    throw new DaoException("The start date is after the end date. Choose a date that starts before the end date.");
-                } else {
-                    throw new DaoException("Another unspecified constraint occured.");
-                }
+                throw new DaoException("The start date is after the end date. Choose a date that starts before the end date.");
             } else {
                 throw new DaoException("Error saving project: " + updatedproject.getProjectNo(), e);
             }
