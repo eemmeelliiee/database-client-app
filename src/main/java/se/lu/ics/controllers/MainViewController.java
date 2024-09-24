@@ -6,7 +6,6 @@ import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -38,7 +37,6 @@ public class MainViewController {
     private void handleShowRegisterConsultantPane() {
         registerConsultantPane.setVisible(true);
         removeConsultantPane.setVisible(false);
-        updateConsultantPane.setVisible(false);
         infoPane.setVisible(false);
     }
 
@@ -53,25 +51,9 @@ public class MainViewController {
     private void handleShowRemoveConsultantPane() {
         removeConsultantPane.setVisible(true);
         registerConsultantPane.setVisible(false);
-        updateConsultantPane.setVisible(false);
         infoPane.setVisible(false);
     }
 
-    // Update Consultant Pane
-    @FXML
-    private AnchorPane updateConsultantPane;
-
-    @FXML
-    private Button showUpdateConsultantPane;
-
-    @FXML
-    private void handleShowUpdateConsultantPane() {
-        updateConsultantPane.setVisible(true);
-        registerConsultantPane.setVisible(false);
-        removeConsultantPane.setVisible(false);
-        infoPane.setVisible(false);
-    
-    }
 
     // info pane
     @FXML
@@ -85,7 +67,6 @@ public class MainViewController {
         infoPane.setVisible(true);
         registerConsultantPane.setVisible(false);
         removeConsultantPane.setVisible(false);
-        updateConsultantPane.setVisible(false);
     }
 
 
@@ -102,7 +83,6 @@ public class MainViewController {
     private void handleShowRegisterProjectPane() {
         registerProjectPane.setVisible(true);
         removeProjectPane.setVisible(false);
-        updateProjectPane.setVisible(false);
         infoProjectPane.setVisible(false);
     }
 
@@ -117,24 +97,7 @@ public class MainViewController {
     private void handleShowRemoveProjectPane() {
         removeProjectPane.setVisible(true);
         registerProjectPane.setVisible(false);
-        updateProjectPane.setVisible(false);
         infoProjectPane.setVisible(false);
-    }
-
-    // Update Project Pane
-    @FXML
-    private AnchorPane updateProjectPane;
-
-    @FXML
-    private Button showUpdateProjectPane;
-
-    @FXML
-    private void handleShowUpdateProjectPane() {
-        updateProjectPane.setVisible(true);
-        registerProjectPane.setVisible(false);
-        removeProjectPane.setVisible(false);
-        infoProjectPane.setVisible(false);
-    
     }
 
     // info pane
@@ -149,25 +112,9 @@ public class MainViewController {
         infoProjectPane.setVisible(true);
         registerProjectPane.setVisible(false);
         removeProjectPane.setVisible(false);
-        updateProjectPane.setVisible(false);
     }
 
     //Milestone Tab
-
-    //Register Milestone Pane
-    @FXML
-    private AnchorPane registerMSPane;
-
-    @FXML
-    private Button showRegisterMSPane;
-
-    @FXML
-    private void handleShowRegisterMSPane() {
-        registerMSPane.setVisible(true);
-        removeMSPane.setVisible(false);
-        addMSPane.setVisible(false);
-        retrieveMSPane.setVisible(false);
-    }
 
     //Remove Milestone Pane
     @FXML
@@ -179,7 +126,6 @@ public class MainViewController {
     @FXML
     private void handleShowRemoveMSPane() {
         removeMSPane.setVisible(true);
-        registerMSPane.setVisible(false);
         addMSPane.setVisible(false);
         retrieveMSPane.setVisible(false);
     }
@@ -194,7 +140,6 @@ public class MainViewController {
     @FXML
     private void handleShowAddMSPane() {
         addMSPane.setVisible(true);
-        registerMSPane.setVisible(false);
         removeMSPane.setVisible(false);
         retrieveMSPane.setVisible(false);
     
@@ -210,7 +155,6 @@ public class MainViewController {
     @FXML
     private void handleShowRetrieveMSPane() {
         retrieveMSPane.setVisible(true);
-        registerMSPane.setVisible(false);
         removeMSPane.setVisible(false);
         addMSPane.setVisible(false);
     }
@@ -228,7 +172,6 @@ public class MainViewController {
     private void handleShowAddConToProPane() {
         addConToProPane.setVisible(true);
         checkWorkingConsPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
         hardestWorkingConPane.setVisible(false);
     }
@@ -244,26 +187,10 @@ public class MainViewController {
     private void handleShowCheckWorkingConsPane() {
         checkWorkingConsPane.setVisible(true);
         addConToProPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
         hardestWorkingConPane.setVisible(false);
     }
 
-    // Update Hours Pane
-    @FXML
-    private AnchorPane updateHoursPane;
-
-    @FXML
-    private Button showUpdateHoursPane;
-
-    @FXML
-    private void handleShowUpdateHoursPane() {
-        updateHoursPane.setVisible(true);
-        addConToProPane.setVisible(false);
-        checkWorkingConsPane.setVisible(false);
-        displayConsHoursPane.setVisible(false);
-        hardestWorkingConPane.setVisible(false);
-    }
 
     // Display Consultant Hours Pane
     @FXML
@@ -277,7 +204,6 @@ public class MainViewController {
         displayConsHoursPane.setVisible(true);
         addConToProPane.setVisible(false);
         checkWorkingConsPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         hardestWorkingConPane.setVisible(false);
     }
 
@@ -293,7 +219,6 @@ public class MainViewController {
         hardestWorkingConPane.setVisible(true);
         addConToProPane.setVisible(false);
         checkWorkingConsPane.setVisible(false);
-        updateHoursPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
     }
 
@@ -388,7 +313,7 @@ public class MainViewController {
             consultantDao.deleteByEmpNo(empNo); // Remove the consultant
             
             // Create a response message with a newline for formatting
-            String responseMessage = String.format("Consultant with Employee No: " + empNo +  " Successfully removed.");
+            String responseMessage = String.format("Consultant with Employee No: " + empNo +  " has been successfully removed.");
             
             // Set the formatted string to the response label
             removeConsultantResponse.setText(responseMessage);
