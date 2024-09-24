@@ -49,7 +49,7 @@ public class WorkDao {
 
             // Check for SQL warnings
             SQLWarning warning = statement.getWarnings();
-            
+
             if (warning != null) {
                 StringBuilder warningMessage = new StringBuilder();
                 while (warning != null) {
@@ -69,10 +69,12 @@ public class WorkDao {
             } else if (e.getErrorCode() == 8114) {
                 throw new DaoException("Work hours must be a number", e);
             } else if (e.getErrorCode() == 547) {
-                throw new DaoException("Work hours must be a greater than 0", e);
+                throw new DaoException("Work hours must be greater than 0", e);
             } else {
                 throw new DaoException("Error adding consultant to project.", e);
             }
+        } catch (Exception e) {
+            throw new DaoException("Error updating work hours.", e);
         }
         return null; // No warnings
     }
@@ -297,6 +299,8 @@ public class WorkDao {
             } else {
                 throw new DaoException("Error updating work hours.", e);
             }
+        } catch (Exception e) {
+            throw new DaoException("Error updating work hours.", e);
         }
     }
 
