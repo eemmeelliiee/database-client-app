@@ -266,26 +266,35 @@ public class MainViewController {
 
     @FXML
     private void handleButtonRegisterConsultant() {
-        String empNo = registerConsultantNo.getText();
-        String empFirstName = registerConsultantName.getText();
-        String empLastName = registerConsultantLast.getText();
-        String empTitle = registerConsultantTitle.getText();
-        LocalDate empStartDate = registerConsultantDate.getValue();
+        try {
+            String empNo = registerConsultantNo.getText();
+            String empFirstName = registerConsultantName.getText();
+            String empLastName = registerConsultantLast.getText();
+            String empTitle = registerConsultantTitle.getText();
+            LocalDate empStartDate = registerConsultantDate.getValue();
 
-        Consultant newConsultant = new Consultant(empNo, empFirstName, empLastName, empTitle, empStartDate);
+            // Set to null if the text is empty
+            empNo = (empNo != null && empNo.trim().isEmpty()) ? null : empNo;
+            empFirstName = (empFirstName != null && empFirstName.trim().isEmpty()) ? null : empFirstName;
+            empLastName = (empLastName != null && empLastName.trim().isEmpty()) ? null : empLastName;
+            empTitle = (empTitle != null && empTitle.trim().isEmpty()) ? null : empTitle;
 
-        consultantDao.save(newConsultant);
+            Consultant newConsultant = new Consultant(empNo, empFirstName, empLastName, empTitle, empStartDate);
 
-        lableResponse.setText("New Consultant Registered:\n" +
-                      "First Name: " + empFirstName + "\n" +
-                      "Last Name: " + empLastName + "\n" +
-                      "Title: " + empTitle + "\n" +
-                      "Employee No: " + empNo + "\n" +
-                      "Start Date: " + empStartDate);
+            consultantDao.save(newConsultant);
 
-        populateEmployeeNumbers();
+            lableResponse.setText("New Consultant Registered:\n" +
+                    "First Name: " + (empFirstName != null ? empFirstName : "N/A") + "\n" +
+                    "Last Name: " + (empLastName != null ? empLastName : "N/A") + "\n" +
+                    "Title: " + (empTitle != null ? empTitle : "N/A") + "\n" +
+                    "Employee No: " + empNo + "\n" +
+                    "Start Date: " + (empStartDate != null ? empStartDate : "N/A"));
 
-        
+            populateEmployeeNumbers();
+        } catch (DaoException e) {
+            lableResponse.setText("Error: " + e.getMessage());
+        }
+
     }
 
     //Remove Consultant
@@ -315,23 +324,27 @@ public class MainViewController {
 
     @FXML
     private void handleButtonRemoveConsultant() {
-        String empNo = removeConsultantNo.getValue(); // Get the selected Employee Number
-        
-        // Check if an Employee Number is selected
-        if (empNo != null && !empNo.isEmpty()) {
-            consultantDao.deleteByEmpNo(empNo); // Remove the consultant
+        try {
+            String empNo = removeConsultantNo.getValue(); // Get the selected Employee Number
             
-            // Create a response message with a newline for formatting
-            String responseMessage = String.format("Consultant with Employee No: " + empNo +  " has been successfully removed.");
-            
-            // Set the formatted string to the response label
-            removeConsultantResponse.setText(responseMessage);
-            
-            // Optional: Refresh the ComboBox after removal
-            populateEmployeeNumbers(); // Assuming you have a method to refresh the ComboBox
-        } else {
-            // If no Employee Number is selected, show a warning message
-            removeConsultantResponse.setText("Please select an employee number.");
+            // Check if an Employee Number is selected
+            if (empNo != null && !empNo.isEmpty()) {
+                consultantDao.deleteByEmpNo(empNo); // Remove the consultant
+                
+                // Create a response message with a newline for formatting
+                String responseMessage = String.format("Consultant with Employee No: " + empNo +  " has been successfully removed.");
+                
+                // Set the formatted string to the response label
+                removeConsultantResponse.setText(responseMessage);
+                
+                // Optional: Refresh the ComboBox after removal
+                populateEmployeeNumbers(); // Assuming you have a method to refresh the ComboBox
+            } else {
+                // If no Employee Number is selected, show a warning message
+                removeConsultantResponse.setText("Please select an employee number.");
+            }
+        } catch (DaoException e){
+            removeConsultantResponse.setText("Error: " + e.getMessage());
         }
     }
 
@@ -380,8 +393,6 @@ public class MainViewController {
         colTitle.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
         colStartDate.setCellValueFactory(new PropertyValueFactory<>("empStartDate"));
     
-        populateEmployeeTitles();
-
         //Add a listener to combobox to populate TableView when a title is selected
         infoConsultantTitle.setOnAction(event -> populateTableViewByTitle(infoConsultantTitle.getValue()));
     
