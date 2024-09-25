@@ -1,46 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<SplitPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MetadataTabController" dividerPositions="0.2825520833333333" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0">
-    <items>
-    <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="76.0" prefWidth="584.0">
-        <children>
-            <Button layoutX="8.0" layoutY="31.0" mnemonicParsing="false" text="View Table Information" />
-            <Button layoutX="313.0" layoutY="31.0" mnemonicParsing="false" text="View Primary Constraints" />
-            <Button layoutX="159.0" layoutY="31.0" mnemonicParsing="false" text="View Check Constraints" />
-            <Button layoutX="476.0" layoutY="31.0" mnemonicParsing="false" text="View Excel File" />
-            <Label layoutX="226.0" layoutY="7.0" text="METADATA OVERVIEW" />
-            <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
-        </children>
-    </AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-        <children>
-            <StackPane prefHeight="302.0" prefWidth="586.0">
-                <children>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                </children>
-            </StackPane>
-        </children>
-    </AnchorPane>
-    </items>
+<SplitPane dividerPositions="0.2825520833333333" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MetadataTabController">
+   <items>
+   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
+       <children>
+           <Button fx:id="showTableInfoPaneButton" layoutX="34.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowTableInfoPaneButton" prefWidth="160.0" text="View Table Information" />
+           <Button fx:id="showPrimaryConstraintPaneButton" layoutX="420.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowPrimaryConstraintPaneButton" prefWidth="160.0" text="View Primary Constraints" />
+           <Button fx:id="showCheckConstraintPaneButton" layoutX="227.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowCheckConstraintPaneButton" prefWidth="160.0" text="View Check Constraints" />
+           <Button layoutX="492.0" layoutY="9.0" mnemonicParsing="false" text="View Excel File" />
+           <Label layoutX="240.0" layoutY="14.0" text="METADATA OVERVIEW" />
+           <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
+       </children>
+   </AnchorPane>
+   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+       <children>
+           <StackPane prefHeight="302.0" prefWidth="586.0">
+               <children>
+               <AnchorPane fx:id="checkConstraintPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
+                    <children>
+                       <Label layoutX="241.0" layoutY="14.0" text="CHECK CONSTRAINTS:" />
+                    </children></AnchorPane>
+               <AnchorPane fx:id="primaryConstraintPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
+                    <children>
+                       <Label layoutX="235.0" layoutY="14.0" text="PRIMARY CONSTRAINTS:" />
+                    </children>
+                 </AnchorPane>
+               <AnchorPane fx:id="tableInfoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
+                    <children>
+                       <Button fx:id="nonIntNamesButton" layoutX="208.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleNonIntNamesButton" prefWidth="200.0" text="Non-int Consultant table names" />
+                       <Button fx:id="mostRowsButton" layoutX="31.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleMostRowsButton" prefWidth="150.0" text="Table with most rows" />
+                       <Button fx:id="allColumnsButton" layoutX="435.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleAllColumnsButton" prefWidth="150.0" text="Names of all columns" />
+                       <Label fx:id="tableInfoLabel" layoutX="244.0" layoutY="14.0" text="TABLE INFORMATION:" />
+                       <TableView fx:id="tableViewMetadata" layoutX="31.0" layoutY="86.0" prefHeight="277.0" prefWidth="300.0">
+                         <columns>
+                           <TableColumn prefWidth="150.0" text="Name" />
+                           <TableColumn fx:id="numberOfRows" prefWidth="150.0" text="Number of rows:" />
+                         </columns>
+                       </TableView>
+                       <Label fx:id="tableInformationResponse" alignment="TOP_LEFT" layoutX="350.0" layoutY="86.0" prefHeight="111.0" prefWidth="248.0" wrapText="true" />
+                    </children>
+                 </AnchorPane>
+               </children>
+           </StackPane>
+       </children>
+   </AnchorPane>
+   </items>
 </SplitPane>
+
+
+
+
+

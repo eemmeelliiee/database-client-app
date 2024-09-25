@@ -23,16 +23,24 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.ComboBox;
 
-import se.lu.ics.models.Consultant;
-import se.lu.ics.models.Milestone;
-import se.lu.ics.models.Project;
-import se.lu.ics.models.Work;
-import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
-import se.lu.ics.data.ProjectDao;
+import se.lu.ics.data.MetaDataDao;
 import se.lu.ics.data.ConnectionHandler;
 
 public class MetadataTabController {
+
+    // Dao instance
+    private MetaDataDao metadataDao;
+
+    // Constructor
+    public MetadataTabController() throws IOException {
+        try {
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            metadataDao = new MetaDataDao(connectionHandler);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 
         // Back to Home Page Button
     @FXML
@@ -60,5 +68,87 @@ public class MetadataTabController {
             e.printStackTrace();
         }
     }
+
+    //Table information Project Pane
+    @FXML
+    private AnchorPane tableInfoPane;
+  
+    @FXML
+    private Button showTableInfoPaneButton;
+  
+    @FXML
+    private void handleShowTableInfoPaneButton() {
+          tableInfoPane.setVisible(true);
+          checkConstraintPane.setVisible(false);
+          primaryConstraintPane.setVisible(false);
+    }
+      
+    //Check constraint pane
+    @FXML
+    private AnchorPane checkConstraintPane;
+
+    @FXML
+    private Button showCheckConstraintPaneButton;
+
+    @FXML
+    private void handleShowCheckConstraintPaneButton() {
+        checkConstraintPane.setVisible(true);
+        tableInfoPane.setVisible(false);
+        primaryConstraintPane.setVisible(false);
+    }
+
+    //Primary constraint pane
+    @FXML
+    private AnchorPane primaryConstraintPane;
+
+    @FXML
+    private Button showPrimaryConstraintPaneButton;
+
+    @FXML
+    private void handleShowPrimaryConstraintPaneButton() {
+        primaryConstraintPane.setVisible(true);
+        tableInfoPane.setVisible(false);
+        checkConstraintPane.setVisible(false);
+    }
+
+
+  
+    //Get non-integer columns button
+    @FXML
+    private Button nonIntNamesButton;
+
+    // Get non-integer columns
+    @FXML
+    private void handleNonIntNamesButton(ActionEvent event) {
+        List<String> nonIntNames = metadataDao.getNonIntegerColumns();
+        String nonIntNamesString = String.join(", ", nonIntNames);
+    }
+
+    //Table with most rows button
+    @FXML
+    private Button mostRowsButton;
+
+    // Get table with most rows
+    @FXML
+    private void handleMostRowsButton(ActionEvent event) {
+        String[] tableWithMostRows = metadataDao.getTableWithMostRows();
+        String tableWithMostRowsString = String.join(", ", tableWithMostRows);
+    }
+
+    //All columns button
+    @FXML
+    private Button allColumnsButton;
+
+    // Get all columns
+    @FXML
+    private void handleAllColumnsButton(ActionEvent event) {
+        List<String> allColumns = metadataDao.getAllColumns();
+        String allColumnsString = String.join(", ", allColumns);
+    }
+
+
+
+
+
     
 }
