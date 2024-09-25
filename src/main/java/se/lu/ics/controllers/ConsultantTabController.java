@@ -250,8 +250,10 @@ private void setupTableColumns() {
                     "Start Date: " + (empStartDate != null ? empStartDate : "N/A"));
 
             populateEmployeeNumbers();
+            lableResponse.setStyle("-fx-text-fill: green");
         } catch (DaoException e) {
             lableResponse.setText("Error: " + e.getMessage());
+            lableResponse.setStyle("-fx-text-fill: red");
         }
 
     }
@@ -282,6 +284,7 @@ private void setupTableColumns() {
 
                 // Set the formatted string to the response label
                 removeConsultantResponse.setText(responseMessage);
+                removeConsultantResponse.setStyle("-fx-text-fill: green");
 
                 // Optional: Refresh the ComboBox after removal
                 populateEmployeeNumbers(); // Assuming you have a method to refresh the ComboBox
@@ -291,6 +294,7 @@ private void setupTableColumns() {
             }
         } catch (DaoException e) {
             removeConsultantResponse.setText("Error: " + e.getMessage());
+            removeConsultantResponse.setStyle("-fx-text-fill: red");
         }
     }
 
@@ -350,11 +354,9 @@ private void setupTableColumns() {
             populateEmployeeNumbers();
             populateEmployeeTitles();
             infoOverViewLabel.setText("Update successful!");
-            //set text to green color
             infoOverViewLabel.setStyle("-fx-text-fill: green");
         } catch (DaoException e) {
             infoOverViewLabel.setText("Error : \n" + e.getMessage());
-            //set text to red color
             infoOverViewLabel.setStyle("-fx-text-fill: red");
             handleButtonViewAll();
             consultantTableView.refresh();
@@ -389,7 +391,8 @@ private void setupTableColumns() {
             totalConsultantsResponse.setText("Total amount\nof consultants: " + consultants.size());
         } catch (DaoException e) {
             // Handle exception (e.g., show an error message)
-            System.err.println("Error fetching consultants: " + e.getMessage());
+            totalConsultantsResponse.setText("Error fetching consultants: " + e.getMessage());
+            totalConsultantsResponse.setStyle("-fx-text-fill: red");
         }
     }
 

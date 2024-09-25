@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ProjectTabController">
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ProjectTabController">
     <items>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="598.0">
             <children>
@@ -29,18 +29,18 @@
                     <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="295.0" prefWidth="583.0">
                         <children>
                             <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
-                            <TableView layoutX="24.0" layoutY="86.0" prefHeight="189.0" prefWidth="440.0">
+                            <TableView fx:id="tableViewProject" layoutX="24.0" layoutY="86.0" prefHeight="189.0" prefWidth="545.0">
                                 <columns>
-                                <TableColumn prefWidth="107.55587577819824" text="Project Number" />
-                                <TableColumn prefWidth="110.94409942626953" text="Name" />
-                                <TableColumn minWidth="3.433319091796875" prefWidth="112.72348022460938" text="Start Date" />
-                                <TableColumn prefWidth="106.20755004882812" text="End Date" />
+                                <TableColumn fx:id="colStatus" prefWidth="92.0" text="Status" />
+                                <TableColumn fx:id="colProjectNo" prefWidth="127.0" text="Project Number" />
+                                <TableColumn fx:id="colProjectName" minWidth="3.433319091796875" prefWidth="112.72348022460938" text="Name" />
+                                <TableColumn fx:id="colStartDate" prefWidth="119.0" text="StartDate" />
+                              <TableColumn fx:id="colEndDate" minWidth="0.0" prefWidth="104.0" text="EndDate" />
                                 </columns>
                             </TableView>
                             <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" visible="false" />
-                            <Button layoutX="398.0" layoutY="43.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="View all" />
-                            <Button layoutX="196.0" layoutY="43.0" mnemonicParsing="false" text="Projects involving all consultants" />
-                            <Label layoutX="478.0" layoutY="86.0" prefHeight="160.0" prefWidth="90.0" />
+                            <Button fx:id="viewAllProjectsButton" layoutX="503.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
+                        <ComboBox fx:id="viewAllProjectsComboBox" layoutX="24.0" layoutY="44.0" prefHeight="26.0" prefWidth="159.0" promptText="View specific project" />
                         </children>
                     </AnchorPane>
                     <AnchorPane fx:id="removeProjectPane" prefHeight="402.0" prefWidth="586.0" visible="false">
