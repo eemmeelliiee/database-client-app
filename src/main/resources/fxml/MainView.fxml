@@ -7,19 +7,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="HomePage" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MainViewController">
+<AnchorPane fx:id="HomePage" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MainViewController">
    <children>
-      <Button fx:id="showConsultantTabButton" layoutX="34.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowConsultantTabButton" text="ConsultantTab" />
-      <Button fx:id="showProjectTabButton" layoutX="156.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowProjectTabButton" text="ProjectTab" />
-      <Button fx:id="showMilestoneTabButton" layoutX="256.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowMilestoneTabButton" text="MilestoneTab" />
-      <Button fx:id="showWorkTabButton" layoutX="373.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowWorkTabButton" text="WorkTab" />
-      <Button fx:id="showMetadataTabButton" layoutX="465.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowMetadataTabButton" text="MetadataTab" />
-      <Text layoutX="163.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your vision, Our strategy">
+      <Button fx:id="showConsultantTabButton" layoutX="18.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowConsultantTabButton" text="ConsultantTab" />
+      <Button fx:id="showProjectTabButton" layoutX="137.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowProjectTabButton" text="ProjectTab" />
+      <Button fx:id="showMilestoneTabButton" layoutX="256.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowMilestoneTabButton" text="MilestoneTab" />
+      <Button fx:id="showWorkTabButton" layoutX="374.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowWorkTabButton" text="WorkTab" />
+      <Button fx:id="showMetadataTabButton" layoutX="493.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowMetadataTabButton" text="MetadataTab" />
+      <Text layoutX="179.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your vision, Our strategy">
          <font>
             <Font name="Charter Black Italic" size="20.0" />
          </font>
       </Text>
-      <TextArea cache="true" editable="false" layoutX="35.0" layoutY="220.0" text="Arctic Byte is a forward-thinking consulting firm dedicated to empowering businesses with innovative, technology-driven solutions. Specializing in digital transformation, data analytics, and strategic IT consulting, we help organizations navigate the complexities of today’s fast-paced digital landscape. Our team of seasoned experts brings a wealth of industry knowledge and a results-oriented approach to every project, ensuring that our clients achieve sustainable growth and operational excellence. At Arctic Byte, we combine cutting-edge technology with personalized strategies, delivering measurable impact and long-term success." wrapText="true">
+      <TextArea cache="true" editable="false" layoutX="49.0" layoutY="220.0" text="Arctic Byte is a forward-thinking consulting firm dedicated to empowering businesses with innovative, technology-driven solutions. Specializing in digital transformation, data analytics, and strategic IT consulting, we help organizations navigate the complexities of today’s fast-paced digital landscape. Our team of seasoned experts brings a wealth of industry knowledge and a results-oriented approach to every project, ensuring that our clients achieve sustainable growth and operational excellence. At Arctic Byte, we combine cutting-edge technology with personalized strategies, delivering measurable impact and long-term success." wrapText="true">
          <effect>
             <DropShadow />
          </effect>

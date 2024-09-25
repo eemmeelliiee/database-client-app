@@ -302,7 +302,7 @@ public class App extends Application {
 
             // TEST OPEN EXCEL FILE
 
-            openExcelFile("src/main/resources/excel/ExcelData.xlsx");
+            //openExcelFile("src/main/resources/excel/ExcelData.xlsx");
 
         } catch (DaoException | IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
