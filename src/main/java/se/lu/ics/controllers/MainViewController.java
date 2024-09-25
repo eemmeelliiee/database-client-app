@@ -2,6 +2,7 @@ package se.lu.ics.controllers;
 
 import java.io.IOException;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -180,5 +181,4 @@ public void initialize() {
 // DAO instance
 // private ConsultantDao consultantDao = new ConsultantDao();
 
-    MetaData Tab */
 
