@@ -51,6 +51,7 @@ public class MilestoneTabController {
     @FXML
     private void initialize() {
         populateProjectNumbers();
+        populateMilestoneNumbers();
     }
 
     // Back to Home Page Button
@@ -180,12 +181,69 @@ public class MilestoneTabController {
             List<String> projectNumbers = projectDao.findAllProjectNos();
             ObservableList<String> projectNumbersList = FXCollections.observableArrayList(projectNumbers);
             registerMilestoneProjectNo.setItems(projectNumbersList);
+            removeMilestoneProjectNo.setItems(projectNumbersList);
         } catch (DaoException e) {
             registerMilestoneStatus.setText(e.getMessage());
         }
     }
 
-    
+    // Remove Milestone
+    @FXML
+    private ComboBox<String> removeMilestoneProjectNo;
+    @FXML
+    private ComboBox<String> removeMilestoneNo;
+    @FXML
+    private Button removeMilestoneButton;
+    @FXML
+    private Label removeMilestoneLabelResponse;
 
-    
+    //populate milestone numbers
+    @FXML
+    private void populateMilestoneNumbers() {
+        List<String> milestoneNumbers = milestoneDao.findAllMilestoneNumbers();
+        removeMilestoneNo.getItems().clear();
+        removeMilestoneNo.getItems().addAll(milestoneNumbers);
+    }
+
+    @FXML
+    private void handleButtonRemoveMilestone() {
+        try {
+        String projectNo = removeMilestoneProjectNo.getValue(); // Get the selected Project Number
+        String milestoneNo = removeMilestoneNo.getValue(); // Get the selected Milestone Number
+        // Check if a Project Number and Milestone Number are selected
+        if (projectNo != null && !projectNo.isEmpty() && milestoneNo != null && !milestoneNo.isEmpty()) {
+            milestoneDao.deleteByProjectNoAndMilestoneNo(projectNo, milestoneNo ); // Remove the milestone
+
+            // Create a response message with a newline for formatting
+            String responseMessage = String
+                    .format("Milestone with Milestone No: " + milestoneNo + " has been successfully removed.");
+
+            // Set the formatted string to the response label
+            removeMilestoneLabelResponse.setText(responseMessage);
+
+            // Optional: Refresh the ComboBox after removal
+            populateProjectNumbers(); // Assuming you have a method to refresh the ComboBox
+        } else {
+            // If no Project Number or Milestone Number is selected, show a warning message
+            removeMilestoneLabelResponse.setText("Please select a project number and a milestone number.");
+        }
+    } catch (DaoException e) {
+        removeMilestoneLabelResponse.setText("Error: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }
+
+    // listner project selector
+    @FXML
+    private void onActionProjectSelected() {
+        removeMilestoneNo.getItems().clear();
+
+        ObservableList<Milestone> milestones = FXCollections.observableArrayList();
+        milestones.addAll(milestoneDao.findByProjectNo(removeMilestoneProjectNo.getSelectionModel().getSelectedItem()));
+
+        for (Milestone milestone : milestones) {
+            removeMilestoneNo.getItems().add(milestone.getMilestoneNo());
+        }
+    }
+
 }
