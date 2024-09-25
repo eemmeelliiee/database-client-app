@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
 import se.lu.ics.data.ProjectDao;
 import se.lu.ics.data.ConnectionHandler;
+import se.lu.ics.data.MilestoneDao;
 
 public class MainViewController {
 
@@ -34,12 +36,15 @@ public class MainViewController {
 
     private ProjectDao projectDao;
 
+    private MilestoneDao milestoneDao;
+
     // Constructor
     public MainViewController() throws IOException {
         try {
             ConnectionHandler connectionHandler = new ConnectionHandler();
             consultantDao = new ConsultantDao(connectionHandler);
             projectDao = new ProjectDao(connectionHandler);
+            milestoneDao = new MilestoneDao(connectionHandler);
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -57,9 +62,7 @@ public class MainViewController {
         loadConsultants();
     }
 
-    // DAO instance
-    // private ConsultantDao consultantDao = new ConsultantDao();
-
+    // Consultant Tab
     // Register Consultant Pane
     @FXML
     private AnchorPane registerConsultantPane;
@@ -281,7 +284,7 @@ public class MainViewController {
     }
 
     // Set up the TableColumns to bind to Consultant properties
-private void setupTableColumns() {
+    private void setupTableColumns() {
     colEmpNo.setCellValueFactory(new PropertyValueFactory<>("empNo"));
     colFirstName.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
     colLastName.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
@@ -485,14 +488,14 @@ private void setupTableColumns() {
             consultantTableView.refresh();
             populateEmployeeNumbers();
             populateEmployeeTitles();
-            infoOverViewLabel.setText("Update successful!");
-        } catch (DaoException e) {
-            infoOverViewLabel.setText("Error : " + e.getMessage());
-            handleButtonViewAll();
-            consultantTableView.refresh();
+            infoOverViewLabel.setText("Update successful!");  
+            } catch (DaoException e) {
+                infoOverViewLabel.setText("Error : " + e.getMessage());
+                handleButtonViewAll();
+                consultantTableView.refresh();
 
+            }
         }
-    }
 
     // Populate the TableView based on the selected title
     private void populateTableViewByTitle(String title) {
@@ -654,8 +657,67 @@ private void setupTableColumns() {
         List<String> projectNumbers = projectDao.findAllProjectNos();
         removeProjectNo.getItems().clear();
         removeProjectNo.getItems().addAll(projectNumbers);
+        milestoneProjectNo.getItems().clear();
+        milestoneProjectNo.getItems().addAll(projectNumbers);
+
         // infoProjectNo.getItems().clear();
         // infoProjectNo.getItems().addAll(projectNumbers);
     }
+
+
+
+
+    // Register Milestone
+    @FXML
+    private TextField registerMilestoneNo;
+
+    @FXML
+    private TextField registerMilestoneName;
+
+    @FXML
+    private DatePicker registerMilestoneDate;
+
+    @FXML
+    private Button registerMilestoneButton;
+
+    @FXML
+    private ComboBox<String> milestoneProjectNo;
+
+    @FXML
+    private Label registerMilestoneLabelResponse;
+
+
+    @FXML
+    private void handleButtonRegisterMilestone() {
+        try {
+            String milestoneNo = registerMilestoneNo.getText();
+            String milestoneName = registerMilestoneName.getText();
+            LocalDate milestoneDate = registerMilestoneDate.getValue();
+            String projectNo = milestoneProjectNo.getValue();
+
+            // Set to null if the text is empty
+            milestoneNo = (milestoneNo != null && milestoneNo.trim().isEmpty()) ? null : milestoneNo;
+            milestoneName = (milestoneName != null && milestoneName.trim().isEmpty()) ? null : milestoneName;
+
+            Milestone newMilestone = new Milestone(milestoneNo, projectNo, milestoneName, milestoneDate);
+
+            milestoneDao.save(newMilestone);
+
+            registerMilestoneLabelResponse.setText(
+                    "New Milestone Registered:\n" +
+                            "Milestone Name: " + (milestoneName != null ? milestoneName : "N/A") + "\n" +
+                            "Milestone No: " + (milestoneNo != null ? milestoneNo : "N/A") + "\n" +
+                            "Date: " + (milestoneDate != null ? milestoneDate : "N/A") + "\n" +
+                            "Project No: " + (projectNo != null ? projectNo : "N/A"));
+
+            populateProjectNumbers();
+        } catch (DaoException e) {
+            registerMilestoneLabelResponse.setText(e.getMessage());
+        }
+    }
+
+
+
+
 
 }
