@@ -47,11 +47,12 @@ public class MilestoneDao {
                 throw new DaoException("Fields MilestoneNo and ProjectNo cannot be empty.", e);
             } else if (e.getErrorCode() == 547) {
                 throw new DaoException("MilestoneDate must be after 2022-01-01", e);
-            } else if (e.getErrorCode() == 50000){
-                throw new DaoException("MilestoneDate must be before project's end date, and after project's start date");
-            } else 
+            } else if (e.getErrorCode() == 50000) {
+                throw new DaoException(
+                        "MilestoneDate must be before project's end date, and after project's start date");
+            } else
                 throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
         }
     }
@@ -125,7 +126,7 @@ public class MilestoneDao {
             if (e.getErrorCode() == 515) {
                 throw new DaoException("ProjectNo is not allowed to contain NULL-values.", e);
             } else {
-            throw new DaoException("Error fetching the total number of milestones for project: " + projectNo, e);
+                throw new DaoException("Error fetching the total number of milestones for project: " + projectNo, e);
             }
         }
 
@@ -158,9 +159,33 @@ public class MilestoneDao {
             if (e.getErrorCode() == 515) {
                 throw new DaoException("Fields ProjectNo and MilestoneNo cannot be empty.", e);
             } else {
-                throw new DaoException("Error deleting milestone with MilestoneNo: " + milestoneNo + " for project: " + projectNo, e);
+                throw new DaoException(
+                        "Error deleting milestone with MilestoneNo: " + milestoneNo + " for project: " + projectNo, e);
             }
         }
+    }
+    /*FIND ALL MILESTONE NUMBERS */
+    /**
+     * Retrieves all milestone numbers from the Milestone table.
+     *
+     * @return a list of milestone numbers.
+     * @throws DaoException if there is an error fetching the milestone numbers from
+     *                      the database.
+     */
+    public List<String> findAllMilestoneNumbers() {
+        String query = "SELECT MilestoneNo FROM Milestone";
+        List<String> milestoneNumbers = new ArrayList<>();
+        try (Connection connection = connectionHandler.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    milestoneNumbers.add(resultSet.getString("MilestoneNo"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error fetching all milestone numbers", e);
+        }
+        return milestoneNumbers;
     }
 
     /* MAP ROW IN RESULTSET TO MILESTONE OBJECT */
