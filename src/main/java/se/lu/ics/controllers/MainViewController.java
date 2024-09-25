@@ -180,5 +180,5 @@ public void initialize() {
 
 // DAO instance
 // private ConsultantDao consultantDao = new ConsultantDao();
-
+*/
 

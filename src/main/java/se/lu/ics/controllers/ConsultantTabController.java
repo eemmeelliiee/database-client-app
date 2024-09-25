@@ -243,9 +243,9 @@ private void setupTableColumns() {
             consultantDao.save(newConsultant);
 
             lableResponse.setText("New Consultant Registered:\n" +
-                    "First Name: " + (empFirstName != null ? empFirstName : "N/A") + "\n" +
+                    "First Name: " + (empFirstName != null ? empFirstName : "N/A") + "   |   " + 
                     "Last Name: " + (empLastName != null ? empLastName : "N/A") + "\n" +
-                    "Title: " + (empTitle != null ? empTitle : "N/A") + "\n" +
+                    "Title: " + (empTitle != null ? empTitle : "N/A") + "   |   " + 
                     "Employee No: " + empNo + "\n" +
                     "Start Date: " + (empStartDate != null ? empStartDate : "N/A"));
 
