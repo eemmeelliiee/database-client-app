@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<SplitPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.WorkTabController" dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0">
+    <items>
+       <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="107.0" prefWidth="584.0">
+           <children>
+               <Button fx:id="showAddConToProPane" layoutX="85.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleShowAddConToProPane" text="Add consultant to project" />
+               <Button fx:id="showCheckWorkingConsPane" layoutX="351.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleShowCheckWorkingConsPane" text="Check working consultants" />
+               <Button fx:id="showDisplayConsHoursPane" layoutX="67.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleShowDisplayConsHoursPane" text="Display consultants work hours " />
+               <Button fx:id="showHardestWorkingConPane" layoutX="332.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleShowHardestWorkingConPane" text="Check hardest working consultant" />
+               <Label layoutX="242.0" layoutY="7.0" text="WORK OVERVIEW" />
+               <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
+           </children>
+       </AnchorPane>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="584.0">
+           <children>
+               <StackPane prefHeight="275.0" prefWidth="587.0">
+                   <children>
+                       <AnchorPane fx:id="hardestWorkingConPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                           <children>
+                               <Button layoutX="43.0" layoutY="217.0" mnemonicParsing="false" text="Refresh" />
+                               <Label layoutX="220.0" layoutY="25.0" text="Hardest working consultant" />
+                               <TableView layoutX="43.0" layoutY="69.0" prefHeight="136.0" prefWidth="502.0">
+                                   <columns>
+                                   <TableColumn prefWidth="125.81924819946289" text="Consultant Number" />
+                                   <TableColumn prefWidth="90.11174011230469" text="First Name" />
+                                   <TableColumn prefWidth="85.88825988769531" text="Last Name" />
+                                   <TableColumn prefWidth="81.8563232421875" text="Title" />
+                                   <TableColumn prefWidth="119.8614501953125" text="Total Hours worked" />
+                                   </columns>
+                               </TableView>
+                           </children>
+                       </AnchorPane>
+                   <AnchorPane fx:id="displayConsHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                       <children>
+                           <ChoiceBox layoutX="135.0" layoutY="51.0" prefWidth="150.0" />
+                           <Label layoutX="15.0" layoutY="57.0" text="Consultant Number:" />
+                           <Label layoutX="219.0" layoutY="15.0" text="View consultant work hours" />
+                           <Label layoutX="305.0" layoutY="55.0" text="Total worked hours:" />
+                           <Button layoutX="12.0" layoutY="103.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="282.0" text="View consultants that work on 3 projects or less" />
+                           <TableView layoutX="10.0" layoutY="138.0" prefHeight="129.0" prefWidth="439.0">
+                               <columns>
+                               <TableColumn prefWidth="115.31922721862793" text="Consultant Number" />
+                               <TableColumn prefWidth="80.35916137695312" text="First Name" />
+                               <TableColumn prefWidth="80.35916137695312" text="Last Name" />
+                               <TableColumn prefWidth="80.35916137695312" text="Title" />
+                               <TableColumn prefWidth="78.0" text="Date" />
+                               </columns>
+                           </TableView>
+                           <Label layoutX="466.0" layoutY="103.0" prefHeight="146.0" prefWidth="97.0" text="Message area" />
+                           <Label layoutX="419.0" layoutY="57.0" prefHeight="73.0" prefWidth="154.0" />
+                       </children>
+                   </AnchorPane>
+                   <AnchorPane fx:id="checkWorkingConsPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                       <children>
+                           <Label layoutX="168.0" layoutY="14.0" text="Check working consultants on specific projects" />
+                           <TableView layoutX="4.0" layoutY="75.0" prefHeight="175.0" prefWidth="450.0">
+                               <columns>
+                               <TableColumn prefWidth="124.39109802246094" text="Consultant Number" />
+                               <TableColumn prefWidth="84.27655029296875" text="First Name" />
+                               <TableColumn prefWidth="81.79248046875" text="Last Name" />
+                               <TableColumn prefWidth="71.31646728515625" text="Title" />
+                               <TableColumn prefWidth="97.68356323242188" text="Start Date" />
+                               </columns>
+                           </TableView>
+                           <ComboBox layoutX="15.0" layoutY="44.0" prefWidth="150.0" promptText="Project Number" />
+                           <Label layoutX="454.0" layoutY="48.0" text="Error/message yta" />
+                       </children>
+                   </AnchorPane>
+                   <AnchorPane fx:id="addConToProPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                       <children>
+                           <Label layoutX="42.0" layoutY="62.0" text="Employee Number:" />
+                           <Label layoutX="58.0" layoutY="112.0" text="Project Number:" />
+                           <Label layoutX="79.0" layoutY="158.0" text="Work Hours:" />
+                           <Label layoutX="214.0" layoutY="22.0" text="Add a consultant to a project:" />
+                           <ChoiceBox layoutX="182.0" layoutY="57.0" prefWidth="150.0" />
+                           <ChoiceBox layoutX="182.0" layoutY="107.0" prefWidth="150.0" />
+                           <TextField layoutX="182.0" layoutY="154.0" prefHeight="26.0" prefWidth="150.0" promptText="Ex: 30 or 30.5" />
+                           <Button layoutX="105.0" layoutY="209.0" mnemonicParsing="false" text="Add consultant tp project" />
+                           <Label layoutX="373.0" layoutY="56.0" prefHeight="123.0" prefWidth="184.0" text="Error yta" />
+                       </children>
+                   </AnchorPane>
+                   </children>
+               </StackPane>
+           </children>
+       </AnchorPane>
+   </items>
+</SplitPane>
