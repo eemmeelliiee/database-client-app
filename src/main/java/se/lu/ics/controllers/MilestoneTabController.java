@@ -22,6 +22,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.ComboBox;
 
+import se.lu.ics.models.Project;
+import se.lu.ics.data.ProjectDao;
 import se.lu.ics.models.Milestone;
 import se.lu.ics.data.MilestoneDao;
 import se.lu.ics.data.DaoException;
@@ -31,11 +33,16 @@ public class MilestoneTabController {
 
     private MilestoneDao milestoneDao;
 
+    private ProjectDao projectDao;
+
+
+
     // Constructor
     public MilestoneTabController() throws IOException {
         try {
             ConnectionHandler connectionHandler = new ConnectionHandler();
             milestoneDao = new MilestoneDao(connectionHandler);
+            projectDao = new ProjectDao(connectionHandler);
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -43,6 +50,7 @@ public class MilestoneTabController {
 
     @FXML
     private void initialize() {
+        populateProjectNumbers();
     }
 
     // Back to Home Page Button
@@ -136,6 +144,48 @@ public class MilestoneTabController {
     @FXML
     private Button registerMilestoneButton;
 
+    @FXML
+    private void handleButtonRegisterMilestone() {
+        try {
+            String milestoneNo = registerMilestoneNo.getText();
+            String milestoneName = registerMilestoneName.getText();
+            LocalDate milestoneDate = registerMilestoneDate.getValue();
+            String projectNo = registerMilestoneProjectNo.getValue();
+
+            // Set to null if the text is empty
+            milestoneNo = (milestoneNo != null && milestoneNo.trim().isEmpty()) ? null : milestoneNo;
+            milestoneName = (milestoneName != null && milestoneName.trim().isEmpty()) ? null : milestoneName;
+
+            Milestone newMilestone = new Milestone(milestoneNo, projectNo, milestoneName, milestoneDate);
+
+            milestoneDao.save(newMilestone);
+
+            registerMilestoneStatus.setText(
+                    "New Milestone Registered:\n" +
+                            "Milestone Name: " + (milestoneName != null ? milestoneName : "N/A") + "\n" +
+                            "Milestone No: " + (milestoneNo != null ? milestoneNo : "N/A") + "\n" +
+                            "Date: " + (milestoneDate != null ? milestoneDate : "N/A") + "\n" +
+                            "Project No: " + (projectNo != null ? projectNo : "N/A"));
+
+            populateProjectNumbers();
+        } catch (DaoException e) {
+            registerMilestoneStatus.setText(e.getMessage());
+        }
+    }
+
+    //populate project numbers
+    @FXML
+    private void populateProjectNumbers() {
+        try {
+            List<String> projectNumbers = projectDao.findAllProjectNos();
+            ObservableList<String> projectNumbersList = FXCollections.observableArrayList(projectNumbers);
+            registerMilestoneProjectNo.setItems(projectNumbersList);
+        } catch (DaoException e) {
+            registerMilestoneStatus.setText(e.getMessage());
+        }
+    }
+
+    
 
     
 }

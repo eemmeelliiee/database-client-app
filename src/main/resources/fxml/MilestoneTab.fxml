@@ -27,9 +27,9 @@
         <children>
             <StackPane layoutX="1.0" layoutY="1.0" prefHeight="293.0" prefWidth="586.0">
                 <children>
-                <AnchorPane fx:id="addMSPane" prefHeight="200.0" prefWidth="200.0">
+                <AnchorPane fx:id="addMSPane" prefHeight="342.0" prefWidth="586.0">
                     <children>
-                        <Label layoutX="248.0" layoutY="14.0" text="Add a milestone:" />
+                        <Label layoutX="248.0" layoutY="14.0" text="Register a milestone" />
                         <Label layoutX="32.0" layoutY="60.0" text="Milestone Number:" />
                         <Label layoutX="46.0" layoutY="107.0" text="Project Number:" />
                         <Label layoutX="105.0" layoutY="153.0" text="Date:" />
@@ -37,8 +37,8 @@
                         <TextField fx:id="registerMilestoneNo" layoutX="177.0" layoutY="56.0" promptText="Ex: M001" />
                         <TextField fx:id="registerMilestoneName" layoutX="177.0" layoutY="191.0" promptText="Ex: Phase 1 completion" />
                         <DatePicker fx:id="registerMilestoneDate" layoutX="177.0" layoutY="148.0" prefHeight="26.0" prefWidth="160.0" />
-                        <Button fx:id="registerMilestoneButton" layoutX="150.0" layoutY="240.0" mnemonicParsing="false" text="Add milestone" />
-                        <Label fx:id="registerMilestoneStatus" layoutX="359.0" layoutY="55.0" prefHeight="163.0" prefWidth="196.0" text="Error yta" />
+                        <Button fx:id="registerMilestoneButton" layoutX="205.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleButtonRegisterMilestone" text="Add milestone" />
+                        <Label fx:id="registerMilestoneStatus" layoutX="359.0" layoutY="55.0" prefHeight="163.0" prefWidth="196.0" />
                         <ComboBox fx:id="registerMilestoneProjectNo" layoutX="173.0" layoutY="103.0" prefHeight="26.0" prefWidth="160.0" />
                     </children>
                 </AnchorPane>
