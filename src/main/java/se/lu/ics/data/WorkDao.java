@@ -38,29 +38,38 @@ public class WorkDao {
         String query = "INSERT INTO Work (ConsultantId, ProjectId, WorkHours) " +
                 "VALUES((SELECT ConsultantId FROM Consultant WHERE EmpNo = ?), " +
                 "(SELECT ProjectId FROM Project WHERE ProjectNo = ?), ?)";
-
+    
         try (Connection connection = connectionHandler.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
-
+             PreparedStatement statement = connection.prepareStatement(query)) {
+    
+            // Calculate total number of consultants
+            String totalConsultantsQuery = "SELECT COUNT(*) FROM Consultant";
+            try (PreparedStatement totalConsultantsStmt = connection.prepareStatement(totalConsultantsQuery);
+                 ResultSet totalConsultantsRs = totalConsultantsStmt.executeQuery()) {
+                totalConsultantsRs.next();
+                int totalConsultants = totalConsultantsRs.getInt(1);
+    
+                // Calculate number of consultants already assigned to the project
+                String projectConsultantsQuery = "SELECT COUNT(DISTINCT ConsultantId) FROM Work WHERE ProjectId = (SELECT ProjectId FROM Project WHERE ProjectNo = ?)";
+                try (PreparedStatement projectConsultantsStmt = connection.prepareStatement(projectConsultantsQuery)) {
+                    projectConsultantsStmt.setString(1, projectNo);
+                    try (ResultSet projectConsultantsRs = projectConsultantsStmt.executeQuery()) {
+                        projectConsultantsRs.next();
+                        int projectConsultants = projectConsultantsRs.getInt(1);
+    
+                        // Check if adding the new consultant would result in 60% or more
+                        if ((projectConsultants + 1) >= 0.6 * totalConsultants) {
+                            return "Warning: Adding this consultant will result in the project having 60% or more of the total number of consultants.";
+                        }
+                    }
+                }
+            }
+    
             statement.setString(1, empNo);
             statement.setString(2, projectNo);
             statement.setDouble(3, workHours);
             statement.executeUpdate();
-
-            // Check for SQL warnings
-            SQLWarning warning = statement.getWarnings();
-
-            if (warning != null) {
-                StringBuilder warningMessage = new StringBuilder();
-                while (warning != null) {
-                    warningMessage.append("SQL Warning:\n");
-                    warningMessage.append("State  : ").append(warning.getSQLState()).append("\n");
-                    warningMessage.append("Message: ").append(warning.getMessage()).append("\n");
-                    warningMessage.append("Error  : ").append(warning.getErrorCode()).append("\n");
-                    warning = warning.getNextWarning();
-                }
-                return warningMessage.toString();
-            }
+    
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
                 throw new DaoException("The combination of EmpNo and ProjectNo must be unique.", e);
