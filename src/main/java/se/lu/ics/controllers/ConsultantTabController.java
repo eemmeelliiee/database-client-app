@@ -309,9 +309,6 @@ private void setupTableColumns() {
     private ComboBox<String> infoConsultantTitle; // combobox for employee name
 
     @FXML
-    private Label infoConsultantResponse;
-
-    @FXML
     private Label infoOverViewLabel;
 
     @FXML
@@ -353,8 +350,12 @@ private void setupTableColumns() {
             populateEmployeeNumbers();
             populateEmployeeTitles();
             infoOverViewLabel.setText("Update successful!");
+            //set text to green color
+            infoOverViewLabel.setStyle("-fx-text-fill: green");
         } catch (DaoException e) {
-            infoOverViewLabel.setText("Error : " + e.getMessage());
+            infoOverViewLabel.setText("Error : \n" + e.getMessage());
+            //set text to red color
+            infoOverViewLabel.setStyle("-fx-text-fill: red");
             handleButtonViewAll();
             consultantTableView.refresh();
 
