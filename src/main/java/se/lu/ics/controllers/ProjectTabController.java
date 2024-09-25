@@ -22,7 +22,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.ComboBox;
 
-
 import se.lu.ics.models.Project;
 import se.lu.ics.data.DaoException;
 import se.lu.ics.data.ProjectDao;
@@ -30,7 +29,7 @@ import se.lu.ics.data.ConnectionHandler;
 
 public class ProjectTabController {
 
-    //Dao instance
+    // Dao instance
     private ProjectDao projectDao;
 
     // Constructor
@@ -46,13 +45,17 @@ public class ProjectTabController {
     @FXML
     private void initialize() {
         populateProjectNumbers();
+        populateViewAllProjectsComboBox();
+        setViewAllProjectsComboBoxHandler();
+        setupTableColumns();
+        setUpTableView();
     }
 
     // Back to Home Page Button
     @FXML
     private Button backToHomePageButton;
 
-    //Button to get to the project tab
+    // Button to get to the project tab
     @FXML
     private void handleBackToHomePageButton(ActionEvent event) {
         String path = "/fxml/MainView.fxml";
@@ -61,7 +64,7 @@ public class ProjectTabController {
             AnchorPane root = loader.load();
             Stage primaryStage = new Stage();
             Scene primaryScene = new Scene(root);
-            
+
             primaryStage.setScene(primaryScene);
 
             primaryStage.setTitle("Home Page");
@@ -105,7 +108,7 @@ public class ProjectTabController {
         infoProjectPane.setVisible(false);
     }
 
-    // info pane
+    // Info pane
     @FXML
     private AnchorPane infoProjectPane;
 
@@ -162,9 +165,10 @@ public class ProjectTabController {
                             "End Date: " + (projectEndDate != null ? projectEndDate : "N/A"));
 
             populateProjectNumbers();
+            populateViewAllProjectsComboBox();
         } catch (DaoException e) {
             registerProjectLabelResponse.setText(e.getMessage());
-
+            registerProjectLabelResponse.setStyle("-fx-text-fill: red");
         }
     }
 
@@ -195,6 +199,7 @@ public class ProjectTabController {
 
             // Optional: Refresh the ComboBox after removal
             populateProjectNumbers(); // Assuming you have a method to refresh the ComboBox
+            populateViewAllProjectsComboBox();
         } else {
             // If no Project Number is selected, show a warning message
             removeProjectLabelResponse.setText("Please select a project number.");
@@ -212,8 +217,128 @@ public class ProjectTabController {
         List<String> projectNumbers = projectDao.findAllProjectNos();
         removeProjectNo.getItems().clear();
         removeProjectNo.getItems().addAll(projectNumbers);
-        // infoProjectNo.getItems().clear();
-        // infoProjectNo.getItems().addAll(projectNumbers);
     }
+
+    // Show All Projects
+    @FXML
+    private ComboBox<String> viewAllProjectsComboBox;
+
+    @FXML
+    private TableView<Project> tableViewProject;
+
+    @FXML
+    private TableColumn<Project, String> colStatus;
+
+    @FXML
+    private TableColumn<Project, String> colProjectNo;
+
+    @FXML
+    private TableColumn<Project, String> colProjectName;
+
+    @FXML
+    private TableColumn<Project, LocalDate> colStartDate;
+
+    @FXML
+    private TableColumn<Project, LocalDate> colEndDate;
+
+    private void populateViewAllProjectsComboBox() {
+        List<String> projectNumbers = projectDao.findAllProjectNos();
+        viewAllProjectsComboBox.getItems().clear();
+        viewAllProjectsComboBox.getItems().addAll(projectNumbers);
+    }
+
+    private void setViewAllProjectsComboBoxHandler() {
+        viewAllProjectsComboBox.setOnAction(event -> {
+            String selectedProjectNo = viewAllProjectsComboBox.getValue();
+            if (selectedProjectNo != null && !selectedProjectNo.isEmpty()) {
+                populateTableViewForProject(selectedProjectNo);
+            }
+        });
+    }
+
+    private void populateTableViewForProject(String projectNo) {
+        try {
+            Project project = projectDao.findByProjectNo(projectNo);
+            if (project != null) {
+                ObservableList<Project> projectList = FXCollections.observableArrayList(project);
+                tableViewProject.setItems(projectList);
+            } else {
+                tableViewProject.getItems().clear();
+            }
+        } catch (DaoException e) {
+            System.err.println("Error fetching project: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private Button viewAllProjectsButton;
+
+    @FXML
+    private void handleButtonViewAllProjects() {
+        try {
+            List<Project> projects = projectDao.findAll(); // Fetch all projects
+            ObservableList<Project> projectList = FXCollections.observableArrayList(projects); // Convert to
+                                                                                               // ObservableList
+            tableViewProject.setItems(projectList); // Set items in TableView
+        } catch (DaoException e) {
+            // Handle exception (e.g., show an error message)
+            System.err.println("Error fetching projects: " + e.getMessage());
+        }
+    }
+
+    private void setUpTableView() {
+        tableViewProject.setEditable(true);
+    }
+
+    private void setupTableColumns() {
+    colStatus.setCellValueFactory(new PropertyValueFactory<>("projectStatus"));
+    colProjectNo.setCellValueFactory(new PropertyValueFactory<>("projectNo"));
+    colProjectName.setCellValueFactory(new PropertyValueFactory<>("projectName"));
+    colStartDate.setCellValueFactory(new PropertyValueFactory<>("projectStartDate"));
+    colEndDate.setCellValueFactory(new PropertyValueFactory<>("projectEndDate"));
+
+    // Make columns editable except for the date columns
+    colProjectNo.setCellFactory(TextFieldTableCell.forTableColumn());
+    colProjectName.setCellFactory(TextFieldTableCell.forTableColumn());
+    // colStartDate.setCellFactory(DatePickerTableCell.forTableColumn());
+    // colEndDate.setCellFactory(DatePickerTableCell.forTableColumn());
+
+    // Add edit commit handlers
+    colProjectNo.setOnEditCommit(event -> updateProject(event.getRowValue(), "projectNo", event.getNewValue()));
+    colProjectName.setOnEditCommit(event -> updateProject(event.getRowValue(), "projectName", event.getNewValue()));
+    colStartDate.setOnEditCommit(event -> updateProject(event.getRowValue(), "projectStartDate", event.getNewValue()));
+    colEndDate.setOnEditCommit(event -> updateProject(event.getRowValue(), "projectEndDate", event.getNewValue()));
+}
+
+private void updateProject(Project project, String field, Object newValue) {
+    String oldProjectNo = project.getProjectNo();
+    try {
+        switch (field) {
+            case "projectNo":
+                project.setProjectNo((String) newValue);
+                break;
+            case "projectName":
+                project.setProjectName((String) newValue);
+                break;
+            case "projectStartDate":
+                project.setProjectStartDate((LocalDate) newValue);
+                break;
+            case "projectEndDate":
+                project.setProjectEndDate((LocalDate) newValue);
+                break;
+        }
+        projectDao.update(project, oldProjectNo);
+        tableViewProject.refresh();
+        populateProjectNumbers();
+        populateViewAllProjectsComboBox();
+        registerProjectLabelResponse.setText("Update successful!");
+        registerProjectLabelResponse.setStyle("-fx-text-fill: green");
+    } catch (DaoException e) {
+        registerProjectLabelResponse.setText("Error: " + e.getMessage());
+        registerProjectLabelResponse.setStyle("-fx-text-fill: red");
+        handleButtonViewAllProjects();
+        tableViewProject.refresh();
+    }
+}
 
 }

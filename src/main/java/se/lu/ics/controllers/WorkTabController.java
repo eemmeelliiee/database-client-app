@@ -141,4 +141,11 @@ public class WorkTabController {
         checkWorkingConsPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
     }
+
+    // Projects involving all consultants
+    @FXML Button projectsInvolvingAllConsultants;
+
+    // private void handleButtonProjectsInvolvingAllConsultants(){
+
+    // }
 }
