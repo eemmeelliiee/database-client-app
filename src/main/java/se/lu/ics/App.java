@@ -3,11 +3,8 @@ package se.lu.ics;
 import java.io.File;
 import java.io.IOException;
 
-import java.time.LocalDate;
-import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import se.lu.ics.data.ConnectionHandler;
@@ -17,33 +14,30 @@ import se.lu.ics.data.MetaDataDao;
 import se.lu.ics.data.ProjectDao;
 import se.lu.ics.data.MilestoneDao;
 import se.lu.ics.data.WorkDao;
-import se.lu.ics.models.Consultant;
-import se.lu.ics.models.Milestone;
-import se.lu.ics.models.Project;
-import se.lu.ics.models.Work;
 import java.awt.Desktop;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
-    private static Scene scene;
-
     @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("MainView"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
-    }
+    public void start(Stage primaryStage) throws IOException {
+        try {
+            String path = "/fxml/MainView.fxml";
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            AnchorPane root = loader.load();
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
-        return fxmlLoader.load();
+            Scene primaryScene = new Scene(root);
+            primaryStage.setScene(primaryScene);
+
+            primaryStage.setTitle("Home Page");
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Used for opening the xlsx file. Should probably be moved to a controller
@@ -308,12 +302,12 @@ public class App extends Application {
 
             // TEST OPEN EXCEL FILE
 
-            openExcelFile("src/main/resources/excel/ExcelData.xlsx");
+            //openExcelFile("src/main/resources/excel/ExcelData.xlsx");
 
         } catch (DaoException | IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
         }
 
-        launch(); // Start the JavaFX application
+        launch(args); // Start the JavaFX application
     }
 }
