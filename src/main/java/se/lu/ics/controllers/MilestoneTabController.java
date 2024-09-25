@@ -117,6 +117,25 @@ public class MilestoneTabController {
         addMSPane.setVisible(false);
     }
 
+    //register milestone
+    @FXML
+    private TextField registerMilestoneNo;
+
+    @FXML
+    private ComboBox<String> registerMilestoneProjectNo;
+
+    @FXML
+    private DatePicker registerMilestoneDate;
+
+    @FXML
+    private TextField registerMilestoneName;
+
+    @FXML
+    private Label registerMilestoneStatus;
+
+    @FXML
+    private Button registerMilestoneButton;
+
 
     
 }
