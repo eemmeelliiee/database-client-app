@@ -47,9 +47,10 @@ public class MilestoneDao {
                 throw new DaoException("Fields MilestoneNo and ProjectNo cannot be empty.", e);
             } else if (e.getErrorCode() == 547) {
                 throw new DaoException("MilestoneDate must be after 2022-01-01", e);
-            } else {
+            } else if (e.getErrorCode() == 50000){
+                throw new DaoException("MilestoneDate must be before project's end date, and after project's start date");
+            } else 
                 throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
-        }
         } catch (Exception e){
             throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
         }
