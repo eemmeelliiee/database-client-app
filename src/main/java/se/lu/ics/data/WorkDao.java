@@ -82,9 +82,8 @@ public class WorkDao {
             } else {
                 throw new DaoException("Error adding consultant to project.", e);
             }
-        } catch (Exception e) {
-            throw new DaoException("Error updating work hours.", e);
-        }
+        } 
+        
         return null; // No warnings
     }
 
