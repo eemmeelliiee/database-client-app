@@ -72,7 +72,7 @@ public class WorkDao {
     
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("The combination of EmpNo and ProjectNo must be unique.", e);
+                throw new DaoException("The combination of EmpNo and ProjectNo already exists", e);
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("Fields EmpNo and ProjectNo cannot be empty", e);
             } else if (e.getErrorCode() == 8114) {
