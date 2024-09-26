@@ -57,7 +57,7 @@
                            </TableView>
                         <ComboBox fx:id="consultantComboBox" layoutX="108.0" layoutY="49.0" prefHeight="25.0" prefWidth="371.0" promptText="View toral worked hours for a certein consultant" />
                         <Label fx:id="totalWorkedHoursLabel" layoutX="108.0" layoutY="116.0" prefHeight="97.0" prefWidth="371.0" />
-                        <Button layoutX="108.0" layoutY="82.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="371.0" text="View number of hors worked by all consultants across all projects" />
+                        <Button fx:id="allConsultantsHours" layoutX="108.0" layoutY="82.0" mnemonicParsing="false" onAction="#onAllConsultantsHoursButtonClick" prefHeight="25.0" prefWidth="371.0" text="View number of hors worked by all consultants across all projects" />
                        </children>
                    </AnchorPane>
                    <AnchorPane fx:id="checkWorkingConsPane" prefHeight="200.0" prefWidth="200.0" visible="false">
