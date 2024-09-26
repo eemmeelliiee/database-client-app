@@ -41,7 +41,7 @@
                             <TextField fx:id="registerConsultantTitle" layoutX="308.0" layoutY="166.0" prefWidth="160.0" promptText="Junior IT" />
                             <DatePicker fx:id="registerConsultantDate" layoutX="308.0" layoutY="206.0" prefHeight="26.0" prefWidth="160.0" />
                             <Button fx:id="registerConsultantButton" layoutX="247.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleButtonRegisterConsultant" text="Register consultant" />
-                            <Label fx:id="lableResponse" alignment="TOP_CENTER" layoutX="85.0" layoutY="287.0" prefHeight="77.0" prefWidth="448.0" textAlignment="CENTER" wrapText="true" />
+                            <Label fx:id="lableResponse" alignment="TOP_CENTER" layoutX="84.0" layoutY="294.0" prefHeight="77.0" prefWidth="448.0" wrapText="true" />
                         </children>
                     </AnchorPane>
                     <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
