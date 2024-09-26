@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
+<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
     <items>
         <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
             <children>
@@ -27,7 +27,7 @@
             <children>
                 <StackPane layoutX="-1.0" layoutY="-1.0" prefHeight="295.0" prefWidth="583.0">
                     <children>
-                    <AnchorPane fx:id="registerConsultantPane" prefHeight="200.0" prefWidth="200.0">
+                    <AnchorPane fx:id="registerConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                         <children>
                             <Label layoutX="249.0" layoutY="14.0" text="Register a consultant:" />
                             <Label layoutX="148.0" layoutY="49.0" text="Employee Number:" />
@@ -41,7 +41,7 @@
                             <TextField fx:id="registerConsultantTitle" layoutX="308.0" layoutY="166.0" prefWidth="160.0" promptText="Junior IT" />
                             <DatePicker fx:id="registerConsultantDate" layoutX="308.0" layoutY="206.0" prefHeight="26.0" prefWidth="160.0" />
                             <Button fx:id="registerConsultantButton" layoutX="247.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleButtonRegisterConsultant" text="Register consultant" />
-                            <Label fx:id="lableResponse" alignment="TOP_CENTER" layoutX="85.0" layoutY="287.0" prefHeight="77.0" prefWidth="448.0" textAlignment="CENTER" wrapText="true" />
+                            <Label fx:id="lableResponse" alignment="TOP_CENTER" layoutX="84.0" layoutY="294.0" prefHeight="77.0" prefWidth="448.0" wrapText="true" />
                         </children>
                     </AnchorPane>
                     <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
@@ -53,7 +53,7 @@
                             <Label fx:id="removeConsultantResponse" layoutX="94.0" layoutY="174.0" prefHeight="99.0" prefWidth="398.0" />
                         </children>
                     </AnchorPane>
-                    <AnchorPane fx:id="infoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="615.0" visible="false">
+                    <AnchorPane fx:id="infoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="615.0">
                         <children>
                             <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
                             <ComboBox fx:id="viewSpecificConsultantComboBox" layoutX="35.0" layoutY="55.0" prefHeight="27.0" prefWidth="179.0" promptText="View specific consultant" />
@@ -68,9 +68,9 @@
                                 <TableColumn fx:id="colStartDate" prefWidth="93.5" text="Start Date" />
                             </columns>
                             </TableView>
-                            <Label fx:id="infoOverViewLabel" alignment="TOP_LEFT" layoutX="487.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="119.0" wrapText="true" />
+                            <Label fx:id="infoOverViewLabel" alignment="TOP_LEFT" layoutX="35.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="565.0" wrapText="true" />
                             <Label layoutX="34.0" layoutY="315.0" prefHeight="17.0" prefWidth="558.0" text="To update a consultant: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
-                            <Label fx:id="totalConsultantsResponse" layoutX="34.0" layoutY="332.0" prefHeight="38.0" prefWidth="438.0" wrapText="true">
+                            <Label fx:id="totalConsultantsResponse" layoutX="479.0" layoutY="247.0" prefHeight="93.0" prefWidth="122.0" wrapText="true">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font></Label>

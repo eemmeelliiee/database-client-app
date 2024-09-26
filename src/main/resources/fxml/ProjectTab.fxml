@@ -26,23 +26,6 @@
             <children>
                 <StackPane layoutY="-3.0" prefHeight="297.0" prefWidth="586.0">
                     <children>
-                    <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="295.0" prefWidth="583.0">
-                        <children>
-                            <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
-                            <TableView fx:id="tableViewProject" layoutX="24.0" layoutY="86.0" prefHeight="189.0" prefWidth="545.0">
-                                <columns>
-                                <TableColumn fx:id="colStatus" prefWidth="92.0" text="Status" />
-                                <TableColumn fx:id="colProjectNo" prefWidth="127.0" text="Project Number" />
-                                <TableColumn fx:id="colProjectName" minWidth="3.433319091796875" prefWidth="112.72348022460938" text="Name" />
-                                <TableColumn fx:id="colStartDate" prefWidth="119.0" text="StartDate" />
-                              <TableColumn fx:id="colEndDate" minWidth="0.0" prefWidth="104.0" text="EndDate" />
-                                </columns>
-                            </TableView>
-                            <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" visible="false" />
-                            <Button fx:id="viewAllProjectsButton" layoutX="503.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
-                        <ComboBox fx:id="viewAllProjectsComboBox" layoutX="24.0" layoutY="44.0" prefHeight="26.0" prefWidth="159.0" promptText="View specific project" />
-                        </children>
-                    </AnchorPane>
                     <AnchorPane fx:id="removeProjectPane" prefHeight="402.0" prefWidth="586.0" visible="false">
                         <children>
                             <Label layoutX="244.0" layoutY="14.0" text="Remove a project:" />
@@ -64,7 +47,26 @@
                             <Label layoutX="69.0" layoutY="195.0" text="End Date:" />
                             <DatePicker fx:id="registerProjectEndDate" layoutX="164.0" layoutY="190.0" prefHeight="26.0" prefWidth="159.0" />
                             <Button fx:id="registerProjectButton" layoutX="132.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleButtonRegisterProject" text="Register Project" />
-                            <Label fx:id="registerProjectLabelResponse" layoutX="333.0" layoutY="82.0" prefHeight="89.0" prefWidth="248.0" text="Ska vara error ruta ifall error uppstår" />
+                        <Label fx:id="registerProjectLabelResponse" layoutX="14.0" layoutY="281.0" prefHeight="96.0" prefWidth="575.0" wrapText="true" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
+                        <children>
+                            <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
+                            <TableView fx:id="tableViewProject" layoutX="3.0" layoutY="92.0" prefHeight="189.0" prefWidth="592.0">
+                                <columns>
+                                <TableColumn fx:id="colStatus" prefWidth="92.0" text="Status" />
+                                <TableColumn fx:id="colProjectNo" prefWidth="127.0" text="Project Number" />
+                                <TableColumn fx:id="colProjectName" minWidth="3.433319091796875" prefWidth="112.72348022460938" text="Name" />
+                                <TableColumn fx:id="colStartDate" prefWidth="119.0" text="StartDate" />
+                              <TableColumn fx:id="colEndDate" minWidth="0.0" prefWidth="140.0" text="EndDate" />
+                                </columns>
+                            </TableView>
+                            <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" visible="false" />
+                            <Button fx:id="viewAllProjectsButton" layoutX="503.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
+                        <ComboBox fx:id="viewAllProjectsComboBox" layoutX="24.0" layoutY="44.0" prefHeight="26.0" prefWidth="159.0" promptText="View specific project" />
+                        <Label fx:id="updateProjectLabel" layoutX="12.0" layoutY="289.0" prefHeight="78.0" prefWidth="569.0" wrapText="true" />
+                        <Label layoutX="5.0" layoutY="281.0" prefHeight="17.0" prefWidth="558.0" text="To update a project: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
                         </children>
                     </AnchorPane>
                     </children>

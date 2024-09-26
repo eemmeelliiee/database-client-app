@@ -1,7 +1,7 @@
 package se.lu.ics.controllers;
 
 import java.io.IOException;
-
+import java.io.File;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import java.awt.Desktop;
+
 
 
 public class MainViewController {
@@ -152,7 +155,38 @@ public class MainViewController {
             e.printStackTrace();
         }
     }
-}
+
+    //Open excel
+    @FXML
+    private Button excelButton;
+
+    @FXML
+    private Label homePageResponse;
+
+    @FXML
+    private void handleExcelButton(ActionEvent event) {
+        String filePath = "src/main/resources/excel/ExcelData.xlsx";
+
+            try {
+                File file = new File(filePath);
+                if (file.exists()) { 
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop.getDesktop().open(file); // Open the file with the default application
+                    } else {
+                        homePageResponse.setText("Desktop is not supported on this platform.");
+                        homePageResponse.setStyle("-fx-text-fill: red");
+                    } 
+                } else {
+                    homePageResponse.setText("Couldn't find excel file");
+                    homePageResponse.setStyle("-fx-text-fill: red");
+                }
+            } catch (IOException e) {
+                homePageResponse.setText("Error opening Excel file: " + e.getMessage());
+                homePageResponse.setStyle("-fx-text-fill: red");
+            }
+        }
+    }
+
     
 
 /* Reference to the TabPane (injected from FXML)
