@@ -403,4 +403,40 @@ public class WorkDao {
                     e);
         }
     }
+
+    /* GET WORK HOURS FOR CONSULTANT ON PROJECT */
+    /**
+     * Retrieves the work hours for a specific consultant on a specific project.
+     * This method retrieves the work hours a consultant has logged on a specific project.
+     *
+     * @param empNo The employee number of the consultant.
+     * @param projNo The project number of the project.
+     * @return The work hours the consultant has logged on the project.
+     * @throws DaoException If there is an error retrieving the work hours.
+     */
+    public double getWorkHoursForConsultantOnProject(String empNo, String projNo) throws DaoException {
+        String query = "SELECT w.WorkHours " +
+                       "FROM Work w " +
+                       "JOIN Consultant c ON w.ConsultantId = c.ConsultantId " +
+                       "JOIN Project p ON w.ProjectId = p.ProjectId " +
+                       "WHERE c.EmpNo = ? AND p.ProjectNo = ?";
+        double workHours = 0;
+
+        try (Connection connection = connectionHandler.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, empNo);
+            statement.setString(2, projNo);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    workHours = resultSet.getDouble("WorkHours");
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error retrieving work hours for consultant on project.", e);
+        }
+
+        return workHours;
+    }
 }
