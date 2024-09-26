@@ -20,7 +20,7 @@
                <Button fx:id="showHardestWorkingConPane" layoutX="354.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleShowHardestWorkingConPane" text="Check hardest working consultant" />
                <Label layoutX="242.0" layoutY="7.0" text="WORK OVERVIEW" />
                <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
-            <Button fx:id="projectsInvolvingAllConsultants" layoutX="359.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleButtonProjectsInvolvingAllConsultants" text="Projects involving all consultants" />
+            <Button fx:id="projectsInvolvingAllConsultants" layoutX="359.0" layoutY="67.0" mnemonicParsing="false" text="Projects involving all consultants" />
            </children>
        </AnchorPane>
        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="584.0">
