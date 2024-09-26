@@ -151,11 +151,11 @@ public class ProjectDao {
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("A project with this ProjectNo or ProjectName already exists.", e);
+                throw new DaoException("Error saving project: " + project.getProjectNo() + "\nA project with this ProjectNo or ProjectName already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Fields ProjectNo and ProjectName cannot be empty.", e);
+                throw new DaoException("Error saving project: " + project.getProjectNo() +"\nFields ProjectNo and ProjectName cannot be empty.", e);
             } else if (e.getErrorCode() == 547) {
-                throw new DaoException("End date must be after start date", e);
+                throw new DaoException("Error saving project: " + project.getProjectNo() +"\nEnd date must be after start date", e);
             } else {
                 throw new DaoException("Error saving project: " + project.getProjectNo(), e);
             }
@@ -184,9 +184,23 @@ public class ProjectDao {
             try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
                 updateStmt.setString(1, updatedproject.getProjectNo());
                 updateStmt.setString(2, updatedproject.getProjectName());
-                updateStmt.setDate(3, Date.valueOf(updatedproject.getProjectStartDate()));
-                updateStmt.setDate(4, Date.valueOf(updatedproject.getProjectEndDate()));
+               
+                // Check if projectStartDate is null and handle it appropriately
+                if (updatedproject.getProjectStartDate() != null) {
+                    updateStmt.setDate(3, Date.valueOf(updatedproject.getProjectStartDate()));
+                } else {
+                    updateStmt.setNull(3, Types.DATE);
+                }
+
+                // Check if projectEndDate is null and handle it appropriately
+                if (updatedproject.getProjectEndDate() != null) {
+                    updateStmt.setDate(4, Date.valueOf(updatedproject.getProjectEndDate()));
+                } else {
+                    updateStmt.setNull(4, Types.DATE);
+                }
+
                 updateStmt.setString(5, oldProjectNo); // In case ProjectNo is updated
+
 
                 // Execute the update operation
                 updateStmt.executeUpdate();
@@ -196,17 +210,21 @@ public class ProjectDao {
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("A project with this ProjectNo or ProjectName already exists.", e);
+                throw new DaoException("Error updating project:" + updatedproject.getProjectNo() + "\nA project with this ProjectNo or ProjectName already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Fields ProjectNo and ProjectName cannot be empty.");
+                throw new DaoException("Error updating project:" + updatedproject.getProjectNo() + "\nFields ProjectNo and ProjectName cannot be empty.");
             } else if (e.getErrorCode() == 547) {
                 throw new DaoException(
-                        "The start date is after the end date. Choose a date that starts before the end date.");
+                        "Error updating project:" + updatedproject.getProjectNo() + "\nEnd date must be after start date");
             } else {
-                throw new DaoException("Error saving project: " + updatedproject.getProjectNo(), e);
+                e.printStackTrace();
+                throw new DaoException("Error updating project: " + updatedproject.getProjectNo(), e);
+                
             }
         } catch (Exception e) {
-            throw new DaoException("Error saving project: " + updatedproject.getProjectNo());
+            e.printStackTrace();
+
+            throw new DaoException("Error Updating project: " + updatedproject.getProjectNo());
         }
     }
 
