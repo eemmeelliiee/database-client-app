@@ -9,10 +9,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import java.awt.Desktop;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 
 
@@ -156,6 +159,17 @@ public class MainViewController {
         }
     }
 
+    //Show logo
+    @FXML
+    private ImageView arcticByteLogo; // Reference to the ImageView in FXML
+
+    @FXML
+    public void initialize() {
+        // Load the image from resources
+        Image logoImage = new Image(getClass().getResourceAsStream("/images/ArcticByteLogo.png"));
+        arcticByteLogo.setImage(logoImage); // Set the loaded image to the ImageView
+    }
+
     //Open excel
     @FXML
     private Button excelButton;
@@ -186,34 +200,5 @@ public class MainViewController {
             }
         }
     }
-
-    
-
-/* Reference to the TabPane (injected from FXML)
-@FXML
-private TabPane mainTabPane;
-
-//Reference to individual tab controllers (optional if you need them)
-private ConsultantTabController consultantTabController;
-private ProjectTabController projectTabController;
-private MilestoneTabController milestoneTabController;
-private WorkTabController workTabController; 
-
-// Initializes the controller class after the root element has been completely processed
-@FXML
-public void initialize() {
-    // Access the controllers for each tab (if needed)
-    consultantTabController = loadTabController("consultantTab.fxml");
-    projectTabController = loadTabController("projectTab.fxml");
-    milestoneTabController = loadTabController("milestoneTab.fxml");
-    workTabController = loadTabController("workTab.fxml");
-    
-    // You can now use tab1Controller, tab2Controller, and tab3Controller to manipulate each tab
-    // For example, you can communicate between the tabs using these controllers
-}
-
-// DAO instance
-// private ConsultantDao consultantDao = new ConsultantDao();*/
-
 
 
