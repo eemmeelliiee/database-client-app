@@ -159,9 +159,7 @@ public class ProjectDao {
             } else {
                 throw new DaoException("Error saving project: " + project.getProjectNo(), e);
             }
-        } catch (Exception e) {
-            throw new DaoException("Error saving project: " + project.getProjectNo());
-        }
+        } 
     }
 
     /* UPDATE PROJECT */
@@ -200,8 +198,6 @@ public class ProjectDao {
                 }
 
                 updateStmt.setString(5, oldProjectNo); // In case ProjectNo is updated
-
-
                 // Execute the update operation
                 updateStmt.executeUpdate();
             }
@@ -210,22 +206,17 @@ public class ProjectDao {
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("Error updating project:" + updatedproject.getProjectNo() + "\nA project with this ProjectNo or ProjectName already exists.", e);
+                throw new DaoException("Error updating project: " + updatedproject.getProjectNo() + "\nA project with this ProjectNo or ProjectName already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Error updating project:" + updatedproject.getProjectNo() + "\nFields ProjectNo and ProjectName cannot be empty.");
+                throw new DaoException("Error updating project: " + updatedproject.getProjectNo() + "\nFields ProjectNo and ProjectName cannot be empty.");
             } else if (e.getErrorCode() == 547) {
                 throw new DaoException(
-                        "Error updating project:" + updatedproject.getProjectNo() + "\nEnd date must be after start date");
+                        "Error updating project: " + updatedproject.getProjectNo() + "\nEnd date must be after start date");
             } else {
                 e.printStackTrace();
-                throw new DaoException("Error updating project: " + updatedproject.getProjectNo(), e);
-                
+                throw new DaoException("HEJError updating project: " + updatedproject.getProjectNo(), e);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            throw new DaoException("Error Updating project: " + updatedproject.getProjectNo());
-        }
+         } 
     }
 
     /* HELPER METHOD: UPDATE ATTRIBUTE projectStatus FOR PROJECT */
