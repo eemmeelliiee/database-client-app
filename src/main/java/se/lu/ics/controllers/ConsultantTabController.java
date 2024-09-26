@@ -333,6 +333,9 @@ private void setupTableColumns() {
     private TableColumn<Consultant, LocalDate> colStartDate; // Column for start date
 
     private void updateConsultant(Consultant consultant, String field, String newValue) {
+        // Set to null if the new value is empty
+        newValue = (newValue != null && newValue.trim().isEmpty()) ? null : newValue;
+    
         String oldEmpNo = consultant.getEmpNo();
         try {
             switch (field) {
@@ -360,9 +363,9 @@ private void setupTableColumns() {
             infoOverViewLabel.setStyle("-fx-text-fill: red");
             handleButtonViewAll();
             consultantTableView.refresh();
-
         }
     }
+    
 
     // Populate the TableView based on the selected title
     private void populateTableViewByTitle(String title) {
