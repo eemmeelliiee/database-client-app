@@ -323,4 +323,24 @@ public class WorkTabController {
         }
     }
 
+    @FXML
+    private Button allConsultantsHours; 
+
+    // Method to handle button click
+    @FXML
+    private void onAllConsultantsHoursButtonClick() {
+        try {
+            // Get total worked hours from WorkDao
+            double totalHours = workDao.getTotalHoursWorked();
+
+            // Update label to display total worked hours
+            totalWorkedHoursLabel.setText("Total Hours Worked by All Consultants: " + totalHours);
+        } catch (DaoException e) {
+            // In case of error, you can show an error message on the label
+            totalWorkedHoursLabel.setText("Error fetching total hours: " + e.getMessage());
+        }
+    }
+
+
+
 }
