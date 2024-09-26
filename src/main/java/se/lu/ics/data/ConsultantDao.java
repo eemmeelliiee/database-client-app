@@ -213,7 +213,7 @@ public class ConsultantDao {
             } else if (e.getErrorCode() == 515) {
                 throw new DaoException("Error registering consultant: \n" +  "Fields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
-                throw new DaoException("Error registering consultant: \n" +"Error registering consultant: " + consultant.getEmpNo(), e);
+                throw new DaoException("Error registering consultant: \n" +"Error registering consultant: ", e);
             }
         } 
     }
