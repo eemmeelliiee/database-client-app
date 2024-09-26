@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MilestoneTabController">
     <items>
@@ -17,7 +18,7 @@
         <children>
             <Button fx:id="showAddMSPane" layoutX="58.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleShowAddMSPane" prefHeight="26.0" prefWidth="120.0" text="Register Milestone" />
             <Button fx:id="showRemoveMSPane" layoutX="227.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleShowRemoveMSPane" prefHeight="26.0" prefWidth="132.0" text="Remove Milestone" />
-            <Button fx:id="showRetrieveMSPane" layoutX="413.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleShowRetrieveMSPane" text="Retrieve Milestone" />
+            <Button fx:id="showRetrieveMSPane" layoutX="413.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleShowRetrieveMSPane" text="Information Overview" />
             <Label layoutX="225.0" layoutY="5.0" text="MILESTONE OVERVIEW" />
             <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
         </children>
@@ -41,7 +42,7 @@
                         <ComboBox fx:id="registerMilestoneProjectNo" layoutX="173.0" layoutY="103.0" prefHeight="26.0" prefWidth="160.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="removeMSPane" prefHeight="200.0" prefWidth="200.0">
+                <AnchorPane fx:id="removeMSPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                     <children>
                         <Label layoutX="236.0" layoutY="14.0" text="Remove A Milestone:" />
                         <Label layoutX="148.0" layoutY="61.0" text="Project Number:" />
@@ -52,19 +53,23 @@
                         <Label fx:id="removeMilestoneLabelResponse" layoutX="14.0" layoutY="201.0" prefHeight="72.0" prefWidth="571.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="retrieveMSPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                <AnchorPane fx:id="retrieveMSPane" prefHeight="200.0" prefWidth="200.0">
                     <children>
-                        <Label layoutX="241.0" layoutY="14.0" text="Retrieve Milestone:" />
-                        <ComboBox layoutX="17.0" layoutY="47.0" prefHeight="26.0" prefWidth="139.0" promptText="Choose Project:" />
-                        <TableView layoutX="16.0" layoutY="90.0" prefHeight="188.0" prefWidth="383.0">
+                        <Label layoutX="241.0" layoutY="14.0" text="Information Overview:" />
+                        <TableView fx:id="milestoneTableView" layoutX="16.0" layoutY="90.0" prefHeight="188.0" prefWidth="383.0">
                             <columns>
-                            <TableColumn prefWidth="124.03993225097656" text="Milestone Number" />
-                            <TableColumn prefWidth="135.4600830078125" text="Name" />
-                            <TableColumn prefWidth="122.5" text="Date" />
+                            <TableColumn fx:id="milestoneNoColumn" prefWidth="124.03993225097656" text="Milestone Number" />
+                            <TableColumn fx:id="milestoneNameColumn" prefWidth="135.4600830078125" text="Name" />
+                            <TableColumn fx:id="milestoneDateColumn" prefWidth="122.5" text="Date" />
                             </columns>
                         </TableView>
-                        <Label layoutX="413.0" layoutY="122.0" text="Total number of milestones:" />
-                        <Label layoutX="413.0" layoutY="147.0" prefHeight="130.0" prefWidth="153.0" />
+                        <Label layoutX="414.0" layoutY="222.0" text="Total number of milestones:">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label fx:id="totalMilestonesLabel" layoutX="413.0" layoutY="239.0" prefHeight="38.0" prefWidth="153.0" />
+                        <Label fx:id="milestoneInfoLabel" layoutX="416.0" layoutY="90.0" prefHeight="118.0" prefWidth="160.0" />
+                        <ComboBox fx:id="projectNoComboBox" layoutX="22.0" layoutY="52.0" onAction="#onProjectSelected" prefWidth="150.0" promptText="Choose Project:" />
                     </children>
                 </AnchorPane>
                 </children>
