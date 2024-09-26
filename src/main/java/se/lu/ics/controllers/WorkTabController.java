@@ -318,14 +318,17 @@ public class WorkTabController {
     @FXML
     private Label totalWorkedHoursLabel;
 
+    @FXML
+    private Label totHoursWorkedForCon;
+
     // Display total worked hours for the selected consultant
     private void displayTotalWorkedHours(String empNo) {
         try {
             double totalHours = workDao.getTotalWorkHoursForConsultant(empNo); // Fetch total hours
-            totalWorkedHoursLabel.setText("Total Worked Hours: " + totalHours); // Display in label
+            totHoursWorkedForCon.setText("" + totalHours); // Display in label
         } catch (DaoException e) {
             System.err.println("Error retrieving total worked hours: " + e.getMessage());
-            totalWorkedHoursLabel.setText("Error retrieving hours");
+            totHoursWorkedForCon.setText("Error retrieving hours");
         }
     }
  
@@ -338,7 +341,7 @@ public class WorkTabController {
             double totalHours = workDao.getTotalHoursWorked();
 
             // Update label to display total worked hours
-            totalWorkedHoursLabel.setText("Total Hours Worked by All Consultants: " + totalHours);
+            totalWorkedHoursLabel.setText(""+totalHours);
         } catch (DaoException e) {
             // In case of error, you can show an error message on the label
             totalWorkedHoursLabel.setText("Error fetching total hours: " + e.getMessage());
