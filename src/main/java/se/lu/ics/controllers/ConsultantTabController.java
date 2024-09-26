@@ -27,9 +27,6 @@ import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
 import se.lu.ics.data.ConnectionHandler;
 
-import se.lu.ics.controllers.DatePickerTableCell;
-
-
 public class ConsultantTabController {
 
     // DAO instance
@@ -55,19 +52,19 @@ public class ConsultantTabController {
         populateViewSpecificConsultantComboBox();
         setViewSpecificConsultantComboBoxHandler();
         loadConsultants();
-        
+
     }
 
-    private void totNbrOfConsultants(){
+    private void totNbrOfConsultants() {
         List<Consultant> consultants = consultantDao.findAll();
         totalConsultantsResponse.setText("Total amount\nof consultants: " + consultants.size());
-    } 
+    }
 
     // Back to Home Page Button
     @FXML
     private Button backToHomePageButton;
 
-    //Button to get to the project tab
+    // Button to get to the project tab
     @FXML
     private void handleBackToHomePageButton(ActionEvent event) {
         String path = "/fxml/MainView.fxml";
@@ -76,7 +73,7 @@ public class ConsultantTabController {
             AnchorPane root = loader.load();
             Stage primaryStage = new Stage();
             Scene primaryScene = new Scene(root);
-            
+
             primaryStage.setScene(primaryScene);
 
             primaryStage.setTitle("Home Page");
@@ -89,6 +86,7 @@ public class ConsultantTabController {
             e.printStackTrace();
         }
     }
+
     // Register Consultant Pane
     @FXML
     private AnchorPane registerConsultantPane;
@@ -137,50 +135,33 @@ public class ConsultantTabController {
     private void setUpTableView() {
         consultantTableView.setEditable(true);
         colTitle.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        // colTitle.setOnEditCommit(event -> {
-        //     Consultant consultant = event.getRowValue();
-        //     String newTitle = event.getNewValue();
-        //     // consultant.setEmpTitle(newTitle);
-
-        //     if (!consultant.getEmpTitle().equals(newTitle)) {
-        //         consultant.setEmpTitle(newTitle);
-
-        //         consultantDao.update(consultant, consultant.getEmpNo());
-
-        //         populateEmployeeTitles();
-
-        //         event.getTableView().getItems().set(event.getTablePosition().getRow(), consultant);
-
-        //         consultantTableView.refresh();
-        //     }
-        // });
     }
 
     // Set up the TableColumns to bind to Consultant properties
-private void setupTableColumns() {
-    colEmpNo.setCellValueFactory(new PropertyValueFactory<>("empNo"));
-    colFirstName.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
-    colLastName.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
-    colTitle.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
-    colStartDate.setCellValueFactory(new PropertyValueFactory<>("empStartDate"));
+    private void setupTableColumns() {
+        colEmpNo.setCellValueFactory(new PropertyValueFactory<>("empNo"));
+        colFirstName.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
+        colLastName.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<>("empStartDate"));
 
-    // Make columns editable except for the date column
-    colEmpNo.setCellFactory(TextFieldTableCell.forTableColumn());
-    colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
-    colLastName.setCellFactory(TextFieldTableCell.forTableColumn());
-    colTitle.setCellFactory(TextFieldTableCell.forTableColumn());
-    colStartDate.setCellFactory(DatePickerTableCell.forTableColumn());
+        // Make columns editable except for the date column
+        colEmpNo.setCellFactory(TextFieldTableCell.forTableColumn());
+        colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
+        colLastName.setCellFactory(TextFieldTableCell.forTableColumn());
+        colTitle.setCellFactory(TextFieldTableCell.forTableColumn());
+        colStartDate.setCellFactory(DatePickerTableCell.forTableColumn());
 
-    // Add edit commit handlers
-    colEmpNo.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empNo", event.getNewValue()));
-    colFirstName.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empFirstName", event.getNewValue()));
-    colLastName.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empLastName", event.getNewValue()));
-    colTitle.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empTitle", event.getNewValue()));
+        // Add edit commit handlers
+        colEmpNo.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empNo", event.getNewValue()));
+        colFirstName
+                .setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empFirstName", event.getNewValue()));
+        colLastName.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empLastName", event.getNewValue()));
+        colTitle.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empTitle", event.getNewValue()));
 
-    // Add a listener to combobox to populate TableView when a title is selected
-    infoConsultantTitle.setOnAction(event -> populateTableViewByTitle(infoConsultantTitle.getValue()));
-}
+        // Add a listener to combobox to populate TableView when a title is selected
+        infoConsultantTitle.setOnAction(event -> populateTableViewByTitle(infoConsultantTitle.getValue()));
+    }
 
     private void populateEmployeeTitles() {
         List<String> employeeTitles = consultantDao.findAllEmpTitles();
@@ -254,9 +235,9 @@ private void setupTableColumns() {
             consultantDao.save(newConsultant);
 
             lableResponse.setText("New Consultant Registered:\n" +
-                    "First Name: " + (empFirstName != null ? empFirstName : "N/A") + "   |   " + 
+                    "First Name: " + (empFirstName != null ? empFirstName : "N/A") + "   |   " +
                     "Last Name: " + (empLastName != null ? empLastName : "N/A") + "\n" +
-                    "Title: " + (empTitle != null ? empTitle : "N/A") + "   |   " + 
+                    "Title: " + (empTitle != null ? empTitle : "N/A") + "   |   " +
                     "Employee No: " + empNo + "\n" +
                     "Start Date: " + (empStartDate != null ? empStartDate : "N/A"));
 
@@ -348,7 +329,7 @@ private void setupTableColumns() {
         if (newValue instanceof String) {
             newValue = (newValue != null && ((String) newValue).trim().isEmpty()) ? null : newValue;
         }
-    
+
         String oldEmpNo = consultant.getEmpNo();
         try {
             switch (field) {
@@ -381,7 +362,6 @@ private void setupTableColumns() {
             consultantTableView.refresh();
         }
     }
-    
 
     // Populate the TableView based on the selected title
     private void populateTableViewByTitle(String title) {
@@ -414,7 +394,7 @@ private void setupTableColumns() {
             totalConsultantsResponse.setStyle("-fx-text-fill: red");
         }
     }
-    
+
     @FXML
     private Label infoOverviewLabel;
 
@@ -451,5 +431,4 @@ private void setupTableColumns() {
         viewSpecificConsultantComboBox.getItems().addAll(employeeNumbers);
     }
 
-    
 }

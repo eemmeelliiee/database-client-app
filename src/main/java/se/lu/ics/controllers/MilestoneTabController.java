@@ -294,7 +294,7 @@ public class MilestoneTabController {
                 ObservableList<Milestone> milestoneList = FXCollections.observableArrayList(milestones);
                 //milestoneTableView.getItems().clear();
                 milestoneTableView.setItems(milestoneList);
-                totalMilestonesLabel.setText("Total Milestones: " + milestones.size());
+                totalMilestonesLabel.setText(""+milestones.size());
             } catch (DaoException e) {
                 milestoneInfoLabel.setText("Error fetching milestones: " + e.getMessage());
                 e.printStackTrace();
