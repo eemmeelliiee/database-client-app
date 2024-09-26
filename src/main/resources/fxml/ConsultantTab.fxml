@@ -12,21 +12,38 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
+<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
     <items>
         <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
             <children>
-                <Button fx:id="showInfoPane" layoutX="400.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowInfoPane" prefWidth="150.0" text="Information overview" />
-                <Button fx:id="showRemoveConsultantPane" layoutX="232.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowRemoveConsultantPane" prefWidth="150.0" text="Remove consultant" />
-                <Button fx:id="showRegisterConsultantPane" layoutX="48.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowRegisterConsultantPane" prefWidth="150.0" text="Register consultant" />
-                <Label layoutX="232.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
                 <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
+                <Button fx:id="showRegisterConsultantPane" layoutX="48.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowRegisterConsultantPane" prefWidth="150.0" text="Register consultant" />
+                <Button fx:id="showRemoveConsultantPane" layoutX="232.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowRemoveConsultantPane" prefWidth="150.0" text="Remove consultant" />
+                <Button fx:id="showInfoPane" layoutX="400.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowInfoPane" prefWidth="150.0" text="Information overview" />
+                <Label layoutX="232.0" layoutY="14.0" text="CONSULTANT OVERVIEW" />
             </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
             <children>
                 <StackPane layoutX="-1.0" layoutY="-1.0" prefHeight="295.0" prefWidth="583.0">
                     <children>
+                    <AnchorPane fx:id="registerConsultantPane" prefHeight="200.0" prefWidth="200.0">
+                        <children>
+                            <Label layoutX="249.0" layoutY="14.0" text="Register a consultant:" />
+                            <Label layoutX="148.0" layoutY="49.0" text="Employee Number:" />
+                            <Label layoutX="148.0" layoutY="92.0" prefHeight="17.0" prefWidth="64.0" text="First name:" />
+                            <Label layoutX="148.0" layoutY="130.0" prefHeight="17.0" prefWidth="63.0" text="Last name:" />
+                            <Label layoutX="148.0" layoutY="171.0" text="Title:" />
+                            <Label layoutX="148.0" layoutY="211.0" text="Start date:" />
+                            <TextField fx:id="registerConsultantNo" layoutX="308.0" layoutY="44.0" prefWidth="160.0" promptText="Ex: E004" />
+                            <TextField fx:id="registerConsultantName" layoutX="308.0" layoutY="87.0" prefWidth="160.0" promptText="John" />
+                            <TextField fx:id="registerConsultantLast" layoutX="308.0" layoutY="125.0" prefWidth="160.0" promptText="Doe" />
+                            <TextField fx:id="registerConsultantTitle" layoutX="308.0" layoutY="166.0" prefWidth="160.0" promptText="Junior IT" />
+                            <DatePicker fx:id="registerConsultantDate" layoutX="308.0" layoutY="206.0" prefHeight="26.0" prefWidth="160.0" />
+                            <Button fx:id="registerConsultantButton" layoutX="247.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleButtonRegisterConsultant" text="Register consultant" />
+                            <Label fx:id="lableResponse" alignment="TOP_CENTER" layoutX="85.0" layoutY="287.0" prefHeight="77.0" prefWidth="448.0" textAlignment="CENTER" wrapText="true" />
+                        </children>
+                    </AnchorPane>
                     <AnchorPane fx:id="removeConsultantPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                         <children>
                             <Label layoutX="233.0" layoutY="14.0" text="Remove a consultant:" />
@@ -39,6 +56,9 @@
                     <AnchorPane fx:id="infoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="615.0" visible="false">
                         <children>
                             <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
+                            <ComboBox fx:id="viewSpecificConsultantComboBox" layoutX="35.0" layoutY="55.0" prefHeight="27.0" prefWidth="179.0" promptText="View specific consultant" />
+                            <ComboBox fx:id="infoConsultantTitle" layoutX="223.0" layoutY="54.0" prefHeight="27.0" prefWidth="150.0" promptText="View by title" />
+                            <Button fx:id="viewAllButton" layoutX="381.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleButtonViewAll" prefHeight="27.0" prefWidth="91.0" text="View All" />
                             <TableView fx:id="consultantTableView" layoutX="34.0" layoutY="106.0" prefHeight="200.0" prefWidth="438.0">
                             <columns>
                                 <TableColumn fx:id="colEmpNo" prefWidth="79.79247665405273" text="Emp. Number" />
@@ -48,32 +68,12 @@
                                 <TableColumn fx:id="colStartDate" prefWidth="93.5" text="Start Date" />
                             </columns>
                             </TableView>
-                            <ComboBox fx:id="viewSpecificConsultantComboBox" layoutX="35.0" layoutY="55.0" prefHeight="27.0" prefWidth="179.0" promptText="View specific consultant" />
-                            <ComboBox fx:id="infoConsultantTitle" layoutX="223.0" layoutY="54.0" prefHeight="27.0" prefWidth="150.0" promptText="View by title" />
-                            <Button fx:id="viewAllButton" layoutX="381.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleButtonViewAll" prefHeight="27.0" prefWidth="91.0" text="View All" />
+                            <Label fx:id="infoOverViewLabel" alignment="TOP_LEFT" layoutX="487.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="119.0" wrapText="true" />
+                            <Label layoutX="34.0" layoutY="315.0" prefHeight="17.0" prefWidth="558.0" text="To update a consultant: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
                             <Label fx:id="totalConsultantsResponse" layoutX="34.0" layoutY="332.0" prefHeight="38.0" prefWidth="438.0" wrapText="true">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font></Label>
-                            <Label layoutX="34.0" layoutY="315.0" prefHeight="17.0" prefWidth="558.0" text="To update a consultant: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
-                            <Label fx:id="infoOverViewLabel" alignment="TOP_LEFT" layoutX="487.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="119.0" wrapText="true" />
-                        </children>
-                    </AnchorPane>
-                    <AnchorPane fx:id="registerConsultantPane" prefHeight="200.0" prefWidth="200.0">
-                        <children>
-                            <Button fx:id="registerConsultantButton" layoutX="247.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleButtonRegisterConsultant" text="Register consultant" />
-                            <Label layoutX="249.0" layoutY="14.0" text="Register a consultant:" />
-                            <TextField fx:id="registerConsultantNo" layoutX="308.0" layoutY="44.0" prefWidth="160.0" promptText="Ex: E004" />
-                            <Label layoutX="148.0" layoutY="49.0" text="Employee Number:" />
-                            <Label layoutX="148.0" layoutY="92.0" prefHeight="17.0" prefWidth="64.0" text="First name:" />
-                            <Label layoutX="148.0" layoutY="130.0" prefHeight="17.0" prefWidth="63.0" text="Last name:" />
-                            <Label layoutX="148.0" layoutY="171.0" text="Title:" />
-                            <Label layoutX="148.0" layoutY="211.0" text="Start date:" />
-                            <TextField fx:id="registerConsultantName" layoutX="308.0" layoutY="87.0" prefWidth="160.0" promptText="John" />
-                            <TextField fx:id="registerConsultantLast" layoutX="308.0" layoutY="125.0" prefWidth="160.0" promptText="Doe" />
-                            <DatePicker fx:id="registerConsultantDate" layoutX="308.0" layoutY="206.0" prefHeight="26.0" prefWidth="160.0" />
-                            <Label fx:id="lableResponse" alignment="TOP_CENTER" layoutX="85.0" layoutY="287.0" prefHeight="77.0" prefWidth="448.0" textAlignment="CENTER" wrapText="true" />
-                            <TextField fx:id="registerConsultantTitle" layoutX="308.0" layoutY="166.0" prefWidth="160.0" promptText="Junior IT" />
                         </children>
                     </AnchorPane>
                     </children>
