@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,11 +10,11 @@
 
 <AnchorPane fx:id="HomePage" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MainViewController">
    <children>
-      <Button fx:id="showConsultantTabButton" layoutX="18.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowConsultantTabButton" text="ConsultantTab" />
-      <Button fx:id="showProjectTabButton" layoutX="137.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowProjectTabButton" text="ProjectTab" />
-      <Button fx:id="showMilestoneTabButton" layoutX="256.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowMilestoneTabButton" text="MilestoneTab" />
-      <Button fx:id="showWorkTabButton" layoutX="374.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowWorkTabButton" text="WorkTab" />
-      <Button fx:id="showMetadataTabButton" layoutX="493.0" layoutY="28.0" mnemonicParsing="false" prefWidth="100.0" onAction="#handleShowMetadataTabButton" text="MetadataTab" />
+      <Button fx:id="showConsultantTabButton" layoutX="18.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowConsultantTabButton" prefWidth="100.0" text="ConsultantTab" />
+      <Button fx:id="showProjectTabButton" layoutX="137.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowProjectTabButton" prefWidth="100.0" text="ProjectTab" />
+      <Button fx:id="showMilestoneTabButton" layoutX="256.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowMilestoneTabButton" prefWidth="100.0" text="MilestoneTab" />
+      <Button fx:id="showWorkTabButton" layoutX="374.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowWorkTabButton" prefWidth="100.0" text="WorkTab" />
+      <Button fx:id="showMetadataTabButton" layoutX="493.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowMetadataTabButton" prefWidth="100.0" text="MetadataTab" />
       <Text layoutX="179.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your vision, Our strategy">
          <font>
             <Font name="Charter Black Italic" size="20.0" />
@@ -24,5 +25,8 @@
             <DropShadow />
          </effect>
       </TextArea>
+      <Button fx:id="excelButton" layoutX="251.0" layoutY="459.0" mnemonicParsing="false" onAction="#handleExcelButton" text="Take me to excel" />
+      <Label layoutX="204.0" layoutY="434.0" text="Click here to see a company overview" textFill="#28bc63" />
+      <Label fx:id="homePageResponse" layoutX="375.0" layoutY="457.0" prefHeight="27.0" prefWidth="225.0" />
    </children>
 </AnchorPane>
