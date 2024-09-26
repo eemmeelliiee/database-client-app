@@ -21,7 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.ComboBox;
-
+import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Work;
 import se.lu.ics.data.WorkDao;
 import se.lu.ics.data.ConsultantDao;
@@ -51,6 +51,10 @@ public class WorkTabController {
 
     @FXML
     private void initialize() {
+        setUpConsultantTable();
+        populateProjectNumbers();
+        populateEmployeeNumbers();
+        setProjectComboBoxHandler();
     }
 
         // Back to Home Page Button
@@ -148,4 +152,152 @@ public class WorkTabController {
     // private void handleButtonProjectsInvolvingAllConsultants(){
 
     // }
+
+    // Add consultant to project
+    @FXML
+    private ComboBox<String> addConEmpNo;
+
+    @FXML
+    private ComboBox<String> addConProjNo;
+
+    @FXML
+    private TextField addConWorkHours;
+
+    @FXML
+    private Button addConButton;
+
+    @FXML
+    private void handleButtonAddConsultant() {
+        try {
+            String empNo = addConEmpNo.getValue(); // Get the selected employee number
+            String projNo = addConProjNo.getValue(); // Get the selected project number
+            String workHoursString = addConWorkHours.getText();
+
+            // Convert work hours from String to double
+            workHoursString = (workHoursString != null && workHoursString.trim().isEmpty()) ? null : workHoursString;
+            double workHours = (workHoursString != null) ? Double.parseDouble(workHoursString) : 0;
+
+            // Save the new Work entry to the database
+            workDao.addConsultantToProject(empNo, projNo, workHours);
+
+            // Status message to inform the user
+            errorLabel.setText(
+                "Consultant hours added:\n" +
+                "Employee No: " + (empNo != null ? empNo : "N/A") + "\n" +
+                "Project No: " + (projNo != null ? projNo : "N/A") + "\n" +
+                "Work Hours: " + (workHoursString != null ? workHoursString : "0.00") + "\n");
+            errorLabel.setStyle("-fx-text-fill: green");
+
+            // Clear fields after submission
+            addConEmpNo.setValue(null);
+            addConProjNo.setValue(null);
+            addConWorkHours.clear();
+
+        } catch (DaoException e) {
+            errorLabel.setText(e.getMessage());
+        }catch (NumberFormatException e) {
+            errorLabel.setText("Invalid input for work hours. Please enter a valid number."); 
+            errorLabel.setStyle("-fx-text-fill: red");
+        /* } catch (Exception e) {
+            errorLabel.setText("An unexpected error occurred.");
+            e.printStackTrace();*/
+        }
+    }
+    
+    // Method to populate employee number ComboBox
+    @FXML
+    private void populateEmployeeNumbers() {
+        try {
+            List<String> employeeNumbers = consultantDao.findAllEmpNos(); // Fetch employee numbers
+            ObservableList<String> employeeNumbersList = FXCollections.observableArrayList(employeeNumbers);
+            addConEmpNo.setItems(employeeNumbersList); // Set items in the employee number ComboBox
+        } catch (DaoException e) {
+            errorLabel.setText("Error fetching employee numbers: " + e.getMessage());
+            errorLabel.setStyle("-fx-text-fill: red");
+        }
+    }
+
+    
+
+
+    // Consultant working on certain projects
+    @FXML
+    private ComboBox<String> projectComboBox;
+
+
+    @FXML
+    private TableView<Consultant> consultantWorkTable;
+
+
+    @FXML
+    private TableColumn<Consultant, String> consultantNumberColumn;
+
+
+    @FXML
+    private TableColumn<Consultant, String> consultantFirstNameColumn;
+
+
+    @FXML
+    private TableColumn<Consultant, String> consultantLastNameColumn;
+
+
+    @FXML
+    private TableColumn<Consultant, String> consultantTitleColumn;
+
+
+    @FXML
+    private TableColumn<Consultant, String> consultantDateColumn;
+
+    @FXML
+    private Label errorLabel;
+
+    //set up the consultant table
+    private void setUpConsultantTable() {
+    consultantNumberColumn.setCellValueFactory(new PropertyValueFactory<>("empNo"));
+    consultantFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
+    consultantLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
+    consultantTitleColumn.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
+    consultantDateColumn.setCellValueFactory(new PropertyValueFactory<>("empStartDate"));
+
+    consultantWorkTable.getItems().clear();
+    }
+
+    // populate project numbers
+    @FXML
+    private void populateProjectNumbers() {
+    List<String> projectNumbers = projectDao.findAllProjectNos();
+    ObservableList<String> projectNumbersList = FXCollections.observableArrayList(projectNumbers);
+    projectComboBox.setItems(projectNumbersList);
+    addConProjNo.setItems(projectNumbersList); // Set items in the add consultant ComboBox
+    }
+
+    @FXML
+    private void setProjectComboBoxHandler() {
+        projectComboBox.setOnAction(event -> {
+            String selectedProjectNo = projectComboBox.getValue();
+            if (selectedProjectNo != null && !selectedProjectNo.isEmpty()) {
+                updateConsultantWorkTableForProject(selectedProjectNo);
+            }
+        });
+    }
+
+    private void updateConsultantWorkTableForProject(String projectNo) {
+        try {
+            // Fetch consultants working on the selected project from the DAO
+            List<Consultant> consultants = workDao.listConsultantsByProject(projectNo);
+            
+            if (consultants != null && !consultants.isEmpty()) {
+                ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultants);
+                consultantWorkTable.setItems(consultantList);
+            } else {
+                // Clear the table if no consultants are found for the selected project
+                consultantWorkTable.getItems().clear();
+            }
+        } catch (DaoException e) {
+            // Handle any database exceptions
+            System.err.println("Error fetching consultants for project: " + e.getMessage());
+        }
+    }
+    
+
 }
