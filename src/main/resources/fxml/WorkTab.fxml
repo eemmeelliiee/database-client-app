@@ -15,7 +15,7 @@
        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="107.0" prefWidth="584.0">
            <children>
                <Button fx:id="showAddConToProPane" layoutX="26.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleShowAddConToProPane" text="Add consultant to project" />
-               <Button fx:id="showCheckWorkingConsPane" layoutX="211.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleShowCheckWorkingConsPane" text="Check working consultants" />
+               <Button fx:id="manageConsultantsForProject" layoutX="192.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleManageConsultantsForProject" text="Manage consultants for project" />
                <Button fx:id="showHardestWorkingConPane" layoutX="387.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleShowHardestWorkingConPane" text="Check hardest working consultant" />
                <Label layoutX="242.0" layoutY="7.0" text="WORK OVERVIEW" />
                <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
@@ -42,7 +42,7 @@
                                </TableView>
                            </children>
                        </AnchorPane>
-                   <AnchorPane fx:id="displayConsHoursPane" prefHeight="200.0" prefWidth="200.0">
+                   <AnchorPane fx:id="displayConsHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                        <children>
                            <Label layoutX="219.0" layoutY="15.0" text="Display consultant work hours" />
                            <Button fx:id="showConsultantsButton" layoutX="108.0" layoutY="192.0" mnemonicParsing="false" onAction="#onShowConsultantsButtonClick" prefHeight="26.0" prefWidth="371.0" text="View consultants that work on 3 projects or less" />
@@ -52,7 +52,7 @@
                                <TableColumn fx:id="empFirstNameColumn" text="First Name" />
                                <TableColumn fx:id="empLastNameColumn" prefWidth="80.35916137695312" text="Last Name" />
                                <TableColumn fx:id="empTitleColumn" prefWidth="59.0" text="Title" />
-                               <TableColumn fx:id="empStartDateColumn" prefWidth="30.0" text="Date" />
+                               <TableColumn fx:id="empStartDateColumn" prefWidth="33.5" text="Date" />
                                </columns>
                            </TableView>
                         <ComboBox fx:id="consultantComboBox" layoutX="108.0" layoutY="54.0" prefHeight="26.0" prefWidth="158.0" promptText="Choose consultant" />
@@ -62,20 +62,22 @@
                         <Label layoutX="108.0" layoutY="147.0" prefHeight="17.0" prefWidth="217.0" text="Total hours worked by all consultants:" />
                        </children>
                    </AnchorPane>
-                   <AnchorPane fx:id="checkWorkingConsPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                   <AnchorPane fx:id="checkWorkingConsPane" prefHeight="200.0" prefWidth="200.0">
                        <children>
-                           <Label layoutX="168.0" layoutY="14.0" text="Check working consultants on specific projects" />
-                           <TableView fx:id="consultantWorkTable" layoutX="66.0" layoutY="104.0" prefHeight="175.0" prefWidth="450.0">
+                           <Label layoutX="168.0" layoutY="14.0" text="Manage working consultants on specific projects" />
+                           <TableView fx:id="consultantWorkTable" layoutX="25.0" layoutY="105.0" prefHeight="175.0" prefWidth="532.0">
                                <columns>
                                <TableColumn fx:id="consultantNumberColumn" prefWidth="124.39109802246094" text="Consultant Number" />
                                <TableColumn fx:id="consultantFirstNameColumn" prefWidth="84.27655029296875" text="First Name" />
                                <TableColumn fx:id="consultantLastNameColumn" prefWidth="81.79248046875" text="Last Name" />
                                <TableColumn fx:id="consultantTitleColumn" prefWidth="71.31646728515625" text="Title" />
                                <TableColumn fx:id="consultantDateColumn" prefWidth="97.68356323242188" text="Start Date" />
+                              <TableColumn fx:id="tableColHours" prefWidth="75.0" text="Hours" />
                                </columns>
                            </TableView>
-                           <ComboBox fx:id="projectComboBox" layoutX="66.0" layoutY="65.0" prefWidth="150.0" promptText="Project Number" />
+                           <ComboBox fx:id="projectComboBox" layoutX="25.0" layoutY="71.0" prefWidth="150.0" promptText="Project Number" />
                            <Label fx:id="errorLabel" layoutX="66.0" layoutY="298.0" prefHeight="83.0" prefWidth="450.0" text="Error/message yta" />
+                        <Label layoutX="25.0" layoutY="280.0" prefHeight="17.0" prefWidth="558.0" text="To update hours for a consultant: double click a cell, insert new value, and hit enter." textFill="#7c7c7c" />
                        </children>
                    </AnchorPane>
                    <AnchorPane fx:id="addConToProPane" prefHeight="200.0" prefWidth="200.0" visible="false">

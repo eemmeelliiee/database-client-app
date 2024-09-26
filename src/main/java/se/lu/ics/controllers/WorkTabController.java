@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -58,7 +59,6 @@ public class WorkTabController {
         setUpConsultantTableThreeProjects();
         onAllConsultantsHoursButtonClick();
 
-       
         // Set up the ComboBox action listener to display total worked hours
         consultantComboBox.setOnAction(event -> {
             String selectedEmpNo = consultantComboBox.getSelectionModel().getSelectedItem();
@@ -117,10 +117,13 @@ public class WorkTabController {
     private AnchorPane checkWorkingConsPane;
 
     @FXML
-    private Button showCheckWorkingConsPane;
+    private Button manageConsultantsForProject;
 
     @FXML
-    private void handleShowCheckWorkingConsPane() {
+    private TableColumn<Consultant, Double> tableColHours;
+
+    @FXML
+    private void handleManageConsultantsForProject() {
         checkWorkingConsPane.setVisible(true);
         addConToProPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
@@ -142,7 +145,6 @@ public class WorkTabController {
         hardestWorkingConPane.setVisible(false);
         onAllConsultantsHoursButtonClick();
 
-        
     }
 
     // Hardest Working Consultant Pane
@@ -263,14 +265,64 @@ public class WorkTabController {
 
     // set up the consultant table
     private void setUpConsultantTable() {
+        consultantWorkTable.setEditable(true);
+
+        // Set up the columns for the consultant table
         consultantNumberColumn.setCellValueFactory(new PropertyValueFactory<>("empNo"));
         consultantFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
         consultantLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
         consultantTitleColumn.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
         consultantDateColumn.setCellValueFactory(new PropertyValueFactory<>("empStartDate"));
-
+    
+        // Custom cell factory for the hours column
+        tableColHours.setCellValueFactory(cellData -> {
+            Consultant consultant = cellData.getValue();
+            String projectNo = projectComboBox.getValue(); // Get selected project number from the ComboBox
+            double workHours = 0;
+            if (projectNo != null && !projectNo.isEmpty()) {
+                try {
+                    // Fetch the work hours for the consultant on the selected project
+                    workHours = workDao.getWorkHoursForConsultantOnProject(consultant.getEmpNo(), projectNo);
+                } catch (DaoException e) {
+                    e.printStackTrace();
+                }
+            }
+            // Return the work hours wrapped in a SimpleDoubleProperty
+            return new SimpleDoubleProperty(workHours).asObject();
+        });
+    
+        // Allow editing of the hours column
+        tableColHours.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.DoubleStringConverter()));
+    
+        // Handle edit commit event to update hours in the database
+        tableColHours.setOnEditCommit(event -> {
+            Consultant consultant = event.getRowValue();
+            String projectNo = projectComboBox.getValue(); // Get the selected project number
+            double newWorkHours = event.getNewValue(); // Get the new work hours value
+    
+            // Call the method to update work hours in the database
+            updateWorkHours(consultant.getEmpNo(), projectNo, newWorkHours);
+            
+            // Optional: Refresh the table to show updated hours
+            consultantWorkTable.refresh();
+        });
+    
+        // Clear any existing items in the table
         consultantWorkTable.getItems().clear();
     }
+
+    private void updateWorkHours(String empNo, String projectNo, double newWorkHours) {
+        try {
+            workDao.updateWorkHours(projectNo, empNo, newWorkHours);
+            // Optionally show success message
+        } catch (DaoException e) {
+            // Handle exception and show error message to the user
+            errorLabel.setText("Error updating hours: " + e.getMessage());
+            errorLabel.setStyle("-fx-text-fill: red");
+        }
+    }
+
+    
 
     // populate project numbers
     @FXML
@@ -331,23 +383,21 @@ public class WorkTabController {
             totHoursWorkedForCon.setText("Error retrieving hours");
         }
     }
- 
 
     // Method to handle button click
-    
+
     private void onAllConsultantsHoursButtonClick() {
         try {
             // Get total worked hours from WorkDao
             double totalHours = workDao.getTotalHoursWorked();
 
             // Update label to display total worked hours
-            totalWorkedHoursLabel.setText(""+totalHours);
+            totalWorkedHoursLabel.setText("" + totalHours);
         } catch (DaoException e) {
             // In case of error, you can show an error message on the label
             totalWorkedHoursLabel.setText("Error fetching total hours: " + e.getMessage());
         }
     }
-
 
     // view consultants that work on 3 projects or less
     @FXML
@@ -368,10 +418,10 @@ public class WorkTabController {
     @FXML
     private TableColumn<Consultant, String> empStartDateColumn;
 
-    @FXML 
+    @FXML
     private Button showConsultantsButton;
 
-    //set up table
+    // set up table
     private void setUpConsultantTableThreeProjects() {
         empNoColumn.setCellValueFactory(new PropertyValueFactory<>("empNo"));
         empFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
@@ -382,27 +432,23 @@ public class WorkTabController {
         consultantsTableThreeProjects.getItems().clear();
     }
 
-    //set up button
-   // Method to handle button click
-   @FXML
-   private void onShowConsultantsButtonClick() {
-       try {
-           // Get consultants who work on three or fewer projects from WorkDao
-           List<Consultant> consultants = workDao.getConsultantsWithThreeProjectsOrLess();
+    // set up button
+    // Method to handle button click
+    @FXML
+    private void onShowConsultantsButtonClick() {
+        try {
+            // Get consultants who work on three or fewer projects from WorkDao
+            List<Consultant> consultants = workDao.getConsultantsWithThreeProjectsOrLess();
 
-           // Convert list to ObservableList for TableView
-           ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultants);
+            // Convert list to ObservableList for TableView
+            ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultants);
 
-           // Set the items for the TableView
-           consultantsTableThreeProjects.setItems(consultantList);
-       } catch (DaoException e) {
-           // Handle any errors, you can log them or display an error message in the UI
-           System.out.println("Error fetching consultants: " + e.getMessage());
-       }
-   }
-
-
-
-
+            // Set the items for the TableView
+            consultantsTableThreeProjects.setItems(consultantList);
+        } catch (DaoException e) {
+            // Handle any errors, you can log them or display an error message in the UI
+            System.out.println("Error fetching consultants: " + e.getMessage());
+        }
+    }
 
 }
