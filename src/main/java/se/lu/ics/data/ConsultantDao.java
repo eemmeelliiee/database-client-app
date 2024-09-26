@@ -209,16 +209,13 @@ public class ConsultantDao {
         } catch (SQLException e) {
             // Check for constraint violations
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("A consultant with this EmpNo already exists.", e);
+                throw new DaoException("Error registering consultant: \n" + "A consultant with this EmpNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Fields EmpNo, First name, and Last name cannot be empty.", e);
+                throw new DaoException("Error registering consultant: \n" +  "Fields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
-                throw new DaoException("Error registering consultant: " + consultant.getEmpNo(), e);
+                throw new DaoException("Error registering consultant: \n" +"Error registering consultant: " + consultant.getEmpNo(), e);
             }
-        } catch (Exception e) {
-            // Handle any other exceptions
-            throw new DaoException("Error registering consultant: " + consultant.getEmpNo(), e);
-        }
+        } 
     }
 
     /* UPDATE CONSULTANT BY EmpNo */
@@ -243,23 +240,26 @@ public class ConsultantDao {
             statement.setString(2, updatedConsultant.getEmpFirstName());
             statement.setString(3, updatedConsultant.getEmpLastName());
             statement.setString(4, updatedConsultant.getEmpTitle());
-            statement.setDate(5, Date.valueOf(updatedConsultant.getEmpStartDate())); // Convert LocalDate to
-                                                                                     // java.sql.Date
+                   // Check if empStartDate is null and handle it appropriately
+            if (updatedConsultant.getEmpStartDate() != null) {
+                statement.setDate(5, Date.valueOf(updatedConsultant.getEmpStartDate()));
+            } else {
+                statement.setNull(5, Types.DATE);
+            }                                                                  // java.sql.Date
+
             statement.setString(6, oldEmpNo); // In case EmpNo is updated
 
             // Execute the update operation
             statement.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("A consultant with this EmpNo already exists.", e);
+                throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo() + "\nA consultant with this EmpNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Fields EmpNo, First name, and Last name cannot be empty.", e);
+                throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo() + "\nFields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
                 throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo(), e);
             }
-        } catch (Exception e) {
-            throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo(), e);
-        }
+        } 
     }
 
     /* DELETE CONSULTANT BY EmpNo */

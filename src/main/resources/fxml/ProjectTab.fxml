@@ -35,7 +35,7 @@
                             <Label fx:id="removeProjectLabelResponse" layoutX="39.0" layoutY="202.0" />
                         </children>
                     </AnchorPane>
-                    <AnchorPane fx:id="registerProjectPane" prefHeight="200.0" prefWidth="200.0">
+                    <AnchorPane fx:id="registerProjectPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                         <children>
                             <Label layoutX="244.0" layoutY="14.0" text="Register a project:" />
                             <Label layoutX="37.0" layoutY="50.0" text="Project Number:" />
@@ -50,7 +50,7 @@
                         <Label fx:id="registerProjectLabelResponse" layoutX="14.0" layoutY="281.0" prefHeight="96.0" prefWidth="575.0" wrapText="true" />
                         </children>
                     </AnchorPane>
-                    <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
+                    <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                         <children>
                             <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
                             <TableView fx:id="tableViewProject" layoutY="92.0" prefHeight="189.0" prefWidth="592.0">
@@ -65,7 +65,7 @@
                             <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" visible="false" />
                             <Button fx:id="viewAllProjectsButton" layoutX="503.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
                         <ComboBox fx:id="viewAllProjectsComboBox" layoutX="24.0" layoutY="44.0" prefHeight="26.0" prefWidth="159.0" promptText="View specific project" />
-                        <Label fx:id="updateProjectLabel" layoutX="12.0" layoutY="308.0" prefHeight="17.0" prefWidth="569.0" />
+                        <Label fx:id="updateProjectLabel" layoutX="12.0" layoutY="289.0" prefHeight="78.0" prefWidth="569.0" wrapText="true" />
                         </children>
                     </AnchorPane>
                     </children>

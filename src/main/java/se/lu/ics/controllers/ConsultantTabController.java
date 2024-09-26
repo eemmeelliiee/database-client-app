@@ -28,6 +28,8 @@ import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
 import se.lu.ics.data.ConnectionHandler;
 
+import se.lu.ics.controllers.DatePickerTableCell;
+
 
 public class ConsultantTabController {
 
@@ -46,6 +48,7 @@ public class ConsultantTabController {
 
     @FXML
     private void initialize() {
+        totNbrOfConsultants();
         populateEmployeeNumbers();
         populateEmployeeTitles();
         setupTableColumns();
@@ -53,7 +56,13 @@ public class ConsultantTabController {
         populateViewSpecificConsultantComboBox();
         setViewSpecificConsultantComboBoxHandler();
         loadConsultants();
+        
     }
+
+    private void totNbrOfConsultants(){
+        List<Consultant> consultants = consultantDao.findAll();
+        totalConsultantsResponse.setText("Total amount\nof consultants: " + consultants.size());
+    } 
 
     // Back to Home Page Button
     @FXML
@@ -118,6 +127,8 @@ public class ConsultantTabController {
 
     @FXML
     private void handleShowInfoPane() {
+        totNbrOfConsultants();
+        handleButtonViewAll();
         infoPane.setVisible(true);
         registerConsultantPane.setVisible(false);
         removeConsultantPane.setVisible(false);
@@ -160,6 +171,7 @@ private void setupTableColumns() {
     colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
     colLastName.setCellFactory(TextFieldTableCell.forTableColumn());
     colTitle.setCellFactory(TextFieldTableCell.forTableColumn());
+    colStartDate.setCellFactory(DatePickerTableCell.forTableColumn());
 
     // Add edit commit handlers
     colEmpNo.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empNo", event.getNewValue()));
@@ -252,7 +264,7 @@ private void setupTableColumns() {
             populateEmployeeNumbers();
             lableResponse.setStyle("-fx-text-fill: green");
         } catch (DaoException e) {
-            lableResponse.setText("Error: " + e.getMessage());
+            lableResponse.setText(e.getMessage());
             lableResponse.setStyle("-fx-text-fill: red");
         }
 
@@ -293,7 +305,7 @@ private void setupTableColumns() {
                 removeConsultantResponse.setText("Please select an employee number.");
             }
         } catch (DaoException e) {
-            removeConsultantResponse.setText("Error: " + e.getMessage());
+            removeConsultantResponse.setText(e.getMessage());
             removeConsultantResponse.setStyle("-fx-text-fill: red");
         }
     }
@@ -332,24 +344,29 @@ private void setupTableColumns() {
     @FXML
     private TableColumn<Consultant, LocalDate> colStartDate; // Column for start date
 
-    private void updateConsultant(Consultant consultant, String field, String newValue) {
-        // Set to null if the new value is empty
-        newValue = (newValue != null && newValue.trim().isEmpty()) ? null : newValue;
+    private void updateConsultant(Consultant consultant, String field, Object newValue) {
+        // Set to null if the new value is empty and is a String
+        if (newValue instanceof String) {
+            newValue = (newValue != null && ((String) newValue).trim().isEmpty()) ? null : newValue;
+        }
     
         String oldEmpNo = consultant.getEmpNo();
         try {
             switch (field) {
                 case "empNo":
-                    consultant.setEmpNo(newValue);
+                    consultant.setEmpNo((String) newValue);
                     break;
                 case "empFirstName":
-                    consultant.setEmpFirstName(newValue);
+                    consultant.setEmpFirstName((String) newValue);
                     break;
                 case "empLastName":
-                    consultant.setEmpLastName(newValue);
+                    consultant.setEmpLastName((String) newValue);
                     break;
                 case "empTitle":
-                    consultant.setEmpTitle(newValue);
+                    consultant.setEmpTitle((String) newValue);
+                    break;
+                case "empStartDate":
+                    consultant.setEmpStartDate((LocalDate) newValue);
                     break;
             }
             consultantDao.update(consultant, oldEmpNo);
@@ -359,7 +376,7 @@ private void setupTableColumns() {
             infoOverViewLabel.setText("Update successful!");
             infoOverViewLabel.setStyle("-fx-text-fill: green");
         } catch (DaoException e) {
-            infoOverViewLabel.setText("Error : \n" + e.getMessage());
+            infoOverViewLabel.setText(e.getMessage());
             infoOverViewLabel.setStyle("-fx-text-fill: red");
             handleButtonViewAll();
             consultantTableView.refresh();
@@ -398,7 +415,7 @@ private void setupTableColumns() {
             totalConsultantsResponse.setStyle("-fx-text-fill: red");
         }
     }
-
+    
     @FXML
     private Label infoOverviewLabel;
 
