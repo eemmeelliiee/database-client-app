@@ -212,6 +212,7 @@ public class ProjectTabController {
         } else {
             // If no Project Number is selected, show a warning message
             removeProjectLabelResponse.setText("Please select a project number.");
+            removeProjectLabelResponse.setStyle("-fx-text-fill: red");
 
         }
     }

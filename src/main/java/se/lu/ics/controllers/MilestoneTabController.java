@@ -166,7 +166,7 @@ public class MilestoneTabController {
                             "Milestone No: " + (milestoneNo != null ? milestoneNo : "N/A") + "\n" +
                             "Date: " + (milestoneDate != null ? milestoneDate : "N/A") + "\n" +
                             "Project No: " + (projectNo != null ? projectNo : "N/A"));
-
+            registerMilestoneStatus.setStyle("-fx-text-fill: green");
             populateProjectNumbers();
         } catch (DaoException e) {
             registerMilestoneStatus.setText(e.getMessage());
@@ -206,7 +206,6 @@ public class MilestoneTabController {
         removeMilestoneNo.getItems().addAll(milestoneNumbers);
     }
 
-    
     @FXML
     private void handleButtonRemoveMilestone() {
         try {
@@ -219,6 +218,7 @@ public class MilestoneTabController {
                 // Create a response message with a newline for formatting
                 String responseMessage = String
                         .format("Milestone with Milestone No: " + milestoneNo + " has been successfully removed.");
+                removeMilestoneLabelResponse.setStyle("-fx-text-fill: green");
 
                 // Set the formatted string to the response label
                 removeMilestoneLabelResponse.setText(responseMessage);
@@ -270,12 +270,12 @@ public class MilestoneTabController {
     @FXML
     private Label totalMilestonesLabel;
 
-    //set up the Milestone Table
+    // set up the Milestone Table
     private void setupMilestoneTableView() {
-        //enusre the tableView is not editable
+        // enusre the tableView is not editable
         milestoneTableView.setEditable(false);
 
-        //bind colums to the milestone fields using PropertyValueFactory
+        // bind colums to the milestone fields using PropertyValueFactory
         milestoneNoColumn.setCellValueFactory(new PropertyValueFactory<>("milestoneNo"));
         milestoneNameColumn.setCellValueFactory(new PropertyValueFactory<>("milestoneName"));
         milestoneDateColumn.setCellValueFactory(new PropertyValueFactory<>("milestoneDate"));
@@ -292,9 +292,9 @@ public class MilestoneTabController {
             try {
                 List<Milestone> milestones = milestoneDao.findByProjectNo(selectedProjectNo);
                 ObservableList<Milestone> milestoneList = FXCollections.observableArrayList(milestones);
-                //milestoneTableView.getItems().clear();
+                // milestoneTableView.getItems().clear();
                 milestoneTableView.setItems(milestoneList);
-                totalMilestonesLabel.setText(""+milestones.size());
+                totalMilestonesLabel.setText("" + milestones.size());
             } catch (DaoException e) {
                 milestoneInfoLabel.setText("Error fetching milestones: " + e.getMessage());
                 e.printStackTrace();
