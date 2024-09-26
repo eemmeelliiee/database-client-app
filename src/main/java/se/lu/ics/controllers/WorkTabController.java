@@ -195,6 +195,7 @@ public class WorkTabController {
 
         } catch (DaoException e) {
             errorLabel.setText(e.getMessage());
+            errorLabel.setStyle("-fx-text-fill: red");
         }catch (NumberFormatException e) {
             errorLabel.setText("Invalid input for work hours. Please enter a valid number."); 
             errorLabel.setStyle("-fx-text-fill: red");
