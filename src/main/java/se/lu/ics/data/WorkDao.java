@@ -72,13 +72,13 @@ public class WorkDao {
     
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("The combination of EmpNo and ProjectNo already exists", e);
+                throw new DaoException("Error: The combination of EmpNo and ProjectNo already exists", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Fields EmpNo and ProjectNo cannot be empty", e);
+                throw new DaoException("Error: Fields EmpNo and ProjectNo cannot be empty", e);
             } else if (e.getErrorCode() == 8114) {
-                throw new DaoException("Work hours must be a number", e);
+                throw new DaoException("Error: Work hours must be a number", e);
             } else if (e.getErrorCode() == 547) {
-                throw new DaoException("Work hours must be greater than 0", e);
+                throw new DaoException("Error: Work hours must be greater than 0", e);
             } else {
                 throw new DaoException("Error adding consultant to project.", e);
             }
@@ -300,10 +300,10 @@ public class WorkDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 8114) {
-                throw new DaoException("Work hours must be a number", e);
+                throw new DaoException("Error: Work hours must be a number", e);
             }
             if (e.getErrorCode() == 547) {
-                throw new DaoException("Work hours must be a greater than 0", e);
+                throw new DaoException("Error: Work hours must be a greater than 0", e);
             } else {
                 throw new DaoException("Error updating work hours.", e);
             }

@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -189,6 +190,72 @@ public class ProjectTabController {
 
     @FXML
     private Label removeProjectLabelResponse;
+
+    @FXML
+    private Button buttonRemoveProjFromCompany;
+
+    
+    @FXML
+private void handleButtonRemoveProjFromCompany() {
+    // Get the selected project from the table
+    Project selectedProject = tableViewProject.getSelectionModel().getSelectedItem();
+
+    // Check if a project is selected
+    if (selectedProject != null) {
+        String projectNo = selectedProject.getProjectNo();
+
+        try {
+            // Call DAO method to delete project from the database
+            projectDao.deleteByProjectNo(projectNo);
+
+            // Show success message
+            updateProjectLabel.setText("Project " + projectNo + " successfully removed.");
+            updateProjectLabel.setStyle("-fx-text-fill: green");
+
+            // Refresh the table view to remove the deleted project
+            handleButtonViewAllProjects();
+
+            // Optional: Refresh the combo boxes for projects
+            populateProjectNumbers();
+            populateViewAllProjectsComboBox();
+
+        } catch (DaoException e) {
+            // Handle exceptions and show error message
+            updateProjectLabel.setText("Error removing project (ProjectNo: " + projectNo + "): " + e.getMessage());
+            updateProjectLabel.setStyle("-fx-text-fill: red");
+        }
+    } else {
+        // No project selected, show error message
+        updateProjectLabel.setText("Please select a project to remove.");
+        updateProjectLabel.setStyle("-fx-text-fill: red");
+    }
+}
+@FXML
+private Button showMilestoneTabButton;
+//Button to get to the milestone tab
+    @FXML
+    private void handleShowMilestoneTabButton(ActionEvent event) {
+        String path = "/fxml/MilestoneTab.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        try {
+            SplitPane root = loader.load();
+            Stage milestoneStage = new Stage();
+            Scene milestoneScene = new Scene(root);
+            
+            milestoneStage.setScene(milestoneScene);
+
+            milestoneStage.setTitle("Milestone");
+            milestoneStage.show();
+
+            // Close the current stage
+            Stage currentStage = (Stage) showMilestoneTabButton.getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+// DELETE THIS:::::
 
     @FXML
     private void handleButtonRemoveProject() {

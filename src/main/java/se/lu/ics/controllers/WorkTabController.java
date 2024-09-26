@@ -199,9 +199,7 @@ public class WorkTabController {
 
             // Status message to inform the user
             errorLabel.setText(
-                    "Consultant hours added:\n" +
-                            "Employee No: " + (empNo != null ? empNo : "N/A") + "\n" +
-                            "Project No: " + (projNo != null ? projNo : "N/A") + "\n" +
+                    "Consultant " + empNo + " added to project " + projNo + " successfully!" + "\n" +
                             "Work Hours: " + (workHoursString != null ? workHoursString : "0.00") + "\n");
             errorLabel.setStyle("-fx-text-fill: green");
 
@@ -263,6 +261,9 @@ public class WorkTabController {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private Label labelUpdateHours;
+
     // set up the consultant table
     private void setUpConsultantTable() {
         consultantWorkTable.setEditable(true);
@@ -314,13 +315,51 @@ public class WorkTabController {
     private void updateWorkHours(String empNo, String projectNo, double newWorkHours) {
         try {
             workDao.updateWorkHours(projectNo, empNo, newWorkHours);
+            labelUpdateHours.setText("Hours successfully updated!");
+            labelUpdateHours.setStyle("-fx-text-fill: green");
             // Optionally show success message
         } catch (DaoException e) {
             // Handle exception and show error message to the user
-            errorLabel.setText("Error updating hours: " + e.getMessage());
-            errorLabel.setStyle("-fx-text-fill: red");
+            labelUpdateHours.setText(e.getMessage());
+            labelUpdateHours.setStyle("-fx-text-fill: red");
         }
     }
+
+    @FXML 
+    private Button buttonRemoveConFromProj;
+
+    @FXML
+private void handleButtonRemoveConFromProj() {
+    // Get selected consultant from the table
+    Consultant selectedConsultant = consultantWorkTable.getSelectionModel().getSelectedItem();
+
+    // Get selected project number from the ComboBox
+    String selectedProjectNo = projectComboBox.getValue();
+
+    // Check if both a consultant and a project are selected
+    if (selectedConsultant != null && selectedProjectNo != null && !selectedProjectNo.isEmpty()) {
+        try {
+            // Call the method to delete the consultant from the selected project
+            workDao.deleteConsultantFromProject(selectedConsultant.getEmpNo(), selectedProjectNo);
+
+            // Show success message (optional)
+            labelUpdateHours.setText("Consultant " + selectedConsultant.getEmpNo() + " removed from project "+ selectedProjectNo +" successfully.");
+            labelUpdateHours.setStyle("-fx-text-fill: green");
+
+            // Refresh the consultant work table for the selected project
+            updateConsultantWorkTableForProject(selectedProjectNo);
+        } catch (DaoException e) {
+            // Handle exceptions and show error message
+            labelUpdateHours.setText("Error removing consultant: " + e.getMessage());
+            labelUpdateHours.setStyle("-fx-text-fill: red");
+        }
+    } else {
+        // If no consultant or project is selected, show an error message
+        labelUpdateHours.setText("Please select a consultant and a project.");
+        labelUpdateHours.setStyle("-fx-text-fill: red");
+    }
+}
+
 
     
 

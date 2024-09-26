@@ -10,16 +10,30 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ProjectTabController">
     <items>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="598.0">
             <children>
-                <Label layoutX="217.0" layoutY="14.0" text="PROJECT OVERVIEW" />
-                <Button fx:id="ShowRegisterProjectPane" layoutX="48.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowRegisterProjectPane" prefWidth="150.0" text="Register Project" />
-                <Button fx:id="showRemoveProjectPane" layoutX="231.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowRemoveProjectPane" prefWidth="150.0" text="Remove Project" />
-                <Button fx:id="showInfoProjectPane" layoutX="402.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowInfoProjectPane" prefWidth="150.0" text="Information Overview" />
-                <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
+                <Label layoutX="255.0" layoutY="12.0" prefHeight="23.0" prefWidth="88.0" text="PROJECT">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+                <Button fx:id="ShowRegisterProjectPane" layoutX="16.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowRegisterProjectPane" prefHeight="26.0" prefWidth="190.0" text="Register Project">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+                <Button fx:id="showInfoProjectPane" layoutX="213.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowInfoProjectPane" prefHeight="26.0" prefWidth="168.0" text="Overview of Projects">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font></Button>
+                <Button fx:id="backToHomePageButton" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- HOME" />
+            <Button fx:id="showMilestoneTabButton" layoutX="387.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowMilestoneTabButton" prefHeight="26.0" prefWidth="184.0" text="Manage Milestones for Project">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="364.0" prefWidth="598.0">
@@ -52,21 +66,22 @@
                     </AnchorPane>
                     <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                         <children>
-                            <Label layoutX="233.0" layoutY="14.0" text="Information Overview:" />
-                            <TableView fx:id="tableViewProject" layoutX="3.0" layoutY="92.0" prefHeight="189.0" prefWidth="592.0">
+                            <Label layoutX="233.0" layoutY="14.0" text="Overview of Projects:" />
+                            <TableView fx:id="tableViewProject" layoutX="16.0" layoutY="79.0" prefHeight="189.0" prefWidth="558.0">
                                 <columns>
-                                <TableColumn fx:id="colStatus" prefWidth="92.0" text="Status" />
-                                <TableColumn fx:id="colProjectNo" prefWidth="127.0" text="Project Number" />
-                                <TableColumn fx:id="colProjectName" minWidth="3.433319091796875" prefWidth="112.72348022460938" text="Name" />
-                                <TableColumn fx:id="colStartDate" prefWidth="119.0" text="StartDate" />
-                              <TableColumn fx:id="colEndDate" minWidth="0.0" prefWidth="140.0" text="EndDate" />
+                                <TableColumn fx:id="colStatus" prefWidth="86.0" text="Status" />
+                                <TableColumn fx:id="colProjectNo" prefWidth="100.0" text="Project Number" />
+                                <TableColumn fx:id="colProjectName" minWidth="3.433319091796875" prefWidth="112.0" text="Name" />
+                                <TableColumn fx:id="colStartDate" prefWidth="115.0" text="StartDate" />
+                              <TableColumn fx:id="colEndDate" minWidth="0.0" prefWidth="143.0" text="EndDate" />
                                 </columns>
                             </TableView>
                             <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" visible="false" />
-                            <Button fx:id="viewAllProjectsButton" layoutX="503.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
-                        <ComboBox fx:id="viewAllProjectsComboBox" layoutX="24.0" layoutY="44.0" prefHeight="26.0" prefWidth="159.0" promptText="View specific project" />
-                        <Label fx:id="updateProjectLabel" layoutX="12.0" layoutY="289.0" prefHeight="78.0" prefWidth="569.0" wrapText="true" />
-                        <Label layoutX="5.0" layoutY="281.0" prefHeight="17.0" prefWidth="558.0" text="To update a project: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
+                            <Button fx:id="viewAllProjectsButton" layoutX="508.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
+                        <ComboBox fx:id="viewAllProjectsComboBox" layoutX="16.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" />
+                        <Label fx:id="updateProjectLabel" layoutX="16.0" layoutY="329.0" prefHeight="17.0" prefWidth="558.0" wrapText="true" />
+                        <Label layoutX="16.0" layoutY="268.0" prefHeight="17.0" prefWidth="558.0" text="To update a project: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
+                        <Button fx:id="buttonRemoveProjFromCompany" layoutX="384.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleButtonRemoveProjFromCompany" prefHeight="26.0" prefWidth="190.0" text="Remove project from company" />
                         </children>
                     </AnchorPane>
                     </children>
