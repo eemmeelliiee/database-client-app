@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import se.lu.ics.models.Milestone;
@@ -28,32 +29,37 @@ public class MilestoneDao {
      */
     public void save(Milestone milestone) {
         String query = "INSERT INTO Milestone (MilestoneNo, ProjectId, MilestoneDate, MilestoneName) VALUES (?, (SELECT ProjectId FROM Project WHERE ProjectNo = ?), ?, ?)";
-
+    
         try (Connection connection = connectionHandler.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
-
+             PreparedStatement statement = connection.prepareStatement(query)) {
+    
             // Set milestone data into the prepared statement
             statement.setString(1, milestone.getMilestoneNo());
             statement.setString(2, milestone.getProjectNo());
-            statement.setDate(3, Date.valueOf(milestone.getMilestoneDate()));
+    
+            // Check if milestone date is not null
+            if (milestone.getMilestoneDate() != null) {
+                statement.setDate(3, Date.valueOf(milestone.getMilestoneDate()));
+            } else {
+                statement.setNull(3, java.sql.Types.DATE);
+            }
+    
             statement.setString(4, milestone.getMilestoneName());
-
+    
             // Execute the insert operation
             statement.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("A combination of this MilestonNo and ProjectNo already exists.", e);
+                throw new DaoException("Error: A combination of this MilestoneNo and ProjectNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Fields MilestoneNo and ProjectNo cannot be empty.", e);
+                throw new DaoException("Error: Fields MilestoneNo and ProjectNo cannot be empty.", e);
             } else if (e.getErrorCode() == 547) {
-                throw new DaoException("MilestoneDate must be after 2022-01-01", e);
+                throw new DaoException("Error: MilestoneDate must be after 2022-01-01", e);
             } else if (e.getErrorCode() == 50000) {
-                throw new DaoException(
-                        "MilestoneDate must be before project's end date, and after project's start date");
-            } else
+                throw new DaoException("Error: MilestoneDate must be before project's end date, and after project's start date", e);
+            } else {
                 throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
-        } catch (Exception e) {
-            throw new DaoException("Error saving milestone: " + milestone.getMilestoneNo(), e);
+            }
         }
     }
 
@@ -200,9 +206,13 @@ public class MilestoneDao {
      *                      ResultSet.
      */
     protected Milestone mapToMilestone(ResultSet resultSet) throws SQLException {
-        return new Milestone(
-                resultSet.getString("MilestoneNo"),
-                resultSet.getString("MilestoneName"),
-                resultSet.getDate("MilestoneDate").toLocalDate());
+        String milestoneNo = resultSet.getString("MilestoneNo");
+        String milestoneName = resultSet.getString("MilestoneName");
+        LocalDate milestoneDate = resultSet.getDate("MilestoneDate") != null 
+            ? resultSet.getDate("MilestoneDate").toLocalDate() 
+            : null;
+    
+        // Assuming you want to keep projectNo as null since it's not being fetched here.
+        return new Milestone(milestoneNo, null, milestoneName, milestoneDate);
     }
 }
