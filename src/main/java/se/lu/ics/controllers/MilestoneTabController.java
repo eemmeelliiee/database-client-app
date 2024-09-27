@@ -49,7 +49,7 @@ public class MilestoneTabController {
     @FXML
     private void initialize() {
         populateProjectNumbers();
-        populateMilestoneNumbers();
+        // populateMilestoneNumbers();
         setupMilestoneTableView();
     }
 
@@ -83,18 +83,18 @@ public class MilestoneTabController {
     // Milestone Tab
 
     // Remove Milestone Pane
-    @FXML
-    private AnchorPane removeMSPane;
+    // @FXML
+    // private AnchorPane removeMSPane;
 
-    @FXML
-    private Button showRemoveMSPane;
+    // @FXML
+    // private Button showRemoveMSPane;
 
-    @FXML
-    private void handleShowRemoveMSPane() {
-        removeMSPane.setVisible(true);
-        addMSPane.setVisible(false);
-        retrieveMSPane.setVisible(false);
-    }
+    // @FXML
+    // private void handleShowRemoveMSPane() {
+    //     removeMSPane.setVisible(true);
+    //     addMSPane.setVisible(false);
+    //     retrieveMSPane.setVisible(false);
+    // }
 
     // Update Milestone Pane
     @FXML
@@ -106,7 +106,7 @@ public class MilestoneTabController {
     @FXML
     private void handleShowAddMSPane() {
         addMSPane.setVisible(true);
-        removeMSPane.setVisible(false);
+        // removeMSPane.setVisible(false);
         retrieveMSPane.setVisible(false);
 
     }
@@ -121,7 +121,7 @@ public class MilestoneTabController {
     @FXML
     private void handleShowRetrieveMSPane() {
         retrieveMSPane.setVisible(true);
-        removeMSPane.setVisible(false);
+        // removeMSPane.setVisible(false);
         addMSPane.setVisible(false);
     }
 
@@ -177,7 +177,7 @@ public class MilestoneTabController {
             List<String> projectNumbers = projectDao.findAllProjectNos();
             ObservableList<String> projectNumbersList = FXCollections.observableArrayList(projectNumbers);
             registerMilestoneProjectNo.setItems(projectNumbersList);
-            removeMilestoneProjectNo.setItems(projectNumbersList);
+            // removeMilestoneProjectNo.setItems(projectNumbersList);
             projectNoComboBox.setItems(projectNumbersList);
         } catch (DaoException e) {
             registerMilestoneStatus.setText(e.getMessage());
@@ -185,23 +185,23 @@ public class MilestoneTabController {
         }
     }
 
-    // Remove Milestone
-    @FXML
-    private ComboBox<String> removeMilestoneProjectNo;
-    @FXML
-    private ComboBox<String> removeMilestoneNo;
-    @FXML
-    private Button removeMilestoneButton;
-    @FXML
-    private Label removeMilestoneLabelResponse;
+    // // Remove Milestone
+    // @FXML
+    // private ComboBox<String> removeMilestoneProjectNo;
+    // @FXML
+    // private ComboBox<String> removeMilestoneNo;
+    // @FXML
+    // private Button removeMilestoneButton;
+    // @FXML
+    // private Label removeMilestoneLabelResponse;
 
     // populate milestone numbers
-    @FXML
-    private void populateMilestoneNumbers() {
-        List<String> milestoneNumbers = milestoneDao.findAllMilestoneNumbers();
-        removeMilestoneNo.getItems().clear();
-        removeMilestoneNo.getItems().addAll(milestoneNumbers);
-    }
+    // @FXML
+    // private void populateMilestoneNumbers() {
+    //     List<String> milestoneNumbers = milestoneDao.findAllMilestoneNumbers();
+    //     removeMilestoneNo.getItems().clear();
+    //     removeMilestoneNo.getItems().addAll(milestoneNumbers);
+    // }
 
     // @FXML
     // private void handleButtonRemoveMilestone() {
@@ -234,18 +234,18 @@ public class MilestoneTabController {
 
     
 
-    // listner project selector
-    @FXML
-    private void onActionProjectSelected() {
-        removeMilestoneNo.getItems().clear();
+    // // listner project selector
+    // @FXML
+    // private void onActionProjectSelected() {
+    //     removeMilestoneNo.getItems().clear();
 
-        ObservableList<Milestone> milestones = FXCollections.observableArrayList();
-        milestones.addAll(milestoneDao.findByProjectNo(removeMilestoneProjectNo.getSelectionModel().getSelectedItem()));
+    //     ObservableList<Milestone> milestones = FXCollections.observableArrayList();
+    //     milestones.addAll(milestoneDao.findByProjectNo(removeMilestoneProjectNo.getSelectionModel().getSelectedItem()));
 
-        for (Milestone milestone : milestones) {
-            removeMilestoneNo.getItems().add(milestone.getMilestoneNo());
-        }
-    }
+    //     for (Milestone milestone : milestones) {
+    //         removeMilestoneNo.getItems().add(milestone.getMilestoneNo());
+    //     }
+    // }
 
     // Info overview Milestone
     @FXML

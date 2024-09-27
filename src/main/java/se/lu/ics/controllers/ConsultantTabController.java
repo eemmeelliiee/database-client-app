@@ -276,6 +276,8 @@ public class ConsultantTabController {
     
                 // Optional: Refresh the TableView after removal
                 refreshConsultantTable(); // Assuming you have a method to refresh the TableView
+                handleButtonViewAll();
+
     
             } catch (DaoException e) {
                 infoOverViewLabel.setText(e.getMessage());

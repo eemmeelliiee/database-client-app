@@ -45,7 +45,7 @@ public class ProjectTabController {
 
     @FXML
     private void initialize() {
-        populateProjectNumbers();
+        // populateProjectNumbers();
         populateViewAllProjectsComboBox();
         setViewAllProjectsComboBoxHandler();
         setupTableColumns();
@@ -93,7 +93,7 @@ public class ProjectTabController {
     @FXML
     private void handleShowRegisterProjectPane() {
         registerProjectPane.setVisible(true);
-        removeProjectPane.setVisible(false);
+        // removeProjectPane.setVisible(false);
         infoProjectPane.setVisible(false);
     }
 
@@ -104,12 +104,12 @@ public class ProjectTabController {
     @FXML
     private Button showRemoveProjectPane;
 
-    @FXML
-    private void handleShowRemoveProjectPane() {
-        removeProjectPane.setVisible(true);
-        registerProjectPane.setVisible(false);
-        infoProjectPane.setVisible(false);
-    }
+    // @FXML
+    // private void handleShowRemoveProjectPane() {
+    //     // removeProjectPane.setVisible(true);
+    //     registerProjectPane.setVisible(false);
+    //     infoProjectPane.setVisible(false);
+    // }
 
     // Info pane
     @FXML
@@ -122,7 +122,7 @@ public class ProjectTabController {
     private void handleShowInfoProjectPane() {
         infoProjectPane.setVisible(true);
         registerProjectPane.setVisible(false);
-        removeProjectPane.setVisible(false);
+        // removeProjectPane.setVisible(false);
         handleButtonViewAllProjects();
     }
 
@@ -173,7 +173,7 @@ public class ProjectTabController {
                             "End Date: " + (projectEndDate != null ? projectEndDate : "N/A"));
 
             registerProjectLabelResponse.setStyle("-fx-text-fill: green");
-            populateProjectNumbers();
+            // populateProjectNumbers();
             populateViewAllProjectsComboBox();
         } catch (DaoException e) {
             registerProjectLabelResponse.setText(e.getMessage());
@@ -181,9 +181,9 @@ public class ProjectTabController {
         }
     }
 
-    // Remove Project
-    @FXML
-    private ComboBox<String> removeProjectNo;
+    // // Remove Project
+    // @FXML
+    // private ComboBox<String> removeProjectNo;
 
     @FXML
     private Button removeProjectButton;
@@ -216,7 +216,7 @@ private void handleButtonRemoveProjFromCompany() {
             handleButtonViewAllProjects();
 
             // Optional: Refresh the combo boxes for projects
-            populateProjectNumbers();
+            // populateProjectNumbers();
             populateViewAllProjectsComboBox();
 
         } catch (DaoException e) {
@@ -255,47 +255,47 @@ private Button showMilestoneTabButton;
         }
     }
 
-// DELETE THIS:::::
+// // DELETE THIS:::::
 
-    @FXML
-    private void handleButtonRemoveProject() {
-        String projectNo = removeProjectNo.getValue(); // Get the selected Project Number
+//     @FXML
+//     private void handleButtonRemoveProject() {
+//         String projectNo = removeProjectNo.getValue(); // Get the selected Project Number
 
-        // Check if a Project Number is selected
-        if (projectNo != null && !projectNo.isEmpty()) {
-            projectDao.deleteByProjectNo(projectNo); // Remove the project
+//         // Check if a Project Number is selected
+//         if (projectNo != null && !projectNo.isEmpty()) {
+//             projectDao.deleteByProjectNo(projectNo); // Remove the project
 
-            // Create a response message with a newline for formatting
-            String responseMessage = String
-                    .format("Project with Project No: " + projectNo + " has been successfully removed.");
+//             // Create a response message with a newline for formatting
+//             String responseMessage = String
+//                     .format("Project with Project No: " + projectNo + " has been successfully removed.");
 
-            // Set the formatted string to the response label
-            removeProjectLabelResponse.setText(responseMessage);
-            removeProjectLabelResponse.setStyle("-fx-text-fill: green");
+//             // Set the formatted string to the response label
+//             removeProjectLabelResponse.setText(responseMessage);
+//             removeProjectLabelResponse.setStyle("-fx-text-fill: green");
 
-            // Optional: Refresh the ComboBox after removal
-            populateProjectNumbers(); // Assuming you have a method to refresh the ComboBox
-            populateViewAllProjectsComboBox();
-        } else {
-            // If no Project Number is selected, show a warning message
-            removeProjectLabelResponse.setText("Please select a project number.");
-            removeProjectLabelResponse.setStyle("-fx-text-fill: red");
+//             // Optional: Refresh the ComboBox after removal
+//             populateProjectNumbers(); // Assuming you have a method to refresh the ComboBox
+//             populateViewAllProjectsComboBox();
+//         } else {
+//             // If no Project Number is selected, show a warning message
+//             removeProjectLabelResponse.setText("Please select a project number.");
+//             removeProjectLabelResponse.setStyle("-fx-text-fill: red");
 
-        }
-    }
+//         }
+//     }
 
     // Populate Project Numbers
-    @FXML
-    private void initializeProject() {
-        populateProjectNumbers();
-    }
+    // @FXML
+    // private void initializeProject() {
+    //     // populateProjectNumbers();
+    // }
 
-    @FXML
-    private void populateProjectNumbers() {
-        List<String> projectNumbers = projectDao.findAllProjectNos();
-        removeProjectNo.getItems().clear();
-        removeProjectNo.getItems().addAll(projectNumbers);
-    }
+    // @FXML
+    // private void populateProjectNumbers() {
+    //     List<String> projectNumbers = projectDao.findAllProjectNos();
+    //     removeProjectNo.getItems().clear();
+    //     removeProjectNo.getItems().addAll(projectNumbers);
+    // }
 
     // Show All Projects
     @FXML
@@ -417,7 +417,7 @@ private Button showMilestoneTabButton;
             }
             projectDao.update(project, oldProjectNo);
             tableViewProject.refresh();
-            populateProjectNumbers();
+            // populateProjectNumbers();
             populateViewAllProjectsComboBox();
             updateProjectLabel.setText("Update successful!");
             updateProjectLabel.setStyle("-fx-text-fill: green");

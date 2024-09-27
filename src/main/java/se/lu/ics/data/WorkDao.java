@@ -39,6 +39,8 @@ public class WorkDao {
                 "VALUES((SELECT ConsultantId FROM Consultant WHERE EmpNo = ?), " +
                 "(SELECT ProjectId FROM Project WHERE ProjectNo = ?), ?)";
     
+        String warningMessage = null;
+    
         try (Connection connection = connectionHandler.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
     
@@ -59,7 +61,7 @@ public class WorkDao {
     
                         // Check if adding the new consultant would result in 60% or more
                         if ((projectConsultants + 1) >= 0.6 * totalConsultants) {
-                            return "Warning: Adding this consultant will result in the project having 60% or more of the total number of consultants.";
+                            warningMessage = "WARNING: Project is now using 60% or more of the total resources.";
                         }
                     }
                 }
@@ -82,9 +84,9 @@ public class WorkDao {
             } else {
                 throw new DaoException("Error adding consultant to project.", e);
             }
-        } 
-        
-        return null; // No warnings
+        }
+    
+        return warningMessage; // Return the warning message if any
     }
 
     /* LIST ALL CONSULTANTS WORKING ON A PROJECT */
@@ -324,7 +326,7 @@ public class WorkDao {
         String query = "SELECT TOP 1 C.EmpNo, C.EmpTitle AS Title, C.EmpFirstName AS FirstName, C.EmpLastName AS LastName, C.EmpStartDate AS StartDate, SUM(W.WorkHours) AS TotalWorkHours "
                 +
                 "FROM Consultant C " +
-                "LEFT JOIN Work W ON C.ConsultantId = W.ConsultantId " +
+                "JOIN Work W ON C.ConsultantId = W.ConsultantId " +
                 "GROUP BY C.EmpNo, C.EmpTitle, C.EmpFirstName, C.EmpLastName, C.EmpStartDate " +
                 "ORDER BY TotalWorkHours DESC";
 

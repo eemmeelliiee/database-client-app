@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.Types;
+import java.time.LocalDate;
+
 import se.lu.ics.models.Consultant;
 
 public class ConsultantDao {
@@ -209,11 +211,11 @@ public class ConsultantDao {
         } catch (SQLException e) {
             // Check for constraint violations
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("Error registering consultant: \n" + "A consultant with this EmpNo already exists.", e);
+                throw new DaoException("Error: A Consultant with this EmpNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Error registering consultant: \n" +  "Fields EmpNo, First name, and Last name cannot be empty.", e);
+                throw new DaoException("Error: Fields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
-                throw new DaoException("Error registering consultant: \n" +"Error registering consultant: ", e);
+                throw new DaoException("Error registering consultant: ", e);
             }
         } 
     }
@@ -253,11 +255,11 @@ public class ConsultantDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo() + "\nA consultant with this EmpNo already exists.", e);
+                throw new DaoException("Error: A consultant with this EmpNo already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo() + "\nFields EmpNo, First name, and Last name cannot be empty.", e);
+                throw new DaoException("Error: Fields EmpNo, First name, and Last name cannot be empty.", e);
             } else {
-                throw new DaoException("Error updating consultant: " + updatedConsultant.getEmpNo(), e);
+                throw new DaoException("Error updating consultant '" + updatedConsultant.getEmpNo(), e);
             }
         } 
     }
@@ -329,11 +331,30 @@ public class ConsultantDao {
      *                      ResultSet.
      */
     protected Consultant mapToConsultant(ResultSet resultSet) throws SQLException {
-        return new Consultant(
-                resultSet.getString("EmpNo"),
-                resultSet.getString("FirstName"),
-                resultSet.getString("LastName"),
-                resultSet.getString("Title") != null ? resultSet.getString("Title") : null,
-                resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null);
+        // Extracting the basic information from the ResultSet
+        String empNo = resultSet.getString("EmpNo");
+        String firstName = resultSet.getString("FirstName");
+        String lastName = resultSet.getString("LastName");
+        String title = resultSet.getString("Title") != null ? resultSet.getString("Title") : null;
+        LocalDate startDate = resultSet.getDate("StartDate") != null ? resultSet.getDate("StartDate").toLocalDate() : null;
+        
+        // Extracting the TotalWorkHours
+        double totalWorkHours = 0;
+        try {
+            totalWorkHours = resultSet.getDouble("TotalWorkHours");
+        } catch (SQLException e) {
+            // Handle the case where the column does not exist
+            if (!e.getMessage().contains("TotalWorkHours")) {
+                throw e;
+            }
+        }
+    
+        // Creating a Consultant object
+        Consultant consultant = new Consultant(empNo, firstName, lastName, title, startDate);
+    
+        // Setting the total work hours
+        consultant.setTotalWorkHours(totalWorkHours);
+        
+        return consultant;
     }
 }

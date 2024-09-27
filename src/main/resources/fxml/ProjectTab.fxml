@@ -20,16 +20,16 @@
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Label>
-                <Button fx:id="ShowRegisterProjectPane" layoutX="16.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowRegisterProjectPane" prefHeight="26.0" prefWidth="190.0" text="Register Project">
+                <Button fx:id="ShowRegisterProjectPane" layoutX="192.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowRegisterProjectPane" prefHeight="26.0" prefWidth="190.0" text="Register new Project">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
-                <Button fx:id="showInfoProjectPane" layoutX="213.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowInfoProjectPane" prefHeight="26.0" prefWidth="168.0" text="Overview of Projects">
+                <Button fx:id="showInfoProjectPane" layoutX="15.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowInfoProjectPane" prefHeight="26.0" prefWidth="168.0" text="Overview of Projects">
                <font>
                   <Font name="System Bold Italic" size="13.0" />
                </font></Button>
                 <Button fx:id="backToHomePageButton" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- HOME" />
-            <Button fx:id="showMilestoneTabButton" layoutX="387.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowMilestoneTabButton" prefHeight="26.0" prefWidth="184.0" text="Manage Milestones for Project">
+            <Button fx:id="showMilestoneTabButton" layoutX="390.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowMilestoneTabButton" prefHeight="26.0" prefWidth="184.0" text="Manage Milestones for Project">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -40,15 +40,6 @@
             <children>
                 <StackPane layoutY="-3.0" prefHeight="297.0" prefWidth="586.0">
                     <children>
-                    <AnchorPane fx:id="removeProjectPane" prefHeight="402.0" prefWidth="586.0" visible="false">
-                        <children>
-                            <Label layoutX="244.0" layoutY="14.0" text="Remove a project:" />
-                            <Label layoutX="156.0" layoutY="76.0" text="Project Number:" />
-                            <Button fx:id="removeProjectButton" layoutX="242.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleButtonRemoveProject" text="Remove Project" />
-                            <ComboBox fx:id="removeProjectNo" layoutX="259.0" layoutY="72.0" prefWidth="150.0" />
-                            <Label fx:id="removeProjectLabelResponse" layoutX="39.0" layoutY="202.0" />
-                        </children>
-                    </AnchorPane>
                     <AnchorPane fx:id="registerProjectPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                         <children>
                             <Label layoutX="244.0" layoutY="14.0" text="Register a project:" />

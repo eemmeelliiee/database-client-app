@@ -2,24 +2,22 @@ package se.lu.ics.models;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Consultant {
     private String empNo;
     private String empFirstName;
     private String empLastName;
-    private StringProperty empTitle;
-    private ObjectProperty<LocalDate> empStartDate;
+    private String empTitle;
+    private LocalDate empStartDate;
+    // Temporary field for specific use case
+    private double totalWorkHours;
+
 
     public Consultant(String empNo, String empFirstName, String empLastName, String empTitle, LocalDate empStartDate) {
         this.empNo = empNo;
         this.empFirstName = empFirstName;
         this.empLastName = empLastName;
-        this.empTitle = new SimpleStringProperty(empTitle);
-        this.empStartDate = new SimpleObjectProperty<>(empStartDate);
+        this.empTitle = empTitle;
+        this.empStartDate = empStartDate;
     }
 
     public String getEmpNo() {
@@ -47,35 +45,28 @@ public class Consultant {
     }
 
     public String getEmpTitle() {
-        return empTitle.get();
-    }
-
-    public void setEmpTitle(String empTitle) {
-        this.empTitle.set(empTitle);
-    }
-
-    public StringProperty empTitleProperty() {
         return empTitle;
     }
 
-    public void setEmpTitle(StringProperty empTitle) {
+    public void setEmpTitle(String empTitle) {
         this.empTitle = empTitle;
     }
 
     public LocalDate getEmpStartDate() {
-        return empStartDate.get();
-    }
-
-    public void setEmpStartDate(LocalDate empStartDate) {
-        this.empStartDate.set(empStartDate);
-    }
-
-    public ObjectProperty<LocalDate> empStartDateProperty() {
         return empStartDate;
     }
 
-    public void setEmpStartDate(ObjectProperty<LocalDate> empStartDate) {
+    public void setEmpStartDate(LocalDate empStartDate) {
         this.empStartDate = empStartDate;
+    }
+
+    // Getters and setters for temporary field
+    public double getTotalWorkHours() {
+        return totalWorkHours;
+    }
+
+    public void setTotalWorkHours(double totalWorkHours) {
+        this.totalWorkHours = totalWorkHours;
     }
 
     // For in terminal testing purposes

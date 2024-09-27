@@ -23,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.ComboBox;
 import se.lu.ics.models.Consultant;
+import se.lu.ics.models.Project;
 import se.lu.ics.models.Work;
 import se.lu.ics.data.WorkDao;
 import se.lu.ics.data.ConsultantDao;
@@ -160,11 +161,14 @@ public class WorkTabController {
         addConToProPane.setVisible(false);
         checkWorkingConsPane.setVisible(false);
         displayConsHoursPane.setVisible(false);
+        displayHardestWorkingConsultant();
+        populateTableWithProjectsInvolvingAllConsultants();
+
     }
 
     // Projects involving all consultants
-    @FXML
-    Button projectsInvolvingAllConsultants;
+    // @FXML
+    // Button projectsInvolvingAllConsultants;
 
     // private void handleButtonProjectsInvolvingAllConsultants(){
 
@@ -184,44 +188,54 @@ public class WorkTabController {
     private Button addConButton;
 
     @FXML
-    private void handleButtonAddConsultant() {
-        try {
-            String empNo = addConEmpNo.getValue(); // Get the selected employee number
-            String projNo = addConProjNo.getValue(); // Get the selected project number
-            String workHoursString = addConWorkHours.getText();
+    private Label warningLabel;
 
-            // Convert work hours from String to double
-            workHoursString = (workHoursString != null && workHoursString.trim().isEmpty()) ? null : workHoursString;
-            double workHours = (workHoursString != null) ? Double.parseDouble(workHoursString) : 0;
+    @FXML
+private void handleButtonAddConsultant() {
+    try {
+        String empNo = addConEmpNo.getValue(); // Get the selected employee number
+        String projNo = addConProjNo.getValue(); // Get the selected project number
+        String workHoursString = addConWorkHours.getText();
 
-            // Save the new Work entry to the database
-            workDao.addConsultantToProject(empNo, projNo, workHours);
+        // Convert work hours from String to double
+        workHoursString = (workHoursString != null && workHoursString.trim().isEmpty()) ? null : workHoursString;
+        double workHours = (workHoursString != null) ? Double.parseDouble(workHoursString) : 0;
 
+        // Save the new Work entry to the database and capture the return value
+        String result = workDao.addConsultantToProject(empNo, projNo, workHours);
+
+        // Check if a warning message is returned
+        if (result != null) {
+            warningLabel.setText(result);
+            warningLabel.setStyle("-fx-text-fill: orange");
+        
             // Status message to inform the user
             errorLabel.setText(
-                    "Consultant " + empNo + " added to project " + projNo + " successfully!" + "\n" +
-                            "Work Hours: " + (workHoursString != null ? workHoursString : "0.00") + "\n");
+                    "Consultant " + empNo + " added to project " + projNo + " successfully");
             errorLabel.setStyle("-fx-text-fill: green");
-
-            // Clear fields after submission
-            addConEmpNo.setValue(null);
-            addConProjNo.setValue(null);
-            addConWorkHours.clear();
-
-        } catch (DaoException e) {
-            errorLabel.setText(e.getMessage());
-            errorLabel.setStyle("-fx-text-fill: red");
-        } catch (NumberFormatException e) {
-            errorLabel.setText("Invalid input for work hours. Please enter a valid number.");
-            errorLabel.setStyle("-fx-text-fill: red");
-            /*
-             * } catch (Exception e) {
-             * errorLabel.setText("An unexpected error occurred.");
-             * e.printStackTrace();
-             */
+        } else {
+            // Status message to inform the user
+            warningLabel.setText("");
+            errorLabel.setText(
+                    "Consultant " + empNo + " added to project " + projNo + " successfully");
+            errorLabel.setStyle("-fx-text-fill: green");
         }
-    }
 
+        // Clear fields after submission
+        addConEmpNo.setValue(null);
+        addConProjNo.setValue(null);
+        addConWorkHours.clear();
+
+    } catch (DaoException e) {
+        warningLabel.setText("");
+        errorLabel.setText(e.getMessage());
+        errorLabel.setStyle("-fx-text-fill: red");
+    } catch (NumberFormatException e) {
+        warningLabel.setText("");
+        errorLabel.setText("Invalid input for work hours. Please enter a valid number.");
+        errorLabel.setStyle("-fx-text-fill: red");
+    }
+}
     // Method to populate employee number ComboBox
     @FXML
     private void populateEmployeeNumbers() {
@@ -489,5 +503,97 @@ private void handleButtonRemoveConFromProj() {
             System.out.println("Error fetching consultants: " + e.getMessage());
         }
     }
+    @FXML
+    private TableView<Consultant> tableViewHardestWorkingConsultant;
+    
+    @FXML
+    private TableColumn<Consultant, String> tableColHardEmpNo;
+    
+    @FXML
+    private TableColumn<Consultant, String> tableColHardTitle;
+    
+    @FXML
+    private TableColumn<Consultant, String> tableColHardFirstName;
+    
+    @FXML
+    private TableColumn<Consultant, String> tableColHardLastName;
+    
+    @FXML
+    private TableColumn<Consultant, Double> tableColHardTotHours;
+
+    
+
+    @FXML
+public void displayHardestWorkingConsultant() {
+    try {
+        Consultant consultant = workDao.getHardestWorkingConsultant();  // Get the hardest working consultant
+
+        // Create a list to add this consultant to the TableView
+        ObservableList<Consultant> consultantData = FXCollections.observableArrayList();
+        consultantData.add(consultant);
+
+        // Bind columns to the Consultant properties
+        tableColHardEmpNo.setCellValueFactory(new PropertyValueFactory<>("empNo"));
+        tableColHardTitle.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
+        tableColHardFirstName.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
+        tableColHardLastName.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
+
+        // Bind the total work hours column to the temporary TotalWorkHours property
+        tableColHardTotHours.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalWorkHours()).asObject());
+
+        // Set data in the TableView
+        tableViewHardestWorkingConsultant.setItems(consultantData);
+
+    } catch (DaoException e) {
+        e.printStackTrace();
+        // Handle exception, e.g., show an error dialog
+    }
+}
+
+
+
+@FXML
+private TableView<Project> tableViewProjectWithAllCons;
+
+@FXML
+private TableColumn<Project, String> tableColProjAllConsStatus;
+
+@FXML
+private TableColumn<Project, String> tableColProjAllConsProjectNo;
+
+@FXML
+private TableColumn<Project, String> tableColProjAllConsName;
+
+@FXML
+private TableColumn<Project, LocalDate> tableColProjAllConsStartDate;
+
+@FXML
+private TableColumn<Project, LocalDate> tableColProjAllConsEndDate;
+
+
+
+private void populateTableWithProjectsInvolvingAllConsultants() {
+    // Call the method to get all projects involving all consultants
+    List<Project> projects = workDao.getProjectsInvolvingAllConsultants();
+
+    // Map columns to Project fields
+    tableColProjAllConsProjectNo.setCellValueFactory(new PropertyValueFactory<>("projectNo"));
+    tableColProjAllConsName.setCellValueFactory(new PropertyValueFactory<>("projectName"));
+    tableColProjAllConsStatus.setCellValueFactory(new PropertyValueFactory<>("projectStatus"));
+    tableColProjAllConsStartDate.setCellValueFactory(new PropertyValueFactory<>("projectStartDate"));
+    tableColProjAllConsEndDate.setCellValueFactory(new PropertyValueFactory<>("projectEndDate"));
+
+    // Populate the TableView with the data
+    ObservableList<Project> projectObservableList = FXCollections.observableArrayList(projects);
+    tableViewProjectWithAllCons.setItems(projectObservableList);
+}
+@FXML
+public void onShowProjectsClicked() {
+    populateTableWithProjectsInvolvingAllConsultants();
+}
+
+
+
+
 
 }
