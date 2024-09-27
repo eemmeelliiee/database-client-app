@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -52,33 +53,32 @@ public class MilestoneTabController {
         // populateMilestoneNumbers();
         setupMilestoneTableView();
     }
-
-    // Back to Home Page Button
     @FXML
-    private Button backToHomePageButton;
+    private Button backToProjectButton;
 
-    // Button to get to the project tab
     @FXML
-    private void handleBackToHomePageButton(ActionEvent event) {
-        String path = "/fxml/MainView.fxml";
+    private void handleShowProjectTabButton(ActionEvent event) {
+        String path = "/fxml/ProjectTab.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         try {
-            AnchorPane root = loader.load();
-            Stage primaryStage = new Stage();
-            Scene primaryScene = new Scene(root);
+            SplitPane root = loader.load();
+            Stage projectStage = new Stage();
+            Scene projectScene = new Scene(root);
+            
+            projectStage.setScene(projectScene);
 
-            primaryStage.setScene(primaryScene);
-
-            primaryStage.setTitle("Home Page");
-            primaryStage.show();
+            projectStage.setTitle("Project");
+            projectStage.show();
 
             // Close the current stage
-            Stage currentStage = (Stage) backToHomePageButton.getScene().getWindow();
+            Stage currentStage = (Stage) backToProjectButton.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     // Milestone Tab
 
