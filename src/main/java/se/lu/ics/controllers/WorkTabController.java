@@ -163,6 +163,7 @@ public class WorkTabController {
         displayConsHoursPane.setVisible(false);
         displayHardestWorkingConsultant();
         populateTableWithProjectsInvolvingAllConsultants();
+        displayConsultantsThreeProjectsOrLess();
 
     }
 
@@ -471,8 +472,6 @@ private void handleButtonRemoveConFromProj() {
     @FXML
     private TableColumn<Consultant, String> empStartDateColumn;
 
-    @FXML
-    private Button showConsultantsButton;
 
     // set up table
     private void setUpConsultantTableThreeProjects() {
@@ -485,10 +484,9 @@ private void handleButtonRemoveConFromProj() {
         consultantsTableThreeProjects.getItems().clear();
     }
 
-    // set up button
-    // Method to handle button click
+    // Method to display consultants who work on three or fewer projects
     @FXML
-    private void onShowConsultantsButtonClick() {
+    private void displayConsultantsThreeProjectsOrLess() {
         try {
             // Get consultants who work on three or fewer projects from WorkDao
             List<Consultant> consultants = workDao.getConsultantsWithThreeProjectsOrLess();
@@ -503,6 +501,7 @@ private void handleButtonRemoveConFromProj() {
             System.out.println("Error fetching consultants: " + e.getMessage());
         }
     }
+
     @FXML
     private TableView<Consultant> tableViewHardestWorkingConsultant;
     
@@ -522,33 +521,32 @@ private void handleButtonRemoveConFromProj() {
     private TableColumn<Consultant, Double> tableColHardTotHours;
 
     
-
     @FXML
-public void displayHardestWorkingConsultant() {
-    try {
-        Consultant consultant = workDao.getHardestWorkingConsultant();  // Get the hardest working consultant
+    public void displayHardestWorkingConsultant() {
+        try {
+            Consultant consultant = workDao.getHardestWorkingConsultant();  // Get the hardest working consultant
 
-        // Create a list to add this consultant to the TableView
-        ObservableList<Consultant> consultantData = FXCollections.observableArrayList();
-        consultantData.add(consultant);
+            // Create a list to add this consultant to the TableView
+            ObservableList<Consultant> consultantData = FXCollections.observableArrayList();
+            consultantData.add(consultant);
 
-        // Bind columns to the Consultant properties
-        tableColHardEmpNo.setCellValueFactory(new PropertyValueFactory<>("empNo"));
-        tableColHardTitle.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
-        tableColHardFirstName.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
-        tableColHardLastName.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
+            // Bind columns to the Consultant properties
+            tableColHardEmpNo.setCellValueFactory(new PropertyValueFactory<>("empNo"));
+            tableColHardTitle.setCellValueFactory(new PropertyValueFactory<>("empTitle"));
+            tableColHardFirstName.setCellValueFactory(new PropertyValueFactory<>("empFirstName"));
+            tableColHardLastName.setCellValueFactory(new PropertyValueFactory<>("empLastName"));
 
-        // Bind the total work hours column to the temporary TotalWorkHours property
-        tableColHardTotHours.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalWorkHours()).asObject());
+            // Bind the total work hours column to the temporary TotalWorkHours property
+            tableColHardTotHours.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalWorkHours()).asObject());
 
-        // Set data in the TableView
-        tableViewHardestWorkingConsultant.setItems(consultantData);
+            // Set data in the TableView
+            tableViewHardestWorkingConsultant.setItems(consultantData);
 
-    } catch (DaoException e) {
-        e.printStackTrace();
-        // Handle exception, e.g., show an error dialog
+        } catch (DaoException e) {
+            e.printStackTrace();
+            // Handle exception, e.g., show an error dialog
+        }
     }
-}
 
 
 
