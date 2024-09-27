@@ -237,10 +237,20 @@ public class ConsultantTabController {
             lableResponse.setText("Consultant '" + empFirstName + " " + empLastName + "', successfully registered");
             populateEmployeeNumbers();
             lableResponse.setStyle("-fx-text-fill: green");
+
+            // Clear the text fields
+            registerConsultantNo.clear();
+            registerConsultantName.clear();
+            registerConsultantLast.clear();
+            registerConsultantTitle.clear();
+            registerConsultantDate.getEditor().clear();
+            
         } catch (DaoException e) {
             lableResponse.setText(e.getMessage());
             lableResponse.setStyle("-fx-text-fill: red");
         }
+
+
 
     }
 

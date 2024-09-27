@@ -166,15 +166,17 @@ public class ProjectTabController {
 
             registerProjectLabelResponse.setText("");
             registerProjectLabelResponse.setText(
-                    "New Project Registered:\n" +
-                            "Project Name: " + (projectName != null ? projectName : "N/A") + "\n" +
-                            "Project No: " + (projectNo != null ? projectNo : "N/A") + "\n" +
-                            "Start Date: " + (projectStartDate != null ? projectStartDate : "N/A") + "\n" +
-                            "End Date: " + (projectEndDate != null ? projectEndDate : "N/A"));
+                    "Project: " + projectNo + " with name: " + projectName + " has been successfully registered.");
 
             registerProjectLabelResponse.setStyle("-fx-text-fill: green");
             // populateProjectNumbers();
             populateViewAllProjectsComboBox();
+            // clear the text fields
+            registerProjectNo.clear();
+            registerProjectName.clear();
+            registerProjectStartDate.getEditor().clear();
+            registerProjectEndDate.getEditor().clear();
+
         } catch (DaoException e) {
             registerProjectLabelResponse.setText(e.getMessage());
             registerProjectLabelResponse.setStyle("-fx-text-fill: red");
