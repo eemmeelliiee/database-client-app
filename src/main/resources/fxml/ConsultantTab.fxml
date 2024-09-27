@@ -56,8 +56,8 @@
                     <AnchorPane fx:id="infoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="615.0">
                         <children>
                             <Label layoutX="241.0" layoutY="14.0" text="Overview of Consultants:" />
-                            <ComboBox fx:id="viewSpecificConsultantComboBox" layoutX="73.0" layoutY="40.0" prefHeight="27.0" prefWidth="179.0" promptText="View specific consultant" />
-                            <ComboBox fx:id="infoConsultantTitle" layoutX="267.0" layoutY="40.0" prefHeight="27.0" prefWidth="150.0" promptText="View by title" />
+                            <ComboBox fx:id="viewSpecificConsultantComboBox" layoutX="75.0" layoutY="40.0" prefHeight="27.0" prefWidth="184.0" promptText="View specific Consultant" />
+                            <ComboBox fx:id="infoConsultantTitle" layoutX="269.0" layoutY="40.0" prefHeight="27.0" prefWidth="150.0" promptText="View by Title" />
                             <Button fx:id="viewAllButton" layoutX="432.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleButtonViewAll" prefHeight="27.0" prefWidth="91.0" text="View All" />
                             <TableView fx:id="consultantTableView" layoutX="75.0" layoutY="96.0" prefHeight="200.0" prefWidth="448.0">
                             <columns>
@@ -74,7 +74,7 @@
                               <Font name="System Bold Italic" size="13.0" />
                            </font>
                         </Label>
-                            <Button fx:id="removeConsultantButton" layoutX="284.0" layoutY="321.0" mnemonicParsing="false" onAction="#handleButtonRemoveConsultant" prefHeight="26.0" prefWidth="237.0" text="Remove consultant from company" />
+                            <Button fx:id="removeConsultantButton" layoutX="284.0" layoutY="321.0" mnemonicParsing="false" onAction="#handleButtonRemoveConsultant" prefHeight="26.0" prefWidth="237.0" text="Remove Consultant from Company" />
                             <Label fx:id="infoOverViewLabel" alignment="TOP_LEFT" layoutX="73.0" layoutY="353.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="404.0" wrapText="true" />
                         <Label layoutX="275.0" layoutY="79.0" prefHeight="17.0" prefWidth="226.0" text="Total amount of consultants in company:" />
                         </children>
