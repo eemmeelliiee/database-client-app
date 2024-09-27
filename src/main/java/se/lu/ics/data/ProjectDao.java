@@ -206,15 +206,15 @@ public class ProjectDao {
         } catch (SQLException e) {
             // Check for unique constraint violation (SQL Server error code 2627)
             if (e.getErrorCode() == 2627) {
-                throw new DaoException("Error updating project: " + updatedproject.getProjectNo() + "\nA project with this ProjectNo or ProjectName already exists.", e);
+                throw new DaoException("Error: A project with this ProjectNo or ProjectName already exists.", e);
             } else if (e.getErrorCode() == 515) {
-                throw new DaoException("Error updating project: " + updatedproject.getProjectNo() + "\nFields ProjectNo and ProjectName cannot be empty.");
+                throw new DaoException("Error: Fields ProjectNo and ProjectName cannot be empty.");
             } else if (e.getErrorCode() == 547) {
                 throw new DaoException(
-                        "Error updating project: " + updatedproject.getProjectNo() + "\nEnd date must be after start date");
+                        "Error updating project: End date must be after start date");
             } else {
                 e.printStackTrace();
-                throw new DaoException("HEJError updating project: " + updatedproject.getProjectNo(), e);
+                throw new DaoException("Error updating project: " + updatedproject.getProjectNo(), e);
             }
          } 
     }
