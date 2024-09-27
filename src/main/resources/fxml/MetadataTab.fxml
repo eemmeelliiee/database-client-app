@@ -19,12 +19,12 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-           <Button fx:id="showPrimaryKeyConstraintPaneButton" layoutX="227.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleShowPrimaryKeyConstraintPaneButton" prefWidth="160.0" text="View Primary Constraints">
+           <Button fx:id="showTableInfoPaneButton" layoutX="38.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowTableInfoPaneButton" prefHeight="26.0" prefWidth="160.0" text="View Table Information">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-           <Button fx:id="showTableInfoPaneButton" layoutX="38.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowTableInfoPaneButton" prefHeight="26.0" prefWidth="160.0" text="View Table Information">
+           <Button fx:id="showPrimaryKeyConstraintPaneButton" layoutX="227.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleShowPrimaryKeyConstraintPaneButton" prefWidth="160.0" text="View Primary Constraints">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -42,6 +42,7 @@
                <children>
                <AnchorPane fx:id="tableInfoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                     <children>
+                       <Label fx:id="tableInfoLabel" layoutX="244.0" layoutY="14.0" text="View Table Information:" />
                        <Button fx:id="mostRowsButton" layoutX="194.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleMostRowsButton" prefHeight="27.0" prefWidth="226.0" text="Table with most Rows" />
                        <TableView fx:id="tableViewMostRows" layoutX="194.0" layoutY="76.0" prefHeight="75.0" prefWidth="226.0">
                          <columns>
@@ -56,7 +57,6 @@
                               <TableColumn fx:id="columnNamesColumn" prefWidth="370.0" text="Names" />
                            </columns>
                         </TableView>
-                       <Label fx:id="tableInfoLabel" layoutX="244.0" layoutY="14.0" text="View Table Information:" />
                        <Label fx:id="tableInformationResponse" alignment="TOP_LEFT" layoutX="432.0" layoutY="42.0" prefHeight="111.0" prefWidth="160.0" wrapText="true" />
                     </children>
                  </AnchorPane>
@@ -68,14 +68,14 @@
                             <TableColumn fx:id="primaryKeyConstraintColumn" prefWidth="397.0" text="Primary Key Constraint Names" />
                           </columns>
                         </TableView>
-                        <Button fx:id="primaryKeyConstraintButton" layoutX="447.0" layoutY="272.0" mnemonicParsing="false" onAction="#handlePrimaryKeyConstraintButton" prefHeight="27.0" prefWidth="60.0" text="View" />
+                        <Button fx:id="primaryKeyConstraintButton" layoutX="447.0" layoutY="273.0" mnemonicParsing="false" onAction="#handlePrimaryKeyConstraintButton" prefHeight="27.0" prefWidth="60.0" text="View" />
                         <Label fx:id="primaryKeyConstraintsResponse" alignment="TOP_CENTER" layoutX="107.0" layoutY="299.0" prefHeight="63.0" prefWidth="398.0" visible="false" />
                     </children>
                  </AnchorPane>
                <AnchorPane fx:id="checkConstraintPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
                     <children>
                        <Label layoutX="241.0" layoutY="14.0" text="View Check Constraints:" />
-                        <TableView fx:id="tableViewCheckConstraints" layoutX="109.0" layoutY="64.0" prefHeight="197.0" prefWidth="398.0">
+                        <TableView fx:id="tableViewCheckConstraints" layoutX="109.0" layoutY="65.0" prefHeight="197.0" prefWidth="398.0">
                           <columns>
                             <TableColumn fx:id="checkConstraintColumn" prefWidth="397.0" text="Check constraint names" />
                           </columns>
