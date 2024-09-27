@@ -14,7 +14,7 @@
    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
        <children>
            <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- HOME" />
-           <Button fx:id="showTableInfoPaneButton" layoutX="45.0" layoutY="56.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowTableInfoPaneButton" prefHeight="26.0" prefWidth="172.0" text="View Table Information">
+           <Label layoutX="260.0" layoutY="11.0" text="METADATA">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
@@ -26,10 +26,11 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
-           <Label layoutX="260.0" layoutY="11.0" text="METADATA">
+           <Button fx:id="showCheckConstraintPaneButton" layoutX="416.0" layoutY="56.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowCheckConstraintPaneButton" prefWidth="160.0" text="View Check Constraints">
                <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Label>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
        </children>
    </AnchorPane>
    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -61,7 +62,7 @@
                        <Label layoutX="224.0" layoutY="14.0" text="View Primary Key Constraints:" />
                         <TableView fx:id="tableViewPrimaryKeyConstraints" layoutX="109.0" layoutY="65.0" prefHeight="197.0" prefWidth="398.0">
                           <columns>
-                            <TableColumn fx:id="primaryKeyConstraintColumn" prefWidth="397.0" text="Primary key constraint names" />
+                            <TableColumn fx:id="primaryKeyConstraintColumn" prefWidth="397.0" text="Primary Key Constraint Names" />
                           </columns>
                         </TableView>
                         <Button fx:id="primaryKeyConstraintButton" layoutX="445.0" layoutY="272.0" mnemonicParsing="false" onAction="#handlePrimaryKeyConstraintButton" prefHeight="27.0" prefWidth="60.0" text="View" />
