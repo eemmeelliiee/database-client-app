@@ -12,24 +12,24 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ProjectTabController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ProjectTabController">
     <items>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="598.0">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="111.0" prefWidth="615.0">
             <children>
-                <Label layoutX="255.0" layoutY="12.0" prefHeight="23.0" prefWidth="88.0" text="PROJECT">
+                <Label layoutX="264.0" layoutY="12.0" prefHeight="23.0" prefWidth="88.0" text="PROJECT">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Label>
-                <Button fx:id="ShowRegisterProjectPane" layoutX="192.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowRegisterProjectPane" prefHeight="26.0" prefWidth="190.0" text="Register new Project">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font></Button>
-                <Button fx:id="showInfoProjectPane" layoutX="15.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowInfoProjectPane" prefHeight="26.0" prefWidth="168.0" text="Overview of Projects">
+                <Button fx:id="backToHomePageButton" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- HOME" />
+                <Button fx:id="showInfoProjectPane" layoutX="14.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowInfoProjectPane" prefHeight="26.0" prefWidth="190.0" text="Overview of Projects">
                <font>
                   <Font name="System Bold Italic" size="13.0" />
                </font></Button>
-                <Button fx:id="backToHomePageButton" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- HOME" />
-            <Button fx:id="showMilestoneTabButton" layoutX="390.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowMilestoneTabButton" prefHeight="26.0" prefWidth="184.0" text="Manage Milestones for Project">
+                <Button fx:id="ShowRegisterProjectPane" layoutX="213.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowRegisterProjectPane" prefHeight="26.0" prefWidth="190.0" text="Register new Project">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Button fx:id="showMilestoneTabButton" layoutX="411.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleShowMilestoneTabButton" prefHeight="26.0" prefWidth="190.0" text="Manage Milestones for Project">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -40,25 +40,27 @@
             <children>
                 <StackPane layoutY="-3.0" prefHeight="297.0" prefWidth="586.0">
                     <children>
-                    <AnchorPane fx:id="registerProjectPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                    <AnchorPane fx:id="registerProjectPane" prefHeight="200.0" prefWidth="200.0">
                         <children>
-                            <Label layoutX="244.0" layoutY="14.0" text="Register a project:" />
-                            <Label layoutX="37.0" layoutY="50.0" text="Project Number:" />
-                            <TextField fx:id="registerProjectNo" layoutX="164.0" layoutY="45.0" promptText="Ex: P001" />
-                            <Label layoutX="89.0" layoutY="104.0" text="Name:" />
-                            <TextField fx:id="registerProjectName" layoutX="164.0" layoutY="100.0" promptText="Ex: Alpha Project" />
-                            <Label layoutX="67.0" layoutY="149.0" text="Start Date:" />
-                            <DatePicker fx:id="registerProjectStartDate" layoutX="164.0" layoutY="144.0" prefHeight="26.0" prefWidth="159.0" />
-                            <Label layoutX="69.0" layoutY="195.0" text="End Date:" />
-                            <DatePicker fx:id="registerProjectEndDate" layoutX="164.0" layoutY="190.0" prefHeight="26.0" prefWidth="159.0" />
-                            <Button fx:id="registerProjectButton" layoutX="132.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleButtonRegisterProject" text="Register Project" />
-                        <Label fx:id="registerProjectLabelResponse" layoutX="14.0" layoutY="281.0" prefHeight="96.0" prefWidth="575.0" wrapText="true" />
+                            <Label layoutX="246.0" layoutY="14.0" text="Register a project:" />
+                            <Label layoutX="157.0" layoutY="50.0" text="Project Number:" />
+                            <TextField fx:id="registerProjectNo" layoutX="293.0" layoutY="45.0" promptText="Ex: P001" />
+                            <Label layoutX="157.0" layoutY="91.0" text="Name:" />
+                            <TextField fx:id="registerProjectName" layoutX="293.0" layoutY="86.0" promptText="Ex: Alpha Project" />
+                            <Label layoutX="157.0" layoutY="136.0" text="Start Date:" />
+                            <DatePicker fx:id="registerProjectStartDate" layoutX="294.0" layoutY="131.0" prefHeight="26.0" prefWidth="159.0" />
+                            <Label layoutX="157.0" layoutY="187.0" text="End Date:" />
+                            <DatePicker fx:id="registerProjectEndDate" layoutX="294.0" layoutY="182.0" prefHeight="26.0" prefWidth="159.0" />
+                            <Button fx:id="registerProjectButton" layoutX="230.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleButtonRegisterProject" prefWidth="130.0" text="Register Project" />
+                        <Label fx:id="registerProjectLabelResponse" alignment="TOP_CENTER" layoutX="7.0" layoutY="267.0" prefHeight="96.0" prefWidth="575.0" wrapText="true" />
                         </children>
                     </AnchorPane>
-                    <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
+                    <AnchorPane fx:id="infoProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
                         <children>
-                            <Label layoutX="233.0" layoutY="14.0" text="Overview of Projects:" />
-                            <TableView fx:id="tableViewProject" layoutX="16.0" layoutY="79.0" prefHeight="189.0" prefWidth="558.0">
+                            <Label layoutX="238.0" layoutY="14.0" text="Overview of Projects:" />
+                        <ComboBox fx:id="viewAllProjectsComboBox" layoutX="29.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" />
+                            <Button fx:id="viewAllProjectsButton" layoutX="521.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
+                            <TableView fx:id="tableViewProject" layoutX="29.0" layoutY="79.0" prefHeight="189.0" prefWidth="558.0">
                                 <columns>
                                 <TableColumn fx:id="colStatus" prefWidth="86.0" text="Status" />
                                 <TableColumn fx:id="colProjectNo" prefWidth="100.0" text="Project Number" />
@@ -67,12 +69,9 @@
                               <TableColumn fx:id="colEndDate" minWidth="0.0" prefWidth="143.0" text="EndDate" />
                                 </columns>
                             </TableView>
-                            <ComboBox layoutX="25.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" visible="false" />
-                            <Button fx:id="viewAllProjectsButton" layoutX="508.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
-                        <ComboBox fx:id="viewAllProjectsComboBox" layoutX="16.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific project" />
-                        <Label fx:id="updateProjectLabel" layoutX="16.0" layoutY="329.0" prefHeight="17.0" prefWidth="558.0" wrapText="true" />
-                        <Label layoutX="16.0" layoutY="268.0" prefHeight="17.0" prefWidth="558.0" text="To update a project: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
-                        <Button fx:id="buttonRemoveProjFromCompany" layoutX="384.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleButtonRemoveProjFromCompany" prefHeight="26.0" prefWidth="190.0" text="Remove project from company" />
+                        <Button fx:id="buttonRemoveProjFromCompany" layoutX="397.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleButtonRemoveProjFromCompany" prefHeight="26.0" prefWidth="190.0" text="Remove project from company" />
+                        <Label layoutX="29.0" layoutY="268.0" prefHeight="17.0" prefWidth="558.0" text="To update a project: double click a cell, insert new value, end hit enter." textFill="#7c7c7c" />
+                        <Label fx:id="updateProjectLabel" layoutX="29.0" layoutY="329.0" prefHeight="17.0" prefWidth="558.0" wrapText="true" />
                         </children>
                     </AnchorPane>
                     </children>
