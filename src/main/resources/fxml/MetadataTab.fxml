@@ -7,16 +7,29 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.2825520833333333" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MetadataTabController">
+<SplitPane dividerPositions="0.2825520833333333" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.MetadataTabController">
    <items>
    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
        <children>
-           <Button fx:id="showTableInfoPaneButton" layoutX="34.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowTableInfoPaneButton" prefWidth="160.0" text="View Table Information" />
-           <Button fx:id="showPrimaryKeyConstraintPaneButton" layoutX="420.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleShowPrimaryKeyConstraintPaneButton" prefWidth="160.0" text="View Primary Constraints" />
-           <Button fx:id="showCheckConstraintPaneButton" layoutX="227.0" layoutY="57.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowCheckConstraintPaneButton" prefWidth="160.0" text="View Check Constraints" />
-           <Label layoutX="240.0" layoutY="14.0" text="METADATA OVERVIEW" />
-           <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- Back" />
+           <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- HOME" />
+           <Button fx:id="showTableInfoPaneButton" layoutX="45.0" layoutY="56.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowTableInfoPaneButton" prefHeight="26.0" prefWidth="172.0" text="View Table Information">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+           <Button fx:id="showCheckConstraintPaneButton" layoutX="408.0" layoutY="56.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleShowCheckConstraintPaneButton" prefWidth="160.0" text="View Check Constraints">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+           <Button fx:id="showPrimaryKeyConstraintPaneButton" layoutX="233.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleShowPrimaryKeyConstraintPaneButton" prefWidth="160.0" text="View Primary Constraints">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+           <Label layoutX="260.0" layoutY="11.0" text="METADATA">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
        </children>
    </AnchorPane>
    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -25,45 +38,45 @@
                <children>
                <AnchorPane fx:id="checkConstraintPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
                     <children>
-                       <Label layoutX="241.0" layoutY="14.0" text="CHECK CONSTRAINTS:" />
-                        <TableView fx:id="tableViewCheckConstraints" layoutX="109.0" layoutY="95.0" prefHeight="197.0" prefWidth="398.0">
+                       <Label layoutX="241.0" layoutY="14.0" text="View Check Constraints:" />
+                        <TableView fx:id="tableViewCheckConstraints" layoutX="109.0" layoutY="64.0" prefHeight="197.0" prefWidth="398.0">
                           <columns>
                             <TableColumn fx:id="checkConstraintColumn" prefWidth="397.0" text="Check constraint names" />
                           </columns>
                         </TableView>
-                        <Button fx:id="checkConstraintButton" layoutX="236.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleCheckConstraintButton" text="View check constraints" />
-                        <Label fx:id="checkConstraintsResponse" alignment="TOP_CENTER" layoutX="109.0" layoutY="301.0" prefHeight="63.0" prefWidth="398.0" />
+                        <Button fx:id="checkConstraintButton" layoutX="463.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleCheckConstraintButton" text="View" />
+                        <Label fx:id="checkConstraintsResponse" alignment="TOP_CENTER" layoutX="109.0" layoutY="293.0" prefHeight="63.0" prefWidth="398.0" />
                     </children></AnchorPane>
-               <AnchorPane fx:id="primaryKeyConstraintPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
+               <AnchorPane fx:id="primaryKeyConstraintPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
                     <children>
-                       <Label layoutX="224.0" layoutY="14.0" text="PRIMARY KEY CONSTRAINTS:" />
-                        <TableView fx:id="tableViewPrimaryKeyConstraints" layoutX="109.0" layoutY="95.0" prefHeight="197.0" prefWidth="398.0">
+                       <Label layoutX="224.0" layoutY="14.0" text="View Primary Key Constraints:" />
+                        <TableView fx:id="tableViewPrimaryKeyConstraints" layoutX="109.0" layoutY="65.0" prefHeight="197.0" prefWidth="398.0">
                           <columns>
                             <TableColumn fx:id="primaryKeyConstraintColumn" prefWidth="397.0" text="Primary key constraint names" />
                           </columns>
                         </TableView>
-                        <Button fx:id="primaryKeyConstraintButton" layoutX="222.0" layoutY="56.0" mnemonicParsing="false" onAction="#handlePrimaryKeyConstraintButton" text="View primary key constraints" />
-                        <Label fx:id="primaryKeyConstraintsResponse" alignment="TOP_CENTER" layoutX="110.0" layoutY="304.0" prefHeight="63.0" prefWidth="398.0" />
+                        <Button fx:id="primaryKeyConstraintButton" layoutX="463.0" layoutY="262.0" mnemonicParsing="false" onAction="#handlePrimaryKeyConstraintButton" prefHeight="27.0" prefWidth="44.0" text="View" />
+                        <Label fx:id="primaryKeyConstraintsResponse" alignment="TOP_CENTER" layoutX="107.0" layoutY="299.0" prefHeight="63.0" prefWidth="398.0" visible="false" />
                     </children>
                  </AnchorPane>
-               <AnchorPane fx:id="tableInfoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
+               <AnchorPane fx:id="tableInfoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                     <children>
-                       <Button fx:id="nonIntNamesButton" layoutX="56.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleColumnNamesButtons" prefHeight="27.0" prefWidth="226.0" text="Non-int Consultant column names" />
-                       <Button fx:id="mostRowsButton" layoutX="330.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleMostRowsButton" prefHeight="27.0" prefWidth="226.0" text="Table with most rows" />
-                       <Button fx:id="allColumnsButton" layoutX="94.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleColumnNamesButtons" prefWidth="150.0" text="Names of all columns" />
-                       <Label fx:id="tableInfoLabel" layoutX="244.0" layoutY="14.0" text="TABLE INFORMATION:" />
-                       <TableView fx:id="tableViewMostRows" layoutX="330.0" layoutY="90.0" prefHeight="80.0" prefWidth="226.0">
-                         <columns>
-                           <TableColumn fx:id="mostRowsNameColumn" prefWidth="113.0" text="Name" />
-                           <TableColumn fx:id="mostRowsNrColumn" prefWidth="112.0" text="Number of rows:" />
-                         </columns>
-                       </TableView>
-                       <Label fx:id="tableInformationResponse" alignment="TOP_LEFT" layoutX="330.0" layoutY="200.0" prefHeight="111.0" prefWidth="226.0" wrapText="true" />
-                        <TableView fx:id="tableViewColumnNames" layoutX="56.0" layoutY="125.0" prefHeight="237.0" prefWidth="226.0">
+                       <Button fx:id="nonIntNamesButton" layoutX="279.0" layoutY="168.0" mnemonicParsing="false" onAction="#handleColumnNamesButtons" prefHeight="26.0" prefWidth="214.0" text="Non-INT Consultant Column Names" />
+                       <Button fx:id="allColumnsButton" layoutX="122.0" layoutY="168.0" mnemonicParsing="false" onAction="#handleColumnNamesButtons" prefHeight="26.0" prefWidth="144.0" text="Names of all Columns" />
+                        <TableView fx:id="tableViewColumnNames" layoutX="122.0" layoutY="201.0" prefHeight="134.0" prefWidth="371.0">
                            <columns>
-                              <TableColumn fx:id="columnNamesColumn" prefWidth="225.0" text="Names" />
+                              <TableColumn fx:id="columnNamesColumn" prefWidth="370.0" text="Names" />
                            </columns>
                         </TableView>
+                       <Button fx:id="mostRowsButton" layoutX="194.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleMostRowsButton" prefHeight="27.0" prefWidth="226.0" text="Table with most Rows" />
+                       <TableView fx:id="tableViewMostRows" layoutX="194.0" layoutY="76.0" prefHeight="75.0" prefWidth="226.0">
+                         <columns>
+                           <TableColumn fx:id="mostRowsNameColumn" prefWidth="114.0" text="Name" />
+                           <TableColumn fx:id="mostRowsNrColumn" prefWidth="111.0" text="Number of Rows" />
+                         </columns>
+                       </TableView>
+                       <Label fx:id="tableInfoLabel" layoutX="244.0" layoutY="14.0" text="View Table Information:" />
+                       <Label fx:id="tableInformationResponse" alignment="TOP_LEFT" layoutX="432.0" layoutY="42.0" prefHeight="111.0" prefWidth="160.0" wrapText="true" />
                     </children>
                  </AnchorPane>
                </children>
