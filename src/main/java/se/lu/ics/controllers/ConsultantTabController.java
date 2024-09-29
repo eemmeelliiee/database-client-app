@@ -30,7 +30,7 @@ import se.lu.ics.data.ConnectionHandler;
 
 public class ConsultantTabController {
 
-    //DAO instance
+    //Dao instance
     private ConsultantDao consultantDao;
 
     //Constructor

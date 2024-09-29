@@ -403,7 +403,7 @@ public class WorkTabController {
         }
     }
 
-    // View total worked hours for a certein consultant
+    // View total worked hours for a certain consultant
     @FXML
     private ComboBox<String> consultantWorkComboBox;
 

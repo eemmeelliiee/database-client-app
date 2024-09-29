@@ -8,10 +8,17 @@ public class Consultant {
     private String empLastName;
     private String empTitle;
     private LocalDate empStartDate;
-    // Temporary field for specific use case
-    private double totalWorkHours;
+    private double totalWorkHours; // Temporary attribute for specific use case getTotal
 
-
+    /**
+     * Constructor
+     *
+     * @param empNo        the employee number of the consultant
+     * @param empFirstName the first name of the consultant
+     * @param empLastName  the last name of the consultant
+     * @param empTitle     the title of the consultant
+     * @param empStartDate the start date of the consultant
+     */
     public Consultant(String empNo, String empFirstName, String empLastName, String empTitle, LocalDate empStartDate) {
         this.empNo = empNo;
         this.empFirstName = empFirstName;
@@ -60,7 +67,7 @@ public class Consultant {
         this.empStartDate = empStartDate;
     }
 
-    // Getters and setters for temporary field
+    // Getters and setters for temporary attribute
     public double getTotalWorkHours() {
         return totalWorkHours;
     }

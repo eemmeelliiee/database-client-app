@@ -13,7 +13,6 @@ public class Project {
      * Main constructor for initializing Project objects.
      * Since ProjectStatus is a computed column, it is set through setProjectStatus
      * in ProjectDao(), and not in constructor.
-     * Constructs a Project object with the specified details.
      * 
      * @param projectNo        The project number.
      * @param projectName      The project name.
@@ -28,12 +27,15 @@ public class Project {
     }
 
     /**
-     * Used in mapToProject() in MilestoneDao to retrieve all values for project
+     * Secondary constructor used in mapToProject() in ProjectDao to retrieve all values for Project
      * instance.
      *
-     * @param milestoneNo   The milestone number.
-     * @param milestoneName The milestone name.
-     * @param milestoneDate The milestone date.
+     * @param projectNo        the project number
+     * @param projectName      the name of the project
+     * @param projectStartDate the start date of the project
+     * @param projectEndDate   the end date of the project
+     * @param projectStatus    the status of the project
+     * 
      */
     public Project(String projectNo, String projectName, LocalDate projectStartDate, LocalDate projectEndDate,
             String projectStatus) {
