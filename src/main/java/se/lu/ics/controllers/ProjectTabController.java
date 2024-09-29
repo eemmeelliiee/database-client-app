@@ -45,7 +45,6 @@ public class ProjectTabController {
 
     @FXML
     private void initialize() {
-        // populateProjectNumbers();
         populateViewAllProjectsComboBox();
         setViewAllProjectsComboBoxHandler();
         setupTableColumns();
@@ -54,11 +53,10 @@ public class ProjectTabController {
 
     }
 
-    // Back to Home Page Button
+    //Back to Home Page Button
     @FXML
     private Button backToHomePageButton;
 
-    // Button to get to the project tab
     @FXML
     private void handleBackToHomePageButton(ActionEvent event) {
         String path = "/fxml/MainView.fxml";
@@ -81,160 +79,10 @@ public class ProjectTabController {
         }
     }
 
-    // Project Tab
-
-    // Register Project Pane
+    //Button to get to the milestone page
     @FXML
-    private AnchorPane registerProjectPane;
-
-    @FXML
-    private Button showRegisterProjectPane;
-
-    @FXML
-    private void handleShowRegisterProjectPane() {
-        registerProjectPane.setVisible(true);
-        // removeProjectPane.setVisible(false);
-        infoProjectPane.setVisible(false);
-    }
-
-    // Remove Project Pane
-    @FXML
-    private AnchorPane removeProjectPane;
-
-    @FXML
-    private Button showRemoveProjectPane;
-
-    // @FXML
-    // private void handleShowRemoveProjectPane() {
-    //     // removeProjectPane.setVisible(true);
-    //     registerProjectPane.setVisible(false);
-    //     infoProjectPane.setVisible(false);
-    // }
-
-    // Info pane
-    @FXML
-    private AnchorPane infoProjectPane;
-
-    @FXML
-    private Button showInfoProjectPane;
-
-    @FXML
-    private void handleShowInfoProjectPane() {
-        infoProjectPane.setVisible(true);
-        registerProjectPane.setVisible(false);
-        // removeProjectPane.setVisible(false);
-        handleButtonViewAllProjects();
-    }
-
-    // Register Project
-    @FXML
-    private TextField registerProjectNo;
-
-    @FXML
-    private TextField registerProjectName;
-
-    @FXML
-    private DatePicker registerProjectStartDate;
-
-    @FXML
-    private DatePicker registerProjectEndDate;
-
-    @FXML
-    private Button registerProjectButton;
-
-    @FXML
-    private Label registerProjectLabelResponse;
-
-    @FXML
-    private Label errorRegisterProjectLabelResponse;
-
-    @FXML
-    private void handleButtonRegisterProject() {
-        try {
-            String projectNo = registerProjectNo.getText();
-            String projectName = registerProjectName.getText();
-            LocalDate projectStartDate = registerProjectStartDate.getValue();
-            LocalDate projectEndDate = registerProjectEndDate.getValue();
-
-            // Set to null if the text is empty
-            projectNo = (projectNo != null && projectNo.trim().isEmpty()) ? null : projectNo;
-            projectName = (projectName != null && projectName.trim().isEmpty()) ? null : projectName;
-
-            Project newProject = new Project(projectNo, projectName, projectStartDate, projectEndDate);
-
-            projectDao.save(newProject);
-
-            registerProjectLabelResponse.setText("");
-            registerProjectLabelResponse.setText(
-                    "Project: " + projectNo + " with name: " + projectName + " has been successfully registered.");
-
-            registerProjectLabelResponse.setStyle("-fx-text-fill: green");
-            // populateProjectNumbers();
-            populateViewAllProjectsComboBox();
-            // clear the text fields
-            registerProjectNo.clear();
-            registerProjectName.clear();
-            registerProjectStartDate.getEditor().clear();
-            registerProjectEndDate.getEditor().clear();
-
-        } catch (DaoException e) {
-            registerProjectLabelResponse.setText(e.getMessage());
-            registerProjectLabelResponse.setStyle("-fx-text-fill: red");
-        }
-    }
-
-    // // Remove Project
-    // @FXML
-    // private ComboBox<String> removeProjectNo;
-
-    @FXML
-    private Button removeProjectButton;
-
-    @FXML
-    private Label removeProjectLabelResponse;
-
-    @FXML
-    private Button buttonRemoveProjFromCompany;
-
+    private Button showMilestoneTabButton;
     
-    @FXML
-private void handleButtonRemoveProjFromCompany() {
-    // Get the selected project from the table
-    Project selectedProject = tableViewProject.getSelectionModel().getSelectedItem();
-
-    // Check if a project is selected
-    if (selectedProject != null) {
-        String projectNo = selectedProject.getProjectNo();
-
-        try {
-            // Call DAO method to delete project from the database
-            projectDao.deleteByProjectNo(projectNo);
-
-            // Show success message
-            updateProjectLabel.setText("Project " + projectNo + " successfully removed.");
-            updateProjectLabel.setStyle("-fx-text-fill: green");
-
-            // Refresh the table view to remove the deleted project
-            handleButtonViewAllProjects();
-
-            // Optional: Refresh the combo boxes for projects
-            // populateProjectNumbers();
-            populateViewAllProjectsComboBox();
-
-        } catch (DaoException e) {
-            // Handle exceptions and show error message
-            updateProjectLabel.setText("Error removing project (ProjectNo: " + projectNo + "): " + e.getMessage());
-            updateProjectLabel.setStyle("-fx-text-fill: red");
-        }
-    } else {
-        // No project selected, show error message
-        updateProjectLabel.setText("Please select a project to remove.");
-        updateProjectLabel.setStyle("-fx-text-fill: red");
-    }
-}
-@FXML
-private Button showMilestoneTabButton;
-//Button to get to the milestone tab
     @FXML
     private void handleShowMilestoneTabButton(ActionEvent event) {
         String path = "/fxml/MilestoneTab.fxml";
@@ -257,47 +105,79 @@ private Button showMilestoneTabButton;
         }
     }
 
-// // DELETE THIS:::::
+    //Manage projects pane
+    @FXML
+    private AnchorPane infoProjectPane;
 
-//     @FXML
-//     private void handleButtonRemoveProject() {
-//         String projectNo = removeProjectNo.getValue(); // Get the selected Project Number
+    @FXML
+    private Button showInfoProjectPane;
 
-//         // Check if a Project Number is selected
-//         if (projectNo != null && !projectNo.isEmpty()) {
-//             projectDao.deleteByProjectNo(projectNo); // Remove the project
+    @FXML
+    private void handleShowInfoProjectPane() {
+        infoProjectPane.setVisible(true);
+        registerProjectPane.setVisible(false);
+        handleButtonViewAllProjects();
+    }
 
-//             // Create a response message with a newline for formatting
-//             String responseMessage = String
-//                     .format("Project with Project No: " + projectNo + " has been successfully removed.");
+    // Register Project Pane
+    @FXML
+    private AnchorPane registerProjectPane;
 
-//             // Set the formatted string to the response label
-//             removeProjectLabelResponse.setText(responseMessage);
-//             removeProjectLabelResponse.setStyle("-fx-text-fill: green");
+    @FXML
+    private Button showRegisterProjectPane;
 
-//             // Optional: Refresh the ComboBox after removal
-//             populateProjectNumbers(); // Assuming you have a method to refresh the ComboBox
-//             populateViewAllProjectsComboBox();
-//         } else {
-//             // If no Project Number is selected, show a warning message
-//             removeProjectLabelResponse.setText("Please select a project number.");
-//             removeProjectLabelResponse.setStyle("-fx-text-fill: red");
+    @FXML
+    private void handleShowRegisterProjectPane() {
+        registerProjectPane.setVisible(true);
+        infoProjectPane.setVisible(false);
+    }
 
-//         }
-//     }
+    // Remove Project
+    @FXML
+    private Button removeProjectButton;
 
-    // Populate Project Numbers
-    // @FXML
-    // private void initializeProject() {
-    //     // populateProjectNumbers();
-    // }
+    @FXML
+    private Label removeProjectLabelResponse;
 
-    // @FXML
-    // private void populateProjectNumbers() {
-    //     List<String> projectNumbers = projectDao.findAllProjectNos();
-    //     removeProjectNo.getItems().clear();
-    //     removeProjectNo.getItems().addAll(projectNumbers);
-    // }
+    @FXML
+    private Button buttonRemoveProjFromCompany;
+
+    
+    @FXML
+    private void handleButtonRemoveProjFromCompany() {
+        // Get the selected project from the table
+        Project selectedProject = tableViewProject.getSelectionModel().getSelectedItem();
+
+        // Check if a project is selected
+        if (selectedProject != null) {
+            String projectNo = selectedProject.getProjectNo();
+
+            try {
+                // Call DAO method to delete project from the database
+                projectDao.deleteByProjectNo(projectNo);
+
+                // Show success message
+                updateProjectLabel.setText("Project " + projectNo + " successfully removed.");
+                updateProjectLabel.setStyle("-fx-text-fill: green");
+
+                // Refresh the table view to remove the deleted project
+                handleButtonViewAllProjects();
+
+                // Optional: Refresh the combo boxes for projects
+                // populateProjectNumbers();
+                populateViewAllProjectsComboBox();
+
+            } catch (DaoException e) {
+                // Handle exceptions and show error message
+                updateProjectLabel.setText("Error removing project (ProjectNo: " + projectNo + "): " + e.getMessage());
+                updateProjectLabel.setStyle("-fx-text-fill: red");
+            }
+        } else {
+            // No project selected, show error message
+            updateProjectLabel.setText("Please select a project to remove.");
+            updateProjectLabel.setStyle("-fx-text-fill: red");
+        }
+    }
 
     // Show All Projects
     @FXML
@@ -336,6 +216,7 @@ private Button showMilestoneTabButton;
         });
     }
 
+    // Populate TableView for selected project
     private void populateTableViewForProject(String projectNo) {
         try {
             Project project = projectDao.findByProjectNo(projectNo);
@@ -357,11 +238,11 @@ private Button showMilestoneTabButton;
     private void handleButtonViewAllProjects() {
         try {
             List<Project> projects = projectDao.findAll(); // Fetch all projects
-            ObservableList<Project> projectList = FXCollections.observableArrayList(projects); // Convert to
-                                                                                               // ObservableList
-            tableViewProject.setItems(projectList); // Set items in TableView
+            ObservableList<Project> projectList = FXCollections.observableArrayList(projects); // Convert to ObservableList
+            // Set items in TableView
+            tableViewProject.setItems(projectList); 
         } catch (DaoException e) {
-            // Handle exception (e.g., show an error message)
+            //Error message
             System.err.println("Error fetching projects: " + e.getMessage());
         }
     }
@@ -428,6 +309,61 @@ private Button showMilestoneTabButton;
             updateProjectLabel.setStyle("-fx-text-fill: red");
             handleButtonViewAllProjects();
             tableViewProject.refresh();
+        }
+    }
+
+    // Register Project
+    @FXML
+    private TextField registerProjectNo;
+
+    @FXML
+    private TextField registerProjectName;
+
+    @FXML
+    private DatePicker registerProjectStartDate;
+
+    @FXML
+    private DatePicker registerProjectEndDate;
+
+    @FXML
+    private Button registerProjectButton;
+
+    @FXML
+    private Label registerProjectLabelResponse;
+
+    @FXML
+    private Label errorRegisterProjectLabelResponse;
+
+    @FXML
+    private void handleButtonRegisterProject() {
+        try {
+            String projectNo = registerProjectNo.getText();
+            String projectName = registerProjectName.getText();
+            LocalDate projectStartDate = registerProjectStartDate.getValue();
+            LocalDate projectEndDate = registerProjectEndDate.getValue();
+
+            // Set to null if the text is empty
+            projectNo = (projectNo != null && projectNo.trim().isEmpty()) ? null : projectNo;
+            projectName = (projectName != null && projectName.trim().isEmpty()) ? null : projectName;
+
+            Project newProject = new Project(projectNo, projectName, projectStartDate, projectEndDate);
+
+            projectDao.save(newProject);
+
+            registerProjectLabelResponse.setText("");
+            registerProjectLabelResponse.setText("Project: " + projectNo + " with name: " + projectName + " has been successfully registered.");
+            registerProjectLabelResponse.setStyle("-fx-text-fill: green");
+            populateViewAllProjectsComboBox();
+
+            // clear the text fields
+            registerProjectNo.clear();
+            registerProjectName.clear();
+            registerProjectStartDate.getEditor().clear();
+            registerProjectEndDate.getEditor().clear();
+
+        } catch (DaoException e) {
+            registerProjectLabelResponse.setText(e.getMessage());
+            registerProjectLabelResponse.setStyle("-fx-text-fill: red");
         }
     }
 

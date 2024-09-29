@@ -37,11 +37,10 @@ public class MetadataTabController {
         }
     }
 
-    // Back to Home Page Button
+    // Back to Home Page
     @FXML
     private Button backToHomePageButton;
 
-    //Handler to get to the home page
     @FXML
     private void handleBackToHomePageButton(ActionEvent event) {
         String path = "/fxml/MainView.fxml";
@@ -123,6 +122,7 @@ public class MetadataTabController {
     @FXML
     private TableColumn<String, String> columnNamesColumn;
 
+    //Names of all columns method
     @FXML
     private void handleColumnNamesButtons(ActionEvent event) {
         // Identify which button was clicked

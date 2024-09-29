@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class DatePickerTableCell<S> extends TableCell<S, LocalDate> {
     private final DatePicker datePicker;
 
+    // Constructor
     public DatePickerTableCell() {
         this.datePicker = new DatePicker();
         this.datePicker.setOnAction(event -> {
