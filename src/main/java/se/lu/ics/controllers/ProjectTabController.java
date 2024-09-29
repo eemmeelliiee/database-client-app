@@ -46,11 +46,10 @@ public class ProjectTabController {
     @FXML
     private void initialize() {
         populateViewAllProjectsComboBox();
-        setViewAllProjectsComboBoxHandler();
+        setViewSpecificProjectsComboBoxHandler();
         setupTableColumns();
         setUpTableView();
         handleButtonViewAllProjects();
-
     }
 
     //Back to Home Page Button
@@ -81,10 +80,10 @@ public class ProjectTabController {
 
     //Button to get to the milestone page
     @FXML
-    private Button showMilestoneTabButton;
+    private Button showMilestonePageButton;
     
     @FXML
-    private void handleShowMilestoneTabButton(ActionEvent event) {
+    private void handleShowMilestonePageButton(ActionEvent event) {
         String path = "/fxml/MilestoneTab.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         try {
@@ -98,7 +97,7 @@ public class ProjectTabController {
             milestoneStage.show();
 
             // Close the current stage
-            Stage currentStage = (Stage) showMilestoneTabButton.getScene().getWindow();
+            Stage currentStage = (Stage) showMilestonePageButton.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,16 +106,17 @@ public class ProjectTabController {
 
     //Manage projects pane
     @FXML
-    private AnchorPane infoProjectPane;
+    private AnchorPane manageProjectsPane;
 
     @FXML
-    private Button showInfoProjectPane;
+    private Button showManageProjectsPane;
 
     @FXML
-    private void handleShowInfoProjectPane() {
-        infoProjectPane.setVisible(true);
+    private void handleShowManageProjectsPane() {
+        manageProjectsPane.setVisible(true);
         registerProjectPane.setVisible(false);
         handleButtonViewAllProjects();
+        registerProjectLabelResponse.setText("");
     }
 
     // Register Project Pane
@@ -129,24 +129,21 @@ public class ProjectTabController {
     @FXML
     private void handleShowRegisterProjectPane() {
         registerProjectPane.setVisible(true);
-        infoProjectPane.setVisible(false);
+        manageProjectsPane.setVisible(false);
     }
 
-    // Remove Project
-    @FXML
-    private Button removeProjectButton;
-
-    @FXML
-    private Label removeProjectLabelResponse;
+    // Remove Project from Company
 
     @FXML
     private Button buttonRemoveProjFromCompany;
 
-    
+    @FXML
+    private Label manageProjectsResponse;
+
     @FXML
     private void handleButtonRemoveProjFromCompany() {
         // Get the selected project from the table
-        Project selectedProject = tableViewProject.getSelectionModel().getSelectedItem();
+        Project selectedProject = tableViewManageProject.getSelectionModel().getSelectedItem();
 
         // Check if a project is selected
         if (selectedProject != null) {
@@ -157,8 +154,8 @@ public class ProjectTabController {
                 projectDao.deleteByProjectNo(projectNo);
 
                 // Show success message
-                updateProjectLabel.setText("Project " + projectNo + " successfully removed.");
-                updateProjectLabel.setStyle("-fx-text-fill: green");
+                manageProjectsResponse.setText("Project " + projectNo + " has been successfully removed.");
+                manageProjectsResponse.setStyle("-fx-text-fill: green");
 
                 // Refresh the table view to remove the deleted project
                 handleButtonViewAllProjects();
@@ -169,22 +166,22 @@ public class ProjectTabController {
 
             } catch (DaoException e) {
                 // Handle exceptions and show error message
-                updateProjectLabel.setText("Error removing project (ProjectNo: " + projectNo + "): " + e.getMessage());
-                updateProjectLabel.setStyle("-fx-text-fill: red");
+                manageProjectsResponse.setText("Error removing project (ProjectNo: " + projectNo + "): " + e.getMessage());
+                manageProjectsResponse.setStyle("-fx-text-fill: red");
             }
         } else {
             // No project selected, show error message
-            updateProjectLabel.setText("Please select a project to remove.");
-            updateProjectLabel.setStyle("-fx-text-fill: red");
+            manageProjectsResponse.setText("Please select a project to remove.");
+            manageProjectsResponse.setStyle("-fx-text-fill: red");
         }
     }
 
     // Show All Projects
     @FXML
-    private ComboBox<String> viewAllProjectsComboBox;
+    private ComboBox<String> viewSpecificProjectComboBox;
 
     @FXML
-    private TableView<Project> tableViewProject;
+    private TableView<Project> tableViewManageProject;
 
     @FXML
     private TableColumn<Project, String> colStatus;
@@ -203,13 +200,13 @@ public class ProjectTabController {
 
     private void populateViewAllProjectsComboBox() {
         List<String> projectNumbers = projectDao.findAllProjectNos();
-        viewAllProjectsComboBox.getItems().clear();
-        viewAllProjectsComboBox.getItems().addAll(projectNumbers);
+        viewSpecificProjectComboBox.getItems().clear();
+        viewSpecificProjectComboBox.getItems().addAll(projectNumbers);
     }
 
-    private void setViewAllProjectsComboBoxHandler() {
-        viewAllProjectsComboBox.setOnAction(event -> {
-            String selectedProjectNo = viewAllProjectsComboBox.getValue();
+    private void setViewSpecificProjectsComboBoxHandler() {
+        viewSpecificProjectComboBox.setOnAction(event -> {
+            String selectedProjectNo = viewSpecificProjectComboBox.getValue();
             if (selectedProjectNo != null && !selectedProjectNo.isEmpty()) {
                 populateTableViewForProject(selectedProjectNo);
             }
@@ -222,9 +219,9 @@ public class ProjectTabController {
             Project project = projectDao.findByProjectNo(projectNo);
             if (project != null) {
                 ObservableList<Project> projectList = FXCollections.observableArrayList(project);
-                tableViewProject.setItems(projectList);
+                tableViewManageProject.setItems(projectList);
             } else {
-                tableViewProject.getItems().clear();
+                tableViewManageProject.getItems().clear();
             }
         } catch (DaoException e) {
             System.err.println("Error fetching project: " + e.getMessage());
@@ -240,7 +237,7 @@ public class ProjectTabController {
             List<Project> projects = projectDao.findAll(); // Fetch all projects
             ObservableList<Project> projectList = FXCollections.observableArrayList(projects); // Convert to ObservableList
             // Set items in TableView
-            tableViewProject.setItems(projectList); 
+            tableViewManageProject.setItems(projectList); 
         } catch (DaoException e) {
             //Error message
             System.err.println("Error fetching projects: " + e.getMessage());
@@ -248,7 +245,7 @@ public class ProjectTabController {
     }
 
     private void setUpTableView() {
-        tableViewProject.setEditable(true);
+        tableViewManageProject.setEditable(true);
     }
 
     private void setupTableColumns() {
@@ -271,9 +268,6 @@ public class ProjectTabController {
                 .setOnEditCommit(event -> updateProject(event.getRowValue(), "projectStartDate", event.getNewValue()));
         colEndDate.setOnEditCommit(event -> updateProject(event.getRowValue(), "projectEndDate", event.getNewValue()));
     }
-
-    @FXML
-    private Label updateProjectLabel;
 
     private void updateProject(Project project, String field, Object newValue) {
         String oldProjectNo = project.getProjectNo();
@@ -299,16 +293,16 @@ public class ProjectTabController {
                     break;
             }
             projectDao.update(project, oldProjectNo);
-            tableViewProject.refresh();
+            tableViewManageProject.refresh();
             // populateProjectNumbers();
             populateViewAllProjectsComboBox();
-            updateProjectLabel.setText("Update successful!");
-            updateProjectLabel.setStyle("-fx-text-fill: green");
+            manageProjectsResponse.setText("Update successful!");
+            manageProjectsResponse.setStyle("-fx-text-fill: green");
         } catch (DaoException e) {
-            updateProjectLabel.setText(e.getMessage());
-            updateProjectLabel.setStyle("-fx-text-fill: red");
+            manageProjectsResponse.setText(e.getMessage());
+            manageProjectsResponse.setStyle("-fx-text-fill: red");
             handleButtonViewAllProjects();
-            tableViewProject.refresh();
+            tableViewManageProject.refresh();
         }
     }
 
@@ -330,9 +324,6 @@ public class ProjectTabController {
 
     @FXML
     private Label registerProjectLabelResponse;
-
-    @FXML
-    private Label errorRegisterProjectLabelResponse;
 
     @FXML
     private void handleButtonRegisterProject() {
@@ -366,5 +357,4 @@ public class ProjectTabController {
             registerProjectLabelResponse.setStyle("-fx-text-fill: red");
         }
     }
-
 }

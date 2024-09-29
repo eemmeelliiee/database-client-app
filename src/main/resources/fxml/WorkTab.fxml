@@ -16,38 +16,40 @@
        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="598.0">
            <children>
                <Label layoutX="281.0" layoutY="11.0" text="WORK">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font></Label>
+                    <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                    </font>
+               </Label>
                <Button fx:id="backToHomePageButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBackToHomePageButton" text="&lt;-- HOME" />
-               <Button fx:id="manageConsultantsForProject" layoutX="50.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleManageConsultantsForProject" prefHeight="27.0" prefWidth="217.0" text="Manage Consultants for Project">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-               <Button fx:id="showAddConToProPane" layoutX="50.0" layoutY="76.0" mnemonicParsing="false" onAction="#handleShowAddConToProPane" prefHeight="27.0" prefWidth="217.0" text="Add Consultant to Project">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-               <Button fx:id="showDisplayConsHoursPane" layoutX="348.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowDisplayConsHoursPane" prefHeight="27.0" prefWidth="217.0" text="Total Work hours for Consultants">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font></Button>
-               <Button fx:id="showHardestWorkingConPane" layoutX="348.0" layoutY="76.0" mnemonicParsing="false" onAction="#handleShowHardestWorkingConPane" prefHeight="27.0" prefWidth="217.0" text="Other">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
+               <Button fx:id="showManageConsultantsForProjectPane" layoutX="50.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowManageConsultantsForProjectPane" prefHeight="27.0" prefWidth="217.0" text="Manage Consultants for Project">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+               </Button>
+               <Button fx:id="showAddConToProjPane" layoutX="50.0" layoutY="76.0" mnemonicParsing="false" onAction="#handleShowAddConToProjPane" prefHeight="27.0" prefWidth="217.0" text="Add Consultant to Project">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+               </Button>
+               <Button fx:id="showTotalWorkHoursPane" layoutX="348.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowTotalWorkHoursPane" prefHeight="27.0" prefWidth="217.0" text="Total Work hours for Consultants">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+               </Button>
+               <Button fx:id="showOtherPane" layoutX="348.0" layoutY="76.0" mnemonicParsing="false" onAction="#handleShowOtherPane" prefHeight="27.0" prefWidth="217.0" text="Other">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+               </Button>
            </children>
        </AnchorPane>
        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="584.0">
            <children>
                <StackPane prefHeight="384.0" prefWidth="587.0">
                    <children>
-                       <AnchorPane fx:id="hardestWorkingConPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
+                       <AnchorPane fx:id="otherPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
                            <children>
-                               <Button layoutX="455.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleShowHardestWorkingConPane" prefWidth="110.0" text="Refresh" />
+                               <Button layoutX="455.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleShowOtherPane" prefWidth="110.0" text="Refresh" />
                                <Label layoutX="51.0" layoutY="37.0" text="Hardest Working Consultant:" />
                                <TableView fx:id="tableViewHardestWorkingConsultant" layoutX="51.0" layoutY="54.0" prefHeight="73.0" prefWidth="515.0">
                                    <columns>
@@ -81,20 +83,20 @@
                         <Label layoutX="51.0" layoutY="246.0" text="Consultants working on three projects or less:" />
                            </children>
                        </AnchorPane>
-                   <AnchorPane fx:id="displayConsHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                   <AnchorPane fx:id="totalWorkHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                        <children>
                            <Label layoutX="217.0" layoutY="14.0" text="Total Work hours for Consultants:" />
-                        <ComboBox fx:id="consultantComboBox" layoutX="229.0" layoutY="54.0" prefHeight="26.0" prefWidth="158.0" promptText="Choose Consultant" />
+                        <ComboBox fx:id="consultantWorkComboBox" layoutX="229.0" layoutY="54.0" prefHeight="26.0" prefWidth="158.0" promptText="Choose Consultant" />
                         <Label layoutX="254.0" layoutY="112.0" text="Total hours worked:" />
                         <Label fx:id="totHoursWorkedForCon" alignment="TOP_CENTER" layoutX="278.0" layoutY="131.0" prefHeight="17.0" prefWidth="61.0" />
                         <Label layoutX="204.0" layoutY="164.0" prefHeight="17.0" prefWidth="209.0" text="Total hours worked by all Consultants:" />
                         <Label fx:id="totalWorkedHoursLabel" alignment="TOP_CENTER" layoutX="230.0" layoutY="185.0" prefHeight="17.0" prefWidth="157.0" />
                        </children>
                    </AnchorPane>
-                   <AnchorPane fx:id="checkWorkingConsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
+                   <AnchorPane fx:id="manageConsultantsForProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                        <children>
                            <Label layoutX="221.0" layoutY="14.0" text="Manage Consultants for Project:" />
-                           <ComboBox fx:id="projectComboBox" layoutX="42.0" layoutY="38.0" prefWidth="150.0" promptText="Project Number" />
+                           <ComboBox fx:id="projectWorkComboBox" layoutX="42.0" layoutY="38.0" prefWidth="150.0" promptText="Project Number" />
                            <TableView fx:id="consultantWorkTable" layoutX="42.0" layoutY="72.0" prefHeight="175.0" prefWidth="532.0">
                                <columns>
                                <TableColumn fx:id="consultantNumberColumn" prefWidth="95.0" text="Emp.Number" />
@@ -107,16 +109,16 @@
                            </TableView>
                         <Label layoutX="42.0" layoutY="247.0" prefHeight="17.0" prefWidth="532.0" text="To update hours for a consultant: double click a cell, insert new value, and hit enter." textFill="#7c7c7c" />
                         <Button fx:id="buttonRemoveConFromProj" layoutX="372.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleButtonRemoveConFromProj" prefHeight="26.0" prefWidth="202.0" text="Remove Consultant from Project" />
-                           <Label fx:id="labelUpdateHours" alignment="TOP_LEFT" layoutX="43.0" layoutY="276.0" prefHeight="50.0" prefWidth="314.0" />
+                           <Label fx:id="updateHoursResponse" alignment="TOP_LEFT" layoutX="43.0" layoutY="276.0" prefHeight="50.0" prefWidth="314.0" wrapText="true" />
                        </children>
                    </AnchorPane>
-                   <AnchorPane fx:id="addConToProPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                   <AnchorPane fx:id="addConToProjPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                        <children>
                            <Label layoutX="240.0" layoutY="21.0" text="Add Consultant to Project:" />
                            <Label layoutX="188.0" layoutY="72.0" text="Employee Number:" />
-                        <ComboBox fx:id="addConEmpNo" layoutX="316.0" layoutY="67.0" prefHeight="26.0" prefWidth="113.0" />
+                        <ComboBox fx:id="addConEmpNoCombobox" layoutX="316.0" layoutY="67.0" prefHeight="26.0" prefWidth="113.0" />
                            <Label layoutX="188.0" layoutY="113.0" text="Project Number:" />
-                        <ComboBox fx:id="addConProjNo" layoutX="316.0" layoutY="108.0" prefHeight="26.0" prefWidth="113.0" />
+                        <ComboBox fx:id="addConProjNoCombobox" layoutX="316.0" layoutY="108.0" prefHeight="26.0" prefWidth="113.0" />
                            <Label layoutX="188.0" layoutY="153.0" text="Work Hours:" />
                            <TextField fx:id="addConWorkHours" layoutX="316.0" layoutY="148.0" prefHeight="26.0" prefWidth="113.0" promptText="Ex: 30 or 30.5" />
                            <Button fx:id="addConButton" layoutX="232.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleButtonAddConsultant" text="Add Consultant to Project" />
