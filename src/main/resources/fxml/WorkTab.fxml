@@ -107,7 +107,7 @@
                            </TableView>
                         <Label layoutX="42.0" layoutY="247.0" prefHeight="17.0" prefWidth="532.0" text="To update hours for a consultant: double click a cell, insert new value, and hit enter." textFill="#7c7c7c" />
                         <Button fx:id="buttonRemoveConFromProj" layoutX="372.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleButtonRemoveConFromProj" prefHeight="26.0" prefWidth="202.0" text="Remove Consultant from Project" />
-                           <Label fx:id="labelUpdateHours" layoutX="34.0" layoutY="276.0" prefHeight="50.0" prefWidth="323.0" />
+                           <Label fx:id="labelUpdateHours" alignment="TOP_LEFT" layoutX="43.0" layoutY="276.0" prefHeight="50.0" prefWidth="314.0" />
                        </children>
                    </AnchorPane>
                    <AnchorPane fx:id="addConToProPane" prefHeight="200.0" prefWidth="200.0" visible="false">
@@ -121,7 +121,7 @@
                            <TextField fx:id="addConWorkHours" layoutX="316.0" layoutY="148.0" prefHeight="26.0" prefWidth="113.0" promptText="Ex: 30 or 30.5" />
                            <Button fx:id="addConButton" layoutX="232.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleButtonAddConsultant" text="Add Consultant to Project" />
                         <Label fx:id="warningLabel" layoutX="37.0" layoutY="270.0" prefHeight="27.0" prefWidth="549.0" />
-                           <Label fx:id="errorLabel" layoutX="37.0" layoutY="297.0" prefHeight="27.0" prefWidth="549.0" />
+                           <Label fx:id="errorLabel" alignment="CENTER" layoutX="37.0" layoutY="297.0" prefHeight="27.0" prefWidth="549.0" />
                        </children>
                    </AnchorPane>
                    </children>

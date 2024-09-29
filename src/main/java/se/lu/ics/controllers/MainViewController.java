@@ -14,10 +14,6 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.awt.Desktop;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
-
-
 
 public class MainViewController {
 
@@ -27,9 +23,6 @@ public class MainViewController {
 
     @FXML
     private Button showProjectTabButton;
-
-    // @FXML
-    // private Button showMilestoneTabButton;
 
     @FXML
     private Button showWorkTabButton;
@@ -89,29 +82,6 @@ public class MainViewController {
             e.printStackTrace();
         }
     }
-
-    // //Button to get to the milestone tab
-    // @FXML
-    // private void handleShowMilestoneTabButton(ActionEvent event) {
-    //     String path = "/fxml/MilestoneTab.fxml";
-    //     FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-    //     try {
-    //         SplitPane root = loader.load();
-    //         Stage milestoneStage = new Stage();
-    //         Scene milestoneScene = new Scene(root);
-            
-    //         milestoneStage.setScene(milestoneScene);
-
-    //         milestoneStage.setTitle("Milestone");
-    //         milestoneStage.show();
-
-    //         // Close the current stage
-    //         Stage currentStage = (Stage) showMilestoneTabButton.getScene().getWindow();
-    //         currentStage.close();
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
 
     //Button to get to the work tab
     @FXML
@@ -200,5 +170,3 @@ public class MainViewController {
             }
         }
     }
-
-

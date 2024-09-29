@@ -42,6 +42,7 @@ public class ConsultantTabController {
         }
     }
 
+    // Initialize the controller
     @FXML
     private void initialize() {
         totNbrOfConsultants();
@@ -52,19 +53,13 @@ public class ConsultantTabController {
         populateViewSpecificConsultantComboBox();
         setViewSpecificConsultantComboBoxHandler();
         loadConsultants();
-
-    }
-
-    private void totNbrOfConsultants() {
-        List<Consultant> consultants = consultantDao.findAll();
-        totalConsultantsResponse.setText(""+ consultants.size());
     }
 
     // Back to Home Page Button
     @FXML
     private Button backToHomePageButton;
 
-    // Button to get to the project tab
+    // Button to get to the home page
     @FXML
     private void handleBackToHomePageButton(ActionEvent event) {
         String path = "/fxml/MainView.fxml";
@@ -87,35 +82,7 @@ public class ConsultantTabController {
         }
     }
 
-    // Register Consultant Pane
-    @FXML
-    private AnchorPane registerConsultantPane;
-
-    @FXML
-    private Button showRegisterConsultantPane;
-
-    @FXML
-    private void handleShowRegisterConsultantPane() {
-        registerConsultantPane.setVisible(true);
-        // removeConsultantPane.setVisible(false);
-        infoPane.setVisible(false);
-    }
-
-    // // Remove consultant Pane
-    // @FXML
-    // private AnchorPane removeConsultantPane;
-
-    // @FXML
-    // private Button showRemoveConsultantPane;
-
-    // @FXML
-    // private void handleShowRemoveConsultantPane() {
-    //     removeConsultantPane.setVisible(true);
-    //     registerConsultantPane.setVisible(false);
-    //     infoPane.setVisible(false);
-    // }
-
-    // info pane
+    //Manage consultant pane
     @FXML
     private AnchorPane infoPane;
 
@@ -128,10 +95,31 @@ public class ConsultantTabController {
         handleButtonViewAll();
         infoPane.setVisible(true);
         registerConsultantPane.setVisible(false);
-        // removeConsultantPane.setVisible(false);
     }
 
-    // CONSULTANT TAB
+    // Register Consultant Pane
+    @FXML
+    private AnchorPane registerConsultantPane;
+
+    @FXML
+    private Button showRegisterConsultantPane;
+
+    @FXML
+    private void handleShowRegisterConsultantPane() {
+        registerConsultantPane.setVisible(true);
+        infoPane.setVisible(false);
+    }
+
+    
+    //MANAGE CONSULTANT 
+
+    // Total number of consultants
+    private void totNbrOfConsultants() {
+        List<Consultant> consultants = consultantDao.findAll();
+        totalConsultantsResponse.setText(""+ consultants.size());
+    }
+
+    // Set up the TableView
     private void setUpTableView() {
         consultantTableView.setEditable(true);
         colTitle.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -154,8 +142,7 @@ public class ConsultantTabController {
 
         // Add edit commit handlers
         colEmpNo.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empNo", event.getNewValue()));
-        colFirstName
-                .setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empFirstName", event.getNewValue()));
+        colFirstName.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empFirstName", event.getNewValue()));
         colLastName.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empLastName", event.getNewValue()));
         colTitle.setOnEditCommit(event -> updateConsultant(event.getRowValue(), "empTitle", event.getNewValue()));
 
@@ -163,25 +150,21 @@ public class ConsultantTabController {
         infoConsultantTitle.setOnAction(event -> populateTableViewByTitle(infoConsultantTitle.getValue()));
     }
 
+    // Populate the comboboxes with employee titles
     private void populateEmployeeTitles() {
         List<String> employeeTitles = consultantDao.findAllEmpTitles();
         infoConsultantTitle.getItems().clear();
         infoConsultantTitle.getItems().addAll(employeeTitles);
     }
 
+    // Populate the comboboxes with employee numbers
     private void populateEmployeeNumbers() {
         List<String> employeeNumbers = consultantDao.findAllEmpNos();
-        // removeConsultantNo.getItems().clear();
-        // removeConsultantNo.getItems().addAll(employeeNumbers);
         viewSpecificConsultantComboBox.getItems().clear();
         viewSpecificConsultantComboBox.getItems().addAll(employeeNumbers);
-
-        /*
-         * infoConsultantNo.getItems().clear();
-         * infoConsultantNo.getItems().addAll(employeeNumbers);
-         */
     }
 
+    // Load consultants into the TableView
     private void loadConsultants() {
         try {
             List<Consultant> consultants = consultantDao.findAll();
@@ -192,103 +175,66 @@ public class ConsultantTabController {
         }
     }
 
-    // REGISTER CONSULTANT
-
+    //View specific consultant
     @FXML
-    private TextField registerConsultantNo;
+    private ComboBox<String> viewSpecificConsultantComboBox;
 
-    @FXML
-    private TextField registerConsultantName;
-
-    @FXML
-    private TextField registerConsultantLast;
-
-    @FXML
-    private TextField registerConsultantTitle;
-
-    @FXML
-    private DatePicker registerConsultantDate;
-
-    @FXML
-    private Button registerConsultantButton;
-
-    @FXML
-    private Label lableResponse;
-
-    @FXML
-    private void handleButtonRegisterConsultant() {
-        try {
-            String empNo = registerConsultantNo.getText();
-            String empFirstName = registerConsultantName.getText();
-            String empLastName = registerConsultantLast.getText();
-            String empTitle = registerConsultantTitle.getText();
-            LocalDate empStartDate = registerConsultantDate.getValue();
-
-            // Set to null if the text is empty
-            empNo = (empNo != null && empNo.trim().isEmpty()) ? null : empNo;
-            empFirstName = (empFirstName != null && empFirstName.trim().isEmpty()) ? null : empFirstName;
-            empLastName = (empLastName != null && empLastName.trim().isEmpty()) ? null : empLastName;
-            empTitle = (empTitle != null && empTitle.trim().isEmpty()) ? null : empTitle;
-
-            Consultant newConsultant = new Consultant(empNo, empFirstName, empLastName, empTitle, empStartDate);
-
-            consultantDao.save(newConsultant);
-
-            lableResponse.setText("Consultant '" + empFirstName + " " + empLastName + "', successfully registered");
-            populateEmployeeNumbers();
-            lableResponse.setStyle("-fx-text-fill: green");
-
-            // Clear the text fields
-            registerConsultantNo.clear();
-            registerConsultantName.clear();
-            registerConsultantLast.clear();
-            registerConsultantTitle.clear();
-            registerConsultantDate.getEditor().clear();
-            
-        } catch (DaoException e) {
-            lableResponse.setText(e.getMessage());
-            lableResponse.setStyle("-fx-text-fill: red");
-        }
-
-
-
+    // Set the handler for the viewSpecificConsultantComboBox
+    private void setViewSpecificConsultantComboBoxHandler() {
+        viewSpecificConsultantComboBox.setOnAction(event -> {
+            String selectedEmpNo = viewSpecificConsultantComboBox.getValue();
+            if (selectedEmpNo != null && !selectedEmpNo.isEmpty()) {
+                updateTableViewForSpecificConsultant(selectedEmpNo);
+            }
+        });
     }
 
-    // // REMOVE CONSULTANT
+    // Populate the viewSpecificConsultantComboBox with employee numbers
+    private void populateViewSpecificConsultantComboBox() {
+        List<String> employeeNumbers = consultantDao.findAllEmpNos();
+        viewSpecificConsultantComboBox.getItems().clear();
+        viewSpecificConsultantComboBox.getItems().addAll(employeeNumbers);
+    }
 
-    // @FXML
-    // private ComboBox<String> removeConsultantNo; // combobox for employee number
+    // Update the TableView to show the selected consultant
+    private void updateTableViewForSpecificConsultant(String empNo) {
+        try {
+            Consultant consultant = consultantDao.findByEmpNo(empNo);
+            if (consultant != null) {
+                ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultant);
+                consultantTableView.setItems(consultantList);
+            } else {
+                consultantTableView.getItems().clear();
+            }
+        } catch (DaoException e) {
+            System.err.println("Error fetching consultant: " + e.getMessage());
+        }
+    }
 
-    // @FXML
-    // private Button removeConsultantButton;
-
-    // @FXML
-    // private Label removeConsultantResponse;
-
+    //Remove consultant
     @FXML
     private void handleButtonRemoveConsultant() {
-        // Get the selected consultant from the TableView
+        //Get the selected consultant from the TableView
         Consultant selectedConsultant = consultantTableView.getSelectionModel().getSelectedItem();
     
         if (selectedConsultant != null) {
             try {
-                String empNo = selectedConsultant.getEmpNo(); // Assuming getEmpNo() method exists in Consultant
+                String empNo = selectedConsultant.getEmpNo(); 
     
-                // Remove the consultant using the empNo
+                //Remove the consultant using the empNo
                 consultantDao.deleteByEmpNo(empNo); // Remove the consultant
     
-                // Create a response message with a newline for formatting
+                //Create a response message
                 String responseMessage = String.format("Consultant with Employee No: " + empNo + " has been successfully removed.");
     
-                // Set the formatted string to the response label
+                //Set the formatted string to the response label
                 infoOverViewLabel.setText(responseMessage);
                 infoOverViewLabel.setStyle("-fx-text-fill: green");
     
-                // Optional: Refresh the TableView after removal
-                refreshConsultantTable(); // Assuming you have a method to refresh the TableView
+                //Optional: Refresh the TableView after removal
+                refreshConsultantTable();
                 handleButtonViewAll();
 
-    
             } catch (DaoException e) {
                 infoOverViewLabel.setText(e.getMessage());
                 infoOverViewLabel.setStyle("-fx-text-fill: red");
@@ -300,25 +246,16 @@ public class ConsultantTabController {
         }
     }
 
+    //Refresh the consultantTableView
     private void refreshConsultantTable() {
-    // Implement logic to fetch the updated list of consultants
-    // and update the consultantTableView
-    List<Consultant> updatedConsultants = consultantDao.findAll(); // Assuming findAll() retrieves all consultants
-    consultantTableView.setItems(FXCollections.observableArrayList(updatedConsultants));
-}
-    // Info consultant
-    /*
-     * @FXML
-     * private ComboBox<String> infoConsultantNo; // combobox for employee number
-     */
-
-    // @FXML
-    // private Button infoConsultantButton;
-
-    // INFO OVERVIEW CONSULTANT
-
+        //Get all consultants from the database
+        List<Consultant> updatedConsultants = consultantDao.findAll(); 
+        consultantTableView.setItems(FXCollections.observableArrayList(updatedConsultants));
+    }
+    
+    //Update consultant
     @FXML
-    private ComboBox<String> infoConsultantTitle; // combobox for employee name
+    private ComboBox<String> infoConsultantTitle;
 
     @FXML
     private Label infoOverViewLabel;
@@ -331,21 +268,26 @@ public class ConsultantTabController {
 
     @FXML
     private TableColumn<Consultant, String> colEmpNo; // Column for employee number
+    
     @FXML
     private TableColumn<Consultant, String> colFirstName; // Column for first name
+    
     @FXML
     private TableColumn<Consultant, String> colLastName; // Column for last name
+    
     @FXML
     private TableColumn<Consultant, String> colTitle; // Column for title
+    
     @FXML
     private TableColumn<Consultant, LocalDate> colStartDate; // Column for start date
 
     private void updateConsultant(Consultant consultant, String field, Object newValue) {
-        // Set to null if the new value is empty and is a String
+        //Set to null if the new value is empty and is a String
         if (newValue instanceof String) {
             newValue = (newValue != null && ((String) newValue).trim().isEmpty()) ? null : newValue;
         }
 
+        //Get the old employee number and update the consultant with the new values
         String oldEmpNo = consultant.getEmpNo();
         try {
             switch (field) {
@@ -379,8 +321,6 @@ public class ConsultantTabController {
         }
     }
 
-    
-
     // Populate the TableView based on the selected title
     private void populateTableViewByTitle(String title) {
         if (title != null && !title.isEmpty()) {
@@ -389,13 +329,12 @@ public class ConsultantTabController {
             // Check
             System.out.println("Consultants retrieved: " + consultants.size());
 
-            ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultants); // Convert to
-                                                                                                        // ObservableList
+            ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultants); // Convert to ObservableList
             consultantTableView.setItems(consultantList); // Set items in TableView
         }
-
     }
 
+    //View all consultants button and handler
     @FXML
     private Button viewAllButton;
 
@@ -414,40 +353,68 @@ public class ConsultantTabController {
         }
     }
 
+
+    // REGISTER CONSULTANT
+
+    //Textfields, labels and buttons for registering a consultant
     @FXML
-    private Label infoOverviewLabel;
+    private TextField registerConsultantNo;
 
     @FXML
-    private ComboBox<String> viewSpecificConsultantComboBox;
+    private TextField registerConsultantName;
 
-    private void setViewSpecificConsultantComboBoxHandler() {
-        viewSpecificConsultantComboBox.setOnAction(event -> {
-            String selectedEmpNo = viewSpecificConsultantComboBox.getValue();
-            if (selectedEmpNo != null && !selectedEmpNo.isEmpty()) {
-                updateTableViewForSpecificConsultant(selectedEmpNo);
-            }
-        });
-    }
+    @FXML
+    private TextField registerConsultantLast;
 
-    private void updateTableViewForSpecificConsultant(String empNo) {
+    @FXML
+    private TextField registerConsultantTitle;
+
+    @FXML
+    private DatePicker registerConsultantDate;
+
+    @FXML
+    private Button registerConsultantButton;
+
+    @FXML
+    private Label lableResponse;
+
+    @FXML
+    private void handleButtonRegisterConsultant() {
         try {
-            Consultant consultant = consultantDao.findByEmpNo(empNo);
-            if (consultant != null) {
-                ObservableList<Consultant> consultantList = FXCollections.observableArrayList(consultant);
-                consultantTableView.setItems(consultantList);
-            } else {
-                consultantTableView.getItems().clear();
-            }
-        } catch (DaoException e) {
-            System.err.println("Error fetching consultant: " + e.getMessage());
+            // Get the values from the text fields
+            String empNo = registerConsultantNo.getText();
+            String empFirstName = registerConsultantName.getText();
+            String empLastName = registerConsultantLast.getText();
+            String empTitle = registerConsultantTitle.getText();
+            LocalDate empStartDate = registerConsultantDate.getValue();
 
+            // Set to null if the text is empty
+            empNo = (empNo != null && empNo.trim().isEmpty()) ? null : empNo;
+            empFirstName = (empFirstName != null && empFirstName.trim().isEmpty()) ? null : empFirstName;
+            empLastName = (empLastName != null && empLastName.trim().isEmpty()) ? null : empLastName;
+            empTitle = (empTitle != null && empTitle.trim().isEmpty()) ? null : empTitle;
+
+            // Create a new Consultant object
+            Consultant newConsultant = new Consultant(empNo, empFirstName, empLastName, empTitle, empStartDate);
+
+            // Save the new consultant
+            consultantDao.save(newConsultant);
+
+            // Set the response message
+            lableResponse.setText("Consultant '" + empFirstName + " " + empLastName + "', successfully registered");
+            populateEmployeeNumbers();
+            lableResponse.setStyle("-fx-text-fill: green");
+
+            // Clear the text fields
+            registerConsultantNo.clear();
+            registerConsultantName.clear();
+            registerConsultantLast.clear();
+            registerConsultantTitle.clear();
+            registerConsultantDate.getEditor().clear();
+            
+        } catch (DaoException e) {
+            lableResponse.setText(e.getMessage());
+            lableResponse.setStyle("-fx-text-fill: red");
         }
     }
-
-    private void populateViewSpecificConsultantComboBox() {
-        List<String> employeeNumbers = consultantDao.findAllEmpNos();
-        viewSpecificConsultantComboBox.getItems().clear();
-        viewSpecificConsultantComboBox.getItems().addAll(employeeNumbers);
-    }
-
 }
