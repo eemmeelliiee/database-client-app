@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
+<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
     <items>
         <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
             <children>
@@ -75,8 +75,8 @@
                            </font>
                         </Label>
                             <Button fx:id="removeConsultantButton" layoutX="295.0" layoutY="326.0" mnemonicParsing="false" onAction="#handleButtonRemoveConsultant" prefHeight="26.0" prefWidth="237.0" text="Remove Consultant from Company" />
-                            <Label fx:id="infoOverViewLabel" alignment="TOP_LEFT" layoutX="73.0" layoutY="353.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="404.0" wrapText="true" />
-                        <Label layoutX="275.0" layoutY="79.0" prefHeight="17.0" prefWidth="226.0" text="Total amount of consultants in company:" />
+                            <Label fx:id="infoOverViewLabel" alignment="TOP_LEFT" layoutX="82.0" layoutY="352.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="404.0" wrapText="true" />
+                        <Label layoutX="268.0" layoutY="79.0" prefHeight="17.0" prefWidth="226.0" text="Total amount of Consultants in Company:" />
                         </children>
                     </AnchorPane>
                     </children>
