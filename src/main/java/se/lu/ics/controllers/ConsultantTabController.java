@@ -291,6 +291,16 @@ public class ConsultantTabController {
             newValue = (newValue != null && ((String) newValue).trim().isEmpty()) ? null : newValue;
         }
 
+        // Validation for empFirstName and empLastName fields
+        if ("empFirstName".equals(field) || "empLastName".equals(field)) {
+            String nameValue = (String) newValue;
+            if (!isValidName(nameValue)) {
+                infoOverViewLabel.setText("Invalid name: First and last names cannot contain numbers.");
+                infoOverViewLabel.setStyle("-fx-text-fill: red");
+                return; // Stop further execution if the name is invalid
+            }
+        }
+
         //Get the old employee number and update the consultant with the new values
         String oldEmpNo = consultant.getEmpNo();
         try {
@@ -311,6 +321,7 @@ public class ConsultantTabController {
                     consultant.setEmpStartDate((LocalDate) newValue);
                     break;
             }
+
             consultantDao.update(consultant, oldEmpNo);
             manageConsultantTableView.refresh();
             populateEmployeeNumbers();
