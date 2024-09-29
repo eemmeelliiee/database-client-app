@@ -42,7 +42,6 @@ public class WorkTabController {
             ConnectionHandler connectionHandler = new ConnectionHandler();
             consultantDao = new ConsultantDao(connectionHandler);
             projectDao = new ProjectDao(connectionHandler);
-
             workDao = new WorkDao(connectionHandler, consultantDao, projectDao);
         } catch (DaoException e) {
             e.printStackTrace();
@@ -404,7 +403,7 @@ public class WorkTabController {
         }
     }
 
-    // View total worked hours for a certein consultant
+    // View total worked hours for a certain consultant
     @FXML
     private ComboBox<String> consultantWorkComboBox;
 

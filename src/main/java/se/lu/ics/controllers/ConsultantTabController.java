@@ -30,7 +30,7 @@ import se.lu.ics.data.ConnectionHandler;
 
 public class ConsultantTabController {
 
-    //DAO instance
+    //Dao instance
     private ConsultantDao consultantDao;
 
     //Constructor
@@ -295,7 +295,7 @@ public class ConsultantTabController {
         if ("empFirstName".equals(field) || "empLastName".equals(field)) {
             String nameValue = (String) newValue;
             if (!isValidName(nameValue)) {
-                infoOverViewLabel.setText("Invalid name: First and last names cannot contain numbers.");
+                infoOverViewLabel.setText("Error: First and Last Name cannot contain numbers.");
                 infoOverViewLabel.setStyle("-fx-text-fill: red");
                 return; // Stop further execution if the name is invalid
             }
@@ -413,7 +413,7 @@ public class ConsultantTabController {
             empTitle = (empTitle != null && empTitle.trim().isEmpty()) ? null : empTitle;
 
             if (!isValidName(empFirstName) || !isValidName(empLastName)) {
-                registerConsultantResponse.setText("Invalid name: First or last name cannot contain numbers.");
+                registerConsultantResponse.setText("Error: First and Last Name cannot contain numbers.");
                 registerConsultantResponse.setStyle("-fx-text-fill: red");
                 return; // Stop further execution if the name is invalid
             }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
+<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
     <items>
         <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
             <children>
@@ -42,10 +42,10 @@
                         <children>
                             <Label layoutX="240.0" layoutY="20.0" text="Register new Consultant:" />
                             <Label layoutX="164.0" layoutY="84.0" text="Employee Number:" />
-                            <Label layoutX="164.0" layoutY="120.0" prefHeight="17.0" prefWidth="64.0" text="First name:" />
-                            <Label layoutX="164.0" layoutY="157.0" prefHeight="17.0" prefWidth="63.0" text="Last name:" />
+                            <Label layoutX="164.0" layoutY="120.0" prefHeight="17.0" prefWidth="64.0" text="First Name:" />
+                            <Label layoutX="164.0" layoutY="157.0" prefHeight="17.0" prefWidth="63.0" text="Last Name:" />
                             <Label layoutX="164.0" layoutY="194.0" text="Title:" />
-                            <Label layoutX="164.0" layoutY="231.0" text="Start date:" />
+                            <Label layoutX="164.0" layoutY="231.0" text="Start Date:" />
                             <TextField fx:id="registerConsultantNo" layoutX="292.0" layoutY="79.0" prefWidth="160.0" promptText="Ex: E004" />
                             <TextField fx:id="registerConsultantName" layoutX="292.0" layoutY="115.0" prefWidth="160.0" promptText="John" />
                             <TextField fx:id="registerConsultantLast" layoutX="292.0" layoutY="153.0" prefWidth="160.0" promptText="Doe" />

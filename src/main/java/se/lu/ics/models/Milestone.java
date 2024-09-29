@@ -24,7 +24,7 @@ public class Milestone {
     }
 
     /**
-     * Used in mapToMilestone() in MilestoneDao to retrieve all Milestones for Project.
+     * Secondary constructor used in mapToMilestone() in MilestoneDao to retrieve all Milestones for Project.
      *
      * @param milestoneNo   The milestone number.
      * @param milestoneName The milestone name.
@@ -68,6 +68,7 @@ public class Milestone {
         this.milestoneDate = milestoneDate;
     }
 
+    // For in terminal testing purposes
     @Override
     public String toString() {
         return "Milestone{" +

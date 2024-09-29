@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ProjectTabController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ProjectTabController">
     <items>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="111.0" prefWidth="615.0">
             <children>
@@ -59,7 +59,7 @@
                         <children>
                             <Label layoutX="250.0" layoutY="14.0" text="Manage Projects:" />
                         <ComboBox fx:id="viewSpecificProjectComboBox" layoutX="18.0" layoutY="43.0" prefHeight="26.0" prefWidth="160.0" promptText="View specific Project" />
-                            <Button fx:id="viewAllProjectsButton" layoutX="510.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View all" />
+                            <Button fx:id="viewAllProjectsButton" layoutX="510.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonViewAllProjects" prefHeight="26.0" prefWidth="66.0" text="View All" />
                             <TableView fx:id="tableViewManageProject" layoutX="18.0" layoutY="79.0" prefHeight="189.0" prefWidth="558.0">
                                 <columns>
                                 <TableColumn fx:id="colStatus" prefWidth="86.0" text="Status" />

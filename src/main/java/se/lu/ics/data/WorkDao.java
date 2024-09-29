@@ -1,6 +1,5 @@
 package se.lu.ics.data;
 
-import java.sql.SQLWarning;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import se.lu.ics.models.Consultant;
 import se.lu.ics.models.Project;
-import se.lu.ics.models.Work;
 
 public class WorkDao {
 
