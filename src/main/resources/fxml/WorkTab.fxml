@@ -31,7 +31,7 @@
                         <Font name="System Bold" size="13.0" />
                     </font>
                </Button>
-               <Button fx:id="showTotalWorkHoursPane" layoutX="348.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowTotalWorkHoursPane" prefHeight="27.0" prefWidth="217.0" text="Total Work hours for Consultants">
+               <Button fx:id="showTotalWorkHoursPane" layoutX="348.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowTotalWorkHoursPane" prefHeight="27.0" prefWidth="217.0" text="Total Work Hours for Consultants">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
@@ -83,17 +83,26 @@
                         <Label layoutX="51.0" layoutY="246.0" text="Consultants working on three projects or less:" />
                            </children>
                        </AnchorPane>
-                   <AnchorPane fx:id="totalWorkHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                   <AnchorPane fx:id="totalWorkHoursPane" prefHeight="200.0" prefWidth="200.0">
                        <children>
-                           <Label layoutX="217.0" layoutY="14.0" text="Total Work hours for Consultants:" />
-                        <ComboBox fx:id="consultantWorkComboBox" layoutX="229.0" layoutY="54.0" prefHeight="26.0" prefWidth="158.0" promptText="Choose Consultant" />
-                        <Label layoutX="254.0" layoutY="112.0" text="Total hours worked:" />
-                        <Label fx:id="totHoursWorkedForCon" alignment="TOP_CENTER" layoutX="278.0" layoutY="131.0" prefHeight="17.0" prefWidth="61.0" />
-                        <Label layoutX="204.0" layoutY="164.0" prefHeight="17.0" prefWidth="209.0" text="Total hours worked by all Consultants:" />
-                        <Label fx:id="totalWorkedHoursLabel" alignment="TOP_CENTER" layoutX="230.0" layoutY="185.0" prefHeight="17.0" prefWidth="157.0" />
+                           <Label layoutX="228.0" layoutY="14.0" text="Total Work Hours for Consultants:" />
+                        <ComboBox fx:id="consultantWorkComboBox" layoutX="207.0" layoutY="109.0" prefHeight="26.0" prefWidth="217.0" promptText="Choose Consultant" />
+                        <Label layoutX="207.0" layoutY="142.0" prefHeight="17.0" prefWidth="113.0" text="Total Hours Worked:" />
+                        <Label fx:id="totHoursWorkedForCon" alignment="TOP_CENTER" layoutX="373.0" layoutY="142.0" prefHeight="17.0" prefWidth="61.0" textAlignment="RIGHT" />
+                        <Label layoutX="206.0" layoutY="216.0" prefHeight="17.0" prefWidth="228.0" text="All Consultants" underline="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <Label fx:id="totalWorkedHoursLabel" alignment="TOP_CENTER" layoutX="355.0" layoutY="240.0" prefHeight="17.0" prefWidth="98.0" textAlignment="RIGHT" />
+                        <Label layoutX="205.0" layoutY="240.0" prefHeight="17.0" prefWidth="113.0" text="Total Hours Worked:" />
+                        <Label layoutX="207.0" layoutY="84.0" prefHeight="18.0" prefWidth="125.0" text="Specific Consultant" underline="true">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
                        </children>
                    </AnchorPane>
-                   <AnchorPane fx:id="manageConsultantsForProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
+                   <AnchorPane fx:id="manageConsultantsForProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
                        <children>
                            <Label layoutX="221.0" layoutY="14.0" text="Manage Consultants for Project:" />
                            <ComboBox fx:id="projectWorkComboBox" layoutX="42.0" layoutY="38.0" prefWidth="150.0" promptText="Project Number" />

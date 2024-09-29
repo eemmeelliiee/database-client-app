@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
+<SplitPane dividerPositions="0.2316" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.ConsultantTabController">
     <items>
         <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="615.0">
             <children>
@@ -38,14 +38,14 @@
             <children>
                 <StackPane layoutX="-1.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                     <children>
-                    <AnchorPane fx:id="registerConsultantPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
+                    <AnchorPane fx:id="registerConsultantPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                         <children>
                             <Label layoutX="240.0" layoutY="20.0" text="Register new Consultant:" />
                             <Label layoutX="164.0" layoutY="84.0" text="Employee Number:" />
-                            <Label layoutX="164.0" layoutY="120.0" prefHeight="17.0" prefWidth="64.0" text="First name:" />
-                            <Label layoutX="164.0" layoutY="157.0" prefHeight="17.0" prefWidth="63.0" text="Last name:" />
+                            <Label layoutX="164.0" layoutY="120.0" prefHeight="17.0" prefWidth="64.0" text="First Name:" />
+                            <Label layoutX="164.0" layoutY="157.0" prefHeight="17.0" prefWidth="63.0" text="Last Name:" />
                             <Label layoutX="164.0" layoutY="194.0" text="Title:" />
-                            <Label layoutX="164.0" layoutY="231.0" text="Start date:" />
+                            <Label layoutX="164.0" layoutY="231.0" text="Start Date:" />
                             <TextField fx:id="registerConsultantNo" layoutX="292.0" layoutY="79.0" prefWidth="160.0" promptText="Ex: E004" />
                             <TextField fx:id="registerConsultantName" layoutX="292.0" layoutY="115.0" prefWidth="160.0" promptText="John" />
                             <TextField fx:id="registerConsultantLast" layoutX="292.0" layoutY="153.0" prefWidth="160.0" promptText="Doe" />
@@ -55,7 +55,7 @@
                             <Label fx:id="registerConsultantResponse" alignment="TOP_CENTER" layoutX="84.0" layoutY="317.0" prefHeight="17.0" prefWidth="448.0" wrapText="true" />
                         </children>
                     </AnchorPane>
-                    <AnchorPane fx:id="manageConsultantsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
+                    <AnchorPane fx:id="manageConsultantsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
                         <children>
                             <Label layoutX="250.0" layoutY="14.0" text="Manage Consultants:" />
                             <ComboBox fx:id="viewSpecificConsultantComboBox" layoutX="84.0" layoutY="40.0" prefHeight="27.0" prefWidth="184.0" promptText="View specific Consultant" />
