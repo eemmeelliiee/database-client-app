@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.WorkTabController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.lu.ics.controllers.WorkTabController">
     <items>
        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="111.0" prefWidth="598.0">
            <children>
@@ -105,7 +105,7 @@
                               <TableColumn fx:id="tableColHours" prefWidth="75.0" text="Hours" />
                                </columns>
                            </TableView>
-                        <Label layoutX="42.0" layoutY="247.0" prefHeight="17.0" prefWidth="532.0" text="To update hours for a consultant: double click a cell, insert new value, and hit enter." textFill="#7c7c7c" />
+                        <Label layoutX="42.0" layoutY="247.0" prefHeight="17.0" prefWidth="532.0" text="To update hours for a Consultant: double click a cell, insert new value, and hit enter." textFill="#7c7c7c" />
                         <Button fx:id="buttonRemoveConFromProj" layoutX="372.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleButtonRemoveConFromProj" prefHeight="26.0" prefWidth="202.0" text="Remove Consultant from Project" />
                            <Label fx:id="labelUpdateHours" alignment="TOP_LEFT" layoutX="43.0" layoutY="276.0" prefHeight="50.0" prefWidth="314.0" />
                        </children>

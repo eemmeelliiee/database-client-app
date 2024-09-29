@@ -42,7 +42,6 @@ public class WorkTabController {
             ConnectionHandler connectionHandler = new ConnectionHandler();
             consultantDao = new ConsultantDao(connectionHandler);
             projectDao = new ProjectDao(connectionHandler);
-
             workDao = new WorkDao(connectionHandler, consultantDao, projectDao);
         } catch (DaoException e) {
             e.printStackTrace();
