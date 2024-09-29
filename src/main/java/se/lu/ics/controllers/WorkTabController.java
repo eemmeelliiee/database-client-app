@@ -58,8 +58,8 @@ public class WorkTabController {
         onAllConsultantsHoursButtonClick();
 
         // Set up the ComboBox action listener to display total worked hours
-        consultantComboBox.setOnAction(event -> {
-            String selectedEmpNo = consultantComboBox.getSelectionModel().getSelectedItem();
+        consultantWorkComboBox.setOnAction(event -> {
+            String selectedEmpNo = consultantWorkComboBox.getSelectionModel().getSelectedItem();
             if (selectedEmpNo != null) {
                 displayTotalWorkedHours(selectedEmpNo);
             }
@@ -94,22 +94,22 @@ public class WorkTabController {
 
     // Add Consultant to Project Pane
     @FXML
-    private AnchorPane addConToProPane;
+    private AnchorPane addConToProjPane;
 
     @FXML
-    private Button showAddConToProPane;
+    private Button showAddConToProjPane;
 
     @FXML
-    private void handleShowAddConToProPane() {
-        addConToProPane.setVisible(true);
-        checkWorkingConsPane.setVisible(false);
-        displayConsHoursPane.setVisible(false);
-        hardestWorkingConPane.setVisible(false);
+    private void handleShowAddConToProjPane() {
+        addConToProjPane.setVisible(true);
+        manageConsultantsForProjectPane.setVisible(false);
+        totalWorkHoursPane.setVisible(false);
+        otherPane.setVisible(false);
     }
 
     //Manage consultants for project Pane
     @FXML
-    private AnchorPane checkWorkingConsPane;
+    private AnchorPane manageConsultantsForProjectPane;
 
     @FXML
     private Button manageConsultantsForProject;
@@ -118,28 +118,28 @@ public class WorkTabController {
     private TableColumn<Consultant, Double> tableColHours;
 
     @FXML
-    private void handleManageConsultantsForProject() {
-        checkWorkingConsPane.setVisible(true);
-        addConToProPane.setVisible(false);
-        displayConsHoursPane.setVisible(false);
-        hardestWorkingConPane.setVisible(false);
+    private void handleShowManageConsultantsForProjectPane() {
+        manageConsultantsForProjectPane.setVisible(true);
+        addConToProjPane.setVisible(false);
+        totalWorkHoursPane.setVisible(false);
+        otherPane.setVisible(false);
         errorLabel.setText("");
         warningLabel.setText("");
     }
 
     //Total work hours for consultants Pane
     @FXML
-    private AnchorPane displayConsHoursPane;
+    private AnchorPane totalWorkHoursPane;
 
     @FXML
-    private Button showDisplayConsHoursPane;
+    private Button showTotalWorkHoursPane;
 
     @FXML
-    private void handleShowDisplayConsHoursPane() {
-        displayConsHoursPane.setVisible(true);
-        addConToProPane.setVisible(false);
-        checkWorkingConsPane.setVisible(false);
-        hardestWorkingConPane.setVisible(false);
+    private void handleShowTotalWorkHoursPane() {
+        totalWorkHoursPane.setVisible(true);
+        otherPane.setVisible(false);
+        addConToProjPane.setVisible(false);
+        manageConsultantsForProjectPane.setVisible(false);
         onAllConsultantsHoursButtonClick();
         errorLabel.setText("");
         warningLabel.setText("");
@@ -147,17 +147,17 @@ public class WorkTabController {
 
     //Other Pane
     @FXML
-    private AnchorPane hardestWorkingConPane;
+    private AnchorPane otherPane;
 
     @FXML
-    private Button showHardestWorkingConPane;
+    private Button showOtherPane;
 
     @FXML
-    private void handleShowHardestWorkingConPane() {
-        hardestWorkingConPane.setVisible(true);
-        addConToProPane.setVisible(false);
-        checkWorkingConsPane.setVisible(false);
-        displayConsHoursPane.setVisible(false);
+    private void handleShowOtherPane() {
+        otherPane.setVisible(true);
+        addConToProjPane.setVisible(false);
+        manageConsultantsForProjectPane.setVisible(false);
+        totalWorkHoursPane.setVisible(false);
         displayHardestWorkingConsultant();
         populateTableWithProjectsInvolvingAllConsultants();
         displayConsultantsThreeProjectsOrLess();
@@ -167,10 +167,10 @@ public class WorkTabController {
 
     // Add consultant to project
     @FXML
-    private ComboBox<String> addConEmpNo;
+    private ComboBox<String> addConEmpNoCombobox;
 
     @FXML
-    private ComboBox<String> addConProjNo;
+    private ComboBox<String> addConProjNoCombobox;
 
     @FXML
     private TextField addConWorkHours;
@@ -184,8 +184,8 @@ public class WorkTabController {
     @FXML
     private void handleButtonAddConsultant() {
         try {
-            String empNo = addConEmpNo.getValue(); // Get the selected employee number
-            String projNo = addConProjNo.getValue(); // Get the selected project number
+            String empNo = addConEmpNoCombobox.getValue(); // Get the selected employee number
+            String projNo = addConProjNoCombobox.getValue(); // Get the selected project number
             String workHoursString = addConWorkHours.getText();
 
             // Convert work hours from String to double
@@ -208,8 +208,8 @@ public class WorkTabController {
             }
 
             // Clear fields after submission
-            addConEmpNo.setValue(null);
-            addConProjNo.setValue(null);
+            addConEmpNoCombobox.setValue(null);
+            addConProjNoCombobox.setValue(null);
             addConWorkHours.clear();
 
         } catch (DaoException e) {
@@ -231,9 +231,9 @@ public class WorkTabController {
             List<String> employeeNumbers = consultantDao.findAllEmpNos(); 
             ObservableList<String> employeeNumbersList = FXCollections.observableArrayList(employeeNumbers);
             // Set items in the employee number ComboBox
-            addConEmpNo.setItems(employeeNumbersList); 
+            addConEmpNoCombobox.setItems(employeeNumbersList); 
             // Set items in the view consultant ComboBox
-            consultantComboBox.setItems(employeeNumbersList);
+            consultantWorkComboBox.setItems(employeeNumbersList);
         } catch (DaoException e) {
             errorLabel.setText("Error fetching employee numbers: " + e.getMessage());
             errorLabel.setStyle("-fx-text-fill: red");
@@ -242,7 +242,7 @@ public class WorkTabController {
 
     // Consultant working on certain projects
     @FXML
-    private ComboBox<String> projectComboBox;
+    private ComboBox<String> projectWorkComboBox;
 
     @FXML
     private TableView<Consultant> consultantWorkTable;
@@ -266,7 +266,7 @@ public class WorkTabController {
     private Label errorLabel;
 
     @FXML
-    private Label labelUpdateHours;
+    private Label updateHoursResponse;
 
     // set up the consultant table
     private void setUpConsultantTable() {
@@ -283,7 +283,7 @@ public class WorkTabController {
         tableColHours.setCellValueFactory(cellData -> {
             Consultant consultant = cellData.getValue();
             //Get selected project number from the ComboBox
-            String projectNo = projectComboBox.getValue();
+            String projectNo = projectWorkComboBox.getValue();
             double workHours = 0;
             if (projectNo != null && !projectNo.isEmpty()) {
                 try {
@@ -303,7 +303,7 @@ public class WorkTabController {
         //Handle edit commit event to update hours in the database
         tableColHours.setOnEditCommit(event -> {
             Consultant consultant = event.getRowValue();
-            String projectNo = projectComboBox.getValue();
+            String projectNo = projectWorkComboBox.getValue();
             double newWorkHours = event.getNewValue();
     
             //Call the method to update work hours in the database
@@ -319,13 +319,13 @@ public class WorkTabController {
     private void updateWorkHours(String empNo, String projectNo, double newWorkHours) {
         try {
             workDao.updateWorkHours(projectNo, empNo, newWorkHours);
-            labelUpdateHours.setText("Hours successfully updated!");
-            labelUpdateHours.setStyle("-fx-text-fill: green");
+            updateHoursResponse.setText("Hours successfully updated!");
+            updateHoursResponse.setStyle("-fx-text-fill: green");
             // Optionally show success message
         } catch (DaoException e) {
             // Handle exception and show error message to the user
-            labelUpdateHours.setText(e.getMessage());
-            labelUpdateHours.setStyle("-fx-text-fill: red");
+            updateHoursResponse.setText(e.getMessage());
+            updateHoursResponse.setStyle("-fx-text-fill: red");
         }
     }
 
@@ -338,7 +338,7 @@ public class WorkTabController {
         Consultant selectedConsultant = consultantWorkTable.getSelectionModel().getSelectedItem();
 
         // Get selected project number from the ComboBox
-        String selectedProjectNo = projectComboBox.getValue();
+        String selectedProjectNo = projectWorkComboBox.getValue();
 
         // Check if both a consultant and a project are selected
         if (selectedConsultant != null && selectedProjectNo != null && !selectedProjectNo.isEmpty()) {
@@ -347,20 +347,20 @@ public class WorkTabController {
                 workDao.deleteConsultantFromProject(selectedConsultant.getEmpNo(), selectedProjectNo);
 
                 // Show success message (optional)
-                labelUpdateHours.setText("Consultant " + selectedConsultant.getEmpNo() + " removed from project "+ selectedProjectNo +" successfully.");
-                labelUpdateHours.setStyle("-fx-text-fill: green");
+                updateHoursResponse.setText("Consultant " + selectedConsultant.getEmpNo() + " removed from project "+ selectedProjectNo +" successfully.");
+                updateHoursResponse.setStyle("-fx-text-fill: green");
 
                 // Refresh the consultant work table for the selected project
                 updateConsultantWorkTableForProject(selectedProjectNo);
             } catch (DaoException e) {
                 // Handle exceptions and show error message
-                labelUpdateHours.setText("Error removing consultant: " + e.getMessage());
-                labelUpdateHours.setStyle("-fx-text-fill: red");
+                updateHoursResponse.setText("Error removing consultant: " + e.getMessage());
+                updateHoursResponse.setStyle("-fx-text-fill: red");
             }
         } else {
             // If no consultant or project is selected, show an error message
-            labelUpdateHours.setText("Please select a consultant and a project.");
-            labelUpdateHours.setStyle("-fx-text-fill: red");
+            updateHoursResponse.setText("Please select a consultant and a project.");
+            updateHoursResponse.setStyle("-fx-text-fill: red");
         }
     }
 
@@ -369,15 +369,15 @@ public class WorkTabController {
     private void populateProjectNumbers() {
         List<String> projectNumbers = projectDao.findAllProjectNos();
         ObservableList<String> projectNumbersList = FXCollections.observableArrayList(projectNumbers);
-        projectComboBox.setItems(projectNumbersList);
-        addConProjNo.setItems(projectNumbersList); // Set items in the add consultant ComboBox
+        projectWorkComboBox.setItems(projectNumbersList);
+        addConProjNoCombobox.setItems(projectNumbersList); // Set items in the add consultant ComboBox
     }
 
     // Set up the ComboBox action listener to update the consultant work table
     @FXML
     private void setProjectComboBoxHandler() {
-        projectComboBox.setOnAction(event -> {
-            String selectedProjectNo = projectComboBox.getValue();
+        projectWorkComboBox.setOnAction(event -> {
+            String selectedProjectNo = projectWorkComboBox.getValue();
             if (selectedProjectNo != null && !selectedProjectNo.isEmpty()) {
                 updateConsultantWorkTableForProject(selectedProjectNo);
             }
@@ -405,7 +405,7 @@ public class WorkTabController {
 
     // View total worked hours for a certein consultant
     @FXML
-    private ComboBox<String> consultantComboBox;
+    private ComboBox<String> consultantWorkComboBox;
 
     @FXML
     private Label totalWorkedHoursLabel;

@@ -19,20 +19,20 @@ public class MainViewController {
 
    //Home page buttons
     @FXML
-    private Button showConsultantTabButton;
+    private Button showConsultantPageButton;
 
     @FXML
-    private Button showProjectTabButton;
+    private Button showProjectPageButton;
 
     @FXML
-    private Button showWorkTabButton;
+    private Button showWorkPageButton;
 
     @FXML
-    private Button showMetadataTabButton;
+    private Button showMetadataPageButton;
 
-    //Button to get to the consultant tab
+    //Button to get to the consultant page
     @FXML
-    private void handleShowConsultantTabButton(ActionEvent event) {
+    private void handleShowConsultantPageButton(ActionEvent event) {
         String path = "/fxml/ConsultantTab.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         try {
@@ -53,16 +53,16 @@ public class MainViewController {
             consultantStage.show();
 
             // Close the current stage
-            Stage currentStage = (Stage) showConsultantTabButton.getScene().getWindow();
+            Stage currentStage = (Stage) showConsultantPageButton.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //Button to get to the project tab
+    //Button to get to the project page
     @FXML
-    private void handleShowProjectTabButton(ActionEvent event) {
+    private void handleShowProjectPageButton(ActionEvent event) {
         String path = "/fxml/ProjectTab.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         try {
@@ -76,16 +76,16 @@ public class MainViewController {
             projectStage.show();
 
             // Close the current stage
-            Stage currentStage = (Stage) showProjectTabButton.getScene().getWindow();
+            Stage currentStage = (Stage) showProjectPageButton.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //Button to get to the work tab
+    //Button to get to the work page
     @FXML
-    private void handleShowWorkTabButton(ActionEvent event) {
+    private void handleShowWorkPageButton(ActionEvent event) {
         String path = "/fxml/WorkTab.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         try {
@@ -99,16 +99,16 @@ public class MainViewController {
             workStage.show();
 
             // Close the current stage
-            Stage currentStage = (Stage) showWorkTabButton.getScene().getWindow();
+            Stage currentStage = (Stage) showWorkPageButton.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //Button to get to the metadata tab
+    //Button to get to the metadata page
     @FXML
-    private void handleShowMetadataTabButton(ActionEvent event) {
+    private void handleShowMetadataPageButton(ActionEvent event) {
         String path = "/fxml/MetadataTab.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         try {
@@ -122,7 +122,7 @@ public class MainViewController {
             metadataStage.show();
 
             // Close the current stage
-            Stage currentStage = (Stage) showMetadataTabButton.getScene().getWindow();
+            Stage currentStage = (Stage) showMetadataPageButton.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();

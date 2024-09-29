@@ -56,7 +56,7 @@ public class MilestoneTabController {
     private Button backToProjectButton;
 
     @FXML
-    private void handleShowProjectTabButton(ActionEvent event) {
+    private void handleShowProjectPageButton(ActionEvent event) {
         String path = "/fxml/ProjectTab.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         try {
@@ -87,20 +87,22 @@ public class MilestoneTabController {
     @FXML
     private void handleShowAddMSPane() {
         addMSPane.setVisible(true);
-        retrieveMSPane.setVisible(false);
+        manageMSPane.setVisible(false);
+        manageMSResponse.setText("");
     }
 
     //Manage milestones pane
     @FXML
-    private AnchorPane retrieveMSPane;
+    private AnchorPane manageMSPane;
 
     @FXML
-    private Button showRetrieveMSPane;
+    private Button showManageMSPane;
 
     @FXML
-    private void handleShowRetrieveMSPane() {
-        retrieveMSPane.setVisible(true);
+    private void handleShowManageMSPane() {
+        manageMSPane.setVisible(true);
         addMSPane.setVisible(false);
+        registerMilestoneStatus.setText("");
     }
 
     //Register milestone
@@ -156,16 +158,16 @@ public class MilestoneTabController {
             ObservableList<String> projectNumbersList = FXCollections.observableArrayList(projectNumbers);
             registerMilestoneProjectNo.setItems(projectNumbersList);
             // removeMilestoneProjectNo.setItems(projectNumbersList);
-            projectNoComboBox.setItems(projectNumbersList);
+            manageMSProjectNoComboBox.setItems(projectNumbersList);
         } catch (DaoException e) {
             registerMilestoneStatus.setText(e.getMessage());
-            milestoneInfoLabel.setText(e.getMessage()); // ta bort?
+            manageMSResponse.setText(e.getMessage()); // ta bort?
         }
     }
 
     //Manage Milestone
     @FXML
-    private TableView<Milestone> milestoneTableView;
+    private TableView<Milestone> manageMSTableView;
 
     @FXML
     private TableColumn<Milestone, String> milestoneNoColumn;
@@ -177,10 +179,10 @@ public class MilestoneTabController {
     private TableColumn<Milestone, LocalDate> milestoneDateColumn;
 
     @FXML
-    private ComboBox<String> projectNoComboBox;
+    private ComboBox<String> manageMSProjectNoComboBox;
 
     @FXML
-    private Label milestoneInfoLabel;
+    private Label manageMSResponse;
 
     @FXML
     private Label totalMilestonesLabel;
@@ -191,37 +193,37 @@ public class MilestoneTabController {
     @FXML
     private void handleButtonRemoveMilestone() {
         // Get the selected milestone from the TableView
-        Milestone selectedMilestone = milestoneTableView.getSelectionModel().getSelectedItem();
+        Milestone selectedMilestone = manageMSTableView.getSelectionModel().getSelectedItem();
 
         if (selectedMilestone != null) {
             try {
                 // Attempt to delete the selected milestone from the database
-                milestoneDao.deleteByProjectNoAndMilestoneNo(projectNoComboBox.getValue(), selectedMilestone.getMilestoneNo());
+                milestoneDao.deleteByProjectNoAndMilestoneNo(manageMSProjectNoComboBox.getValue(), selectedMilestone.getMilestoneNo());
 
                 // Show a confirmation message in the response label
-                milestoneInfoLabel.setStyle("-fx-text-fill: green");
-                milestoneInfoLabel.setText("Milestone " + selectedMilestone.getMilestoneNo() + " successfully removed.");
+                manageMSResponse.setStyle("-fx-text-fill: green");
+                manageMSResponse.setText("Milestone " + selectedMilestone.getMilestoneNo() + " successfully removed.");
 
                 // Refresh the table view after deletion
                 onProjectSelected();  // This will re-fetch and display the updated list of milestones
 
             } catch (DaoException e) {
                 // If there's an error in the deletion process, display the error message
-                milestoneInfoLabel.setStyle("-fx-text-fill: red");
-                milestoneInfoLabel.setText("Error removing milestone: " + e.getMessage());
+                manageMSResponse.setStyle("-fx-text-fill: red");
+                manageMSResponse.setText("Error removing milestone: " + e.getMessage());
                 e.printStackTrace();
             }
         } else {
             // If no milestone is selected, display a warning message
-            milestoneInfoLabel.setStyle("-fx-text-fill: red");
-            milestoneInfoLabel.setText("Please select a milestone to remove.");
+            manageMSResponse.setStyle("-fx-text-fill: red");
+            manageMSResponse.setText("Please select a milestone to remove.");
         }
     }
 
     //Set up the Milestone Table
     private void setupMilestoneTableView() {
         //Ensuree the tableView is not editable
-        milestoneTableView.setEditable(false);
+        manageMSTableView.setEditable(false);
 
         //Bind colums to the milestone fields using PropertyValueFactory
         milestoneNoColumn.setCellValueFactory(new PropertyValueFactory<>("milestoneNo"));
@@ -229,26 +231,26 @@ public class MilestoneTabController {
         milestoneDateColumn.setCellValueFactory(new PropertyValueFactory<>("milestoneDate"));
 
         //Intially, clear the table view
-        milestoneTableView.getItems().clear();
+        manageMSTableView.getItems().clear();
     }
 
     //Get milestones for selected project
     @FXML
     private void onProjectSelected() {
-        String selectedProjectNo = projectNoComboBox.getSelectionModel().getSelectedItem();
+        String selectedProjectNo = manageMSProjectNoComboBox.getSelectionModel().getSelectedItem();
 
         if (selectedProjectNo != null) {
             try {
                 List<Milestone> milestones = milestoneDao.findByProjectNo(selectedProjectNo);
                 ObservableList<Milestone> milestoneList = FXCollections.observableArrayList(milestones);
-                milestoneTableView.setItems(milestoneList);
+                manageMSTableView.setItems(milestoneList);
                 totalMilestonesLabel.setText("" + milestones.size());
             } catch (DaoException e) {
-                milestoneInfoLabel.setText("Error fetching milestones: " + e.getMessage());
+                manageMSResponse.setText("Error fetching milestones: " + e.getMessage());
                 e.printStackTrace();
             }
         } else {
-            milestoneInfoLabel.setText("Please select a valid project number.");
+            manageMSResponse.setText("Please select a valid project number.");
         }
     }
 }
