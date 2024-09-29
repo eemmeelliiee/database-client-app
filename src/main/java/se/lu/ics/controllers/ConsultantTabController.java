@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.ComboBox;
 
+
 import se.lu.ics.models.Consultant;
 import se.lu.ics.data.ConsultantDao;
 import se.lu.ics.data.DaoException;
@@ -290,6 +291,16 @@ public class ConsultantTabController {
             newValue = (newValue != null && ((String) newValue).trim().isEmpty()) ? null : newValue;
         }
 
+        // Validation for empFirstName and empLastName fields
+        if ("empFirstName".equals(field) || "empLastName".equals(field)) {
+            String nameValue = (String) newValue;
+            if (!isValidName(nameValue)) {
+                infoOverViewLabel.setText("Error: First and Last Name cannot contain numbers.");
+                infoOverViewLabel.setStyle("-fx-text-fill: red");
+                return; // Stop further execution if the name is invalid
+            }
+        }
+
         //Get the old employee number and update the consultant with the new values
         String oldEmpNo = consultant.getEmpNo();
         try {
@@ -310,6 +321,7 @@ public class ConsultantTabController {
                     consultant.setEmpStartDate((LocalDate) newValue);
                     break;
             }
+
             consultantDao.update(consultant, oldEmpNo);
             manageConsultantTableView.refresh();
             populateEmployeeNumbers();
@@ -380,6 +392,10 @@ public class ConsultantTabController {
     @FXML
     private Label registerConsultantResponse;
 
+    private boolean isValidName(String name) {
+        return !name.matches(".*\\d.*");  // Returns false if the name contains digits
+    }
+
     @FXML
     private void handleButtonRegisterConsultant() {
         try {
@@ -395,6 +411,12 @@ public class ConsultantTabController {
             empFirstName = (empFirstName != null && empFirstName.trim().isEmpty()) ? null : empFirstName;
             empLastName = (empLastName != null && empLastName.trim().isEmpty()) ? null : empLastName;
             empTitle = (empTitle != null && empTitle.trim().isEmpty()) ? null : empTitle;
+
+            if (!isValidName(empFirstName) || !isValidName(empLastName)) {
+                registerConsultantResponse.setText("Error: First and Last Name cannot contain numbers.");
+                registerConsultantResponse.setStyle("-fx-text-fill: red");
+                return; // Stop further execution if the name is invalid
+            }
 
             // Create a new Consultant object
             Consultant newConsultant = new Consultant(empNo, empFirstName, empLastName, empTitle, empStartDate);

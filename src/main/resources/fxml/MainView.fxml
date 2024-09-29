@@ -44,7 +44,7 @@
             <Font name="System Italic" size="13.0" />
          </font></Label>
       <Label fx:id="homePageResponse" layoutX="375.0" layoutY="457.0" prefHeight="27.0" prefWidth="225.0" />
-      <Label layoutX="233.0" layoutY="14.0" text="Select a Section to Explore" textFill="#20359d">
+      <Label layoutX="233.0" layoutY="14.0" text="Select a Section to Explore:" textFill="#20359d">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

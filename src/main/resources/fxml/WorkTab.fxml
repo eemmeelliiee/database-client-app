@@ -83,7 +83,7 @@
                         <Label layoutX="51.0" layoutY="246.0" text="Consultants working on three projects or less:" />
                            </children>
                        </AnchorPane>
-                   <AnchorPane fx:id="totalWorkHoursPane" prefHeight="200.0" prefWidth="200.0">
+                   <AnchorPane fx:id="totalWorkHoursPane" prefHeight="200.0" prefWidth="200.0" visible="false">
                        <children>
                            <Label layoutX="228.0" layoutY="14.0" text="Total Work Hours for Consultants:" />
                         <ComboBox fx:id="consultantWorkComboBox" layoutX="207.0" layoutY="109.0" prefHeight="26.0" prefWidth="217.0" promptText="Choose Consultant" />
@@ -102,21 +102,21 @@
                         </Label>
                        </children>
                    </AnchorPane>
-                   <AnchorPane fx:id="manageConsultantsForProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0" visible="false">
+                   <AnchorPane fx:id="manageConsultantsForProjectPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="387.0" prefWidth="615.0">
                        <children>
                            <Label layoutX="221.0" layoutY="14.0" text="Manage Consultants for Project:" />
                            <ComboBox fx:id="projectWorkComboBox" layoutX="42.0" layoutY="38.0" prefWidth="150.0" promptText="Project Number" />
                            <TableView fx:id="consultantWorkTable" layoutX="42.0" layoutY="72.0" prefHeight="175.0" prefWidth="532.0">
                                <columns>
-                               <TableColumn fx:id="consultantNumberColumn" prefWidth="95.0" text="Emp.Number" />
+                               <TableColumn fx:id="consultantNumberColumn" prefWidth="77.0" text="Emp.Number" />
                                <TableColumn fx:id="consultantFirstNameColumn" prefWidth="100.0" text="First Name" />
-                               <TableColumn fx:id="consultantLastNameColumn" prefWidth="97.0" text="Last Name" />
-                               <TableColumn fx:id="consultantTitleColumn" prefWidth="71.31646728515625" text="Title" />
-                               <TableColumn fx:id="consultantDateColumn" prefWidth="97.68356323242188" text="Start Date" />
-                              <TableColumn fx:id="tableColHours" prefWidth="75.0" text="Hours" />
+                               <TableColumn fx:id="consultantLastNameColumn" prefWidth="95.0" text="Last Name" />
+                               <TableColumn fx:id="consultantTitleColumn" prefWidth="81.5" text="Title" />
+                               <TableColumn fx:id="consultantDateColumn" prefWidth="97.0" text="Start Date" />
+                              <TableColumn fx:id="tableColHours" prefWidth="86.0" text="Work Hours" />
                                </columns>
                            </TableView>
-                        <Label layoutX="42.0" layoutY="247.0" prefHeight="17.0" prefWidth="532.0" text="To update hours for a Consultant: double click a cell, insert new value, and hit enter." textFill="#7c7c7c" />
+                        <Label layoutX="42.0" layoutY="247.0" prefHeight="17.0" prefWidth="532.0" text="To update Work Hours for a Consultant: double click a cell, insert new value, and hit enter." textFill="#7c7c7c" />
                         <Button fx:id="buttonRemoveConFromProj" layoutX="372.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleButtonRemoveConFromProj" prefHeight="26.0" prefWidth="202.0" text="Remove Consultant from Project" />
                            <Label fx:id="updateHoursResponse" alignment="TOP_LEFT" layoutX="43.0" layoutY="276.0" prefHeight="50.0" prefWidth="314.0" wrapText="true" />
                        </children>
